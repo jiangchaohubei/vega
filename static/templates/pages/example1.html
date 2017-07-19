@@ -1,0 +1,201 @@
+<html lang="zh_CN">
+<head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>增加 组 | DjangoX</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen"
+          rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.widget.select-related.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+
+    <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+
+    <script type="text/javascript">
+        window.__admin_media_prefix__ = "/static/xadmin/";
+        window.__admin_path_prefix__ = "/xadmin/";
+    </script>
+
+    <script type="text/javascript" src="/static/xadmin/js/site_config.js"></script>
+
+    <script type="text/javascript" src="/xadmin/jsi18n/"></script>
+
+
+</head>
+<body class="auth-group change-form">
+
+<!-- Header -->
+
+
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+        <ul class="breadcrumb">
+
+
+            <li>
+                <a href="/xadmin/auth/group/">组</a>
+            </li>
+
+            <li>
+                增加 组
+
+            </li>
+
+
+        </ul>
+
+
+        <div class="navbar content-navbar navbar-default navbar-xs" data-toggle="breakpoint"
+             data-class-xs="navbar content-navbar navbar-inverse navbar-xs"
+             data-class-sm="navbar content-navbar navbar-default navbar-xs">
+            <div class="navbar-header">
+
+
+                <button type="button" class="navbar-toggle pull-left" onclick="javascript: history.back();"><i
+                        class="fa fa-arrow-left"></i></button>
+
+
+                <a class="navbar-brand" data-toggle="collapse" data-target="#top-nav .navbar-collapse">
+                    <i class="fa fa-group"><sub class="fa fa-plus"></sub></i>
+                    增加 组
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+
+
+                <div class="navbar-btn navbar-right hide-xs">
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <form class="exform rended" enctype="multipart/form-data" action="" method="post" id="group_form"><input
+                type="hidden" name="csrfmiddlewaretoken" value="gE3YzdP0TGKtm63NS3jQFTHj1BSKfOWB">
+
+            <input type="hidden" id="_portal_key" value="auth_group_editform_portal">
+
+
+            <input type="hidden" name="csrfmiddlewaretoken" value="gE3YzdP0TGKtm63NS3jQFTHj1BSKfOWB">
+            <link href="/static/xadmin/css/xadmin.widget.select-related.css" type="text/css" media="screen"
+                  rel="stylesheet">
+            <script type="text/javascript" src="/static/xadmin/js/xadmin.widget.RelatedObjectLookups.js"></script>
+            <script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.quick-form.js"></script>
+            <div class="form-container row clearfix">
+                <div id="column-0" class="formColumn column form-column full col col-sm-12 form-horizontal ui-sortable"
+                     horizontal="True" span="12">
+                    <div class="panel panel-default fieldset unsort no_title" id="box-0">
+                        <div class="panel-heading"><i class="icon fa fa-chevron-up chevron"></i>
+                            <h3 class="panel-title"></h3></div>
+                        <div class="panel-body ">
+                            <div id="div_id_name" class="form-group"><label for="id_name"
+                                                                            class="control-label  requiredField">
+                                主机<span class="asteriskField">*</span> </label>
+                                <div class="controls "><input class="text-field admintextinputwidget form-control"
+                                                              id="id_name" maxlength="80" name="name" type="text"></div>
+                            </div>
+                            <div id="div_id_permissions" class="form-group"><label for="id_permissions"
+                                                                                   class="control-label ">
+                                权限
+                            </label>
+                                <div class="controls "><a href="/static/templates/pages/inventories.html" title="创建新的 权限"
+                                                          class="btn btn-primary btn-sm btn-ajax pull-right"
+                                                          data-for-id="id_permissions"
+                                                          data-refresh-url="/xadmin/auth/group/add/?_field=permissions&amp;permissions="><i
+                                        class="fa fa-plus"></i></a>
+                                    <div class="control-wrap" id="id_permissions_wrap_container"><input
+                                            class="vManyToManyRawIdAdminField" id="id_permissions" name="permissions"
+                                            type="hidden">
+                                        <div class="input-group m2m-field">
+                                            <div class="obj-show " id="id_permissions_show"></div>
+                                            <span class="input-group-btn vertical-top"> <a
+                                                    href="/xadmin/auth/permission/?t=id"
+                                                    class="btn btn-primary related-lookup" id="lookup_id_permissions"
+                                                    onclick="return showRelatedObjectLookupPopup(this);"><i
+                                                    class="fa fa-search"></i></a> <a href="javascript://"
+                                                                                     class="btn btn-default related-lookup"
+                                                                                     id="remove_id_permissions"
+                                                                                     onclick="return removeRelatedObject(this);"><i
+                                                    class="fa fa-remove"></i></a> </span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions well well-sm clearfix fixed2left">
+
+
+                <div class="btn-group clearfix show-xs save-group col-xs-12">
+                    <button type="submit" class="default btn btn-primary col-xs-10" name="_save"
+                            data-loading-text="保存中.."><i class="fa fa-save"></i> 保存
+                    </button>
+                    <button type="button" class="more btn btn-primary col-xs-2" data-toggle="collapse"
+                            data-target=".nav-collapse.more-btns"><i class="fa fa-ellipsis-vertical"></i></button>
+                </div>
+                <button type="submit" class="default btn btn-primary hide-xs" name="_save" data-loading-text="保存中.."><i
+                        class="fa fa-save"></i> 保存
+                </button>
+
+
+                <div class="nav-collapse collapse more-btns">
+
+                    <input type="submit" class="btn btn-default" value="保存并增加另一个" name="_addanother">
+                    <input type="submit" class="btn btn-default" value="保存并继续编辑" name="_continue">
+
+                </div>
+
+
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<br>
+<br>
+
+
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.sortable.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.main.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.responsive.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.effect.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.themes.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.portal.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.widget.RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.quick-form.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.page.form.js"></script>
+
+
+</body>
+</html>

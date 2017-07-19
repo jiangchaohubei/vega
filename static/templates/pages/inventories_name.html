@@ -1,0 +1,345 @@
+<html lang="zh_CN"><head>
+
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>用户设置列表 | DjangoX</title>
+  <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+  <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+<link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+<link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+<link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+        <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+  <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+<link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+
+<style type="text/css">
+  .btn-toolbar{margin-top: 0;}
+  #content-block.full-content{margin-left: 0;}
+</style>
+
+  <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+
+  <script type="text/javascript">
+    window.__admin_media_prefix__ = "/static/xadmin/";
+    window.__admin_path_prefix__ = "/xadmin/";
+  </script>
+
+    <script type="text/javascript" src="/static/xadmin/js/site_config.js"></script>
+
+  <script type="text/javascript" src="/xadmin/jsi18n/"></script>
+
+
+</head>
+<body class="change-list">
+
+    <!-- Header -->
+
+
+  <div id="body-content" class="clearfix row" style="margin-top: 15px;">
+
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+      <ul class="breadcrumb">
+
+
+		      <li>
+                <a href="/static/templates/pages/inventories.html">主机清单</a>
+            </li>
+
+            <li>
+                增加主机
+
+            </li>
+
+
+      </ul>
+
+
+
+      <div class="navbar content-navbar navbar-default navbar-xs" data-toggle="breakpoint" data-class-xs="navbar content-navbar navbar-inverse navbar-xs" data-class-sm="navbar content-navbar navbar-default navbar-xs">
+        <div class="navbar-header">
+
+
+<button class="navbar-toggle pull-left" data-toggle="class" data-target="#body-content" data-class-name="show_menu">
+  <i class="fa fa-list"></i>
+</button>
+
+  <a href="/xadmin/xadmin/usersettings/add/" class="navbar-toggle pull-right"><i class="fa fa-plus"></i></a>
+
+<button class="navbar-toggle pull-right" data-toggle="collapse" data-target=".content-navbar .navbar-collapse">
+  <i class="fa fa-filter"></i>
+</button>
+
+
+          <a class="navbar-brand" data-toggle="collapse" data-target="#top-nav .navbar-collapse">
+            <i class="fa fa-cog"></i> GROUP
+          </a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+
+          </ul>
+
+
+          <div class="navbar-btn navbar-right hide-xs">
+
+
+
+
+    <a href="/static/templates/pages/inventories_create.html" class="btn btn-primary"><i class="fa fa-plus"></i>
+    ADD GROUP</a>
+
+
+
+
+          </div>
+        </div>
+      </div>
+<div class="results table-responsive">
+
+
+  <table class="table table-bordered table-striped table-hover">
+
+    <thead>
+      <tr>
+        <th scope="col" class="action-checkbox-column">
+
+
+            <input type="checkbox" id="action-toggle">
+
+        </th>
+        <th scope="col">
+
+
+            GROUP名称
+
+        </th>
+        <th scope="col">
+
+
+            &nbsp;
+
+        </th>
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+<tr class="grid-item">
+        <td class="action-checkbox">
+
+
+            <input class="action-select" name="_selected_action" type="checkbox" value="1">
+
+        </td>
+
+        <td>
+
+
+            <a href="/xadmin/xadmin/usersettings/1/detail/">webservices</a>
+
+        </td>
+
+        <td>
+
+
+            <a data-res-uri="/xadmin/xadmin/usersettings/1/detail/" data-edit-uri="/xadmin/xadmin/usersettings/1/update/" rel="tooltip" title="admin dashboard:home:pos" class="btn btn-info btn-xs details-handler"><i class="fa fa-search-plus"></i> 查看</a> <a href="/xadmin/xadmin/usersettings/1/update/" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> 修改</a> <a href="/xadmin/xadmin/usersettings/1/delete/" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> 删除</a>
+
+        </td>
+      </tr>
+      <tr class="grid-item">
+        <td class="action-checkbox">
+
+
+            <input class="action-select" name="_selected_action" type="checkbox" value="2">
+
+        </td>
+
+        <td>
+             <input class="text-field admintextinputwidget form-control" id="id_name" maxlength="80" name="name" type="text">
+
+        </td>
+
+        <td>
+          <input class="text-field admintextinputwidget form-control" id="" maxlength="80" name="name" type="text">
+</td>
+      </tr>
+
+
+
+
+
+    </tbody>
+
+  </table>
+
+
+  </div>
+      <div class="navbar content-navbar navbar-default navbar-xs" data-toggle="breakpoint" data-class-xs="navbar content-navbar navbar-inverse navbar-xs" data-class-sm="navbar content-navbar navbar-default navbar-xs">
+        <div class="navbar-header">
+
+
+<button class="navbar-toggle pull-left" data-toggle="class" data-target="#body-content" data-class-name="show_menu">
+  <i class="fa fa-list"></i>
+</button>
+
+  <a href="/xadmin/xadmin/usersettings/add/" class="navbar-toggle pull-right"><i class="fa fa-plus"></i></a>
+
+<button class="navbar-toggle pull-right" data-toggle="collapse" data-target=".content-navbar .navbar-collapse">
+  <i class="fa fa-filter"></i>
+</button>
+
+
+          <a class="navbar-brand" data-toggle="collapse" data-target="#top-nav .navbar-collapse">
+            <i class="fa fa-cog"></i> HOSTS
+          </a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+
+          </ul>
+
+
+          <div class="navbar-btn navbar-right hide-xs">
+
+
+
+
+    <a href="/static/templates/pages/inventories_create.html" class="btn btn-primary"><i class="fa fa-plus"></i>
+    ADD HOSTS</a>
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+ <div class="results table-responsive">
+
+
+  <table class="table table-bordered table-striped table-hover">
+
+    <thead>
+      <tr>
+        <th scope="col" class="action-checkbox-column">
+
+
+            <input type="checkbox" id="action-toggle">
+
+        </th>
+        <th scope="col">
+
+
+            HOST
+
+        </th>
+        <th scope="col">
+
+
+            &nbsp;
+
+        </th>
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+<tr class="grid-item">
+        <td class="action-checkbox">
+
+
+            <input class="action-select" name="_selected_action" type="checkbox" value="1">
+
+        </td>
+
+        <td>
+
+
+            <a href="/xadmin/xadmin/usersettings/1/detail/">127.0.0.1</a>
+
+        </td>
+
+        <td>
+
+
+            <a data-res-uri="/xadmin/xadmin/usersettings/1/detail/" data-edit-uri="/xadmin/xadmin/usersettings/1/update/" rel="tooltip" title="admin dashboard:home:pos" class="btn btn-info btn-xs details-handler"><i class="fa fa-search-plus"></i> 查看</a> <a href="/xadmin/xadmin/usersettings/1/update/" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> 修改</a> <a href="/xadmin/xadmin/usersettings/1/delete/" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> 删除</a>
+
+        </td>
+      </tr>
+      <tr class="grid-item">
+        <td class="action-checkbox">
+
+
+            <input class="action-select" name="_selected_action" type="checkbox" value="2">
+
+        </td>
+
+        <td>
+             <input class="text-field admintextinputwidget form-control" id="id_name" maxlength="80" name="name" type="text">
+
+        </td>
+
+        <td>
+          <input class="text-field admintextinputwidget form-control" id="" maxlength="80" name="name" type="text">
+</td>
+      </tr>
+
+
+
+
+
+    </tbody>
+
+  </table>
+
+
+  </div>
+
+
+
+
+  </form>
+
+
+
+    </div>
+  </div>
+
+
+  <br>
+  <br>
+
+
+
+  <script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.sortable.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.main.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.responsive.js"></script>
+  <script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.effect.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.themes.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.details.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.filters.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.actions.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.page.list.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.page.form.js"></script>
+
+
+
+
+</body></html>
