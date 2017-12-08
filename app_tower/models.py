@@ -10,8 +10,8 @@ class inventories(models.Model):
     def __str__(self):
         return self.name, self.description
 #组清单
-class group(models.Model):
-    name=models.CharField(max_length=32)
+  class group(models.Model):
+       name=models.CharField(max_length=32)
     description = models.CharField(max_length=128)
 
     def __str__(self):
