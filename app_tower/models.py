@@ -763,40 +763,7 @@ class T_VERSION(models.Model):
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
 	
 	
-#包版本
-class T_VERSION(models.Model):
-    objects=checkOwnManager()
-    #版本号
-    NAME=models.FloatField(null=False,blank=False)
-    # #版本号
-    # VERSION_NUMBER=models.FloatField(null=True,blank=True)
-    #描述
-    DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
-    #程序外键
-    SOFTWARE_ID=models.ForeignKey(T_SOFTWARE, null=True,blank=True,on_delete=models.PROTECT,related_name='SOFTWARE_ID_T_VERSION')
-    #默认安装路径
-    INSTALL_PATH=models.CharField(max_length=256,null=True,blank=True)
-    #软件包存储路径
-    PACKAGE_PATH=models.CharField(max_length=256,null=True,blank=True)
-    #默认应用
-    ISUSE=models.BooleanField(default=True)
 
-    OWNER_ID=models.IntegerField(null=True,blank=True)
-    OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
-    OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)
-    OWNER_ALL=models.BooleanField(default=False)
-
-    CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
-    #创建者
-    CREATE_USER_ID=models.IntegerField(null=True,blank=True)
-    CREATE_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
-    #最后更新时间
-    LAST_MODIFY_TIME=models.DateTimeField('修改时间',auto_now=True,null=True,blank=True)
-    #最后更新者
-    MODIFY_USER_ID=models.IntegerField(null=True,blank=True)
-    ARGS1=models.CharField(max_length=128,null=True,blank=True)
-    ARGS2=models.CharField(max_length=128,null=True,blank=True)
-    ARGS3=models.CharField(max_length=128,null=True,blank=True)	
 	
 	
 
