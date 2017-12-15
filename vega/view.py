@@ -8,7 +8,8 @@ from vega.rolelist_permissionlist_init import rolelist_permission
 def index(request):
     context = {}
     context['index'] = 'this is index!'
-    rolelist_permission.init_role_user()
+    initClass=rolelist_permission()
+    initClass.init_role_user()
 
     return render(request, 'templates/pages/index3.html', context)
 
