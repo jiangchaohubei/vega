@@ -1,0 +1,31 @@
+2017-12-15 14:18:40,127 base.py[line:256] ERROR Internal Server Error: /authority/delete/user
+Traceback (most recent call last):
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\vega2\vega\authority\permission.py", line 43, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\vega2\vega\authority\mysqldb\authoritydb.py", line 502, in delete
+    user = User.objects.get(id=form['id'])
+KeyError: 'id'
+2017-12-15 15:21:37,388 base.py[line:256] ERROR Internal Server Error: /authority/select/parentPermission
+Traceback (most recent call last):
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\vega2\vega\authority\mysqldb\authoritydb.py", line 693, in parentPermission
+    role=RoleList.objects.get(id=int(form['id']))
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\db\models\manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\db\models\query.py", line 334, in get
+    self.model._meta.object_name
+DoesNotExist: RoleList matching query does not exist.
+2017-12-15 15:27:57,322 base.py[line:256] ERROR Internal Server Error: /authority/select/parentPermission
+Traceback (most recent call last):
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\vega2\vega\authority\mysqldb\authoritydb.py", line 693, in parentPermission
+    role=RoleList.objects.get(id=int(form['id']))
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\db\models\manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\mytools\python-django\Python27\lib\site-packages\django-1.8.18-py2.7.egg\django\db\models\query.py", line 334, in get
+    self.model._meta.object_name
+DoesNotExist: RoleList matching query does not exist.

@@ -1,0 +1,87 @@
+2017-12-05 09:48:08,562 inventoriesdb.py[line:140] INFO group_select start
+2017-12-05 09:48:08,562 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512438488460'>
+2017-12-05 09:48:08,571 inventoriesdb.py[line:184] INFO group_select end
+2017-12-05 09:48:18,364 inventoriesdb.py[line:26] INFO group_add start
+2017-12-05 09:48:18,364 inventoriesdb.py[line:27] INFO request: <WSGIRequest: POST '/app_tower/group/add'>
+2017-12-05 09:48:18,365 inventoriesdb.py[line:40] INFO form:{'owner': u'onlyOne', 'variables': u'', 'name': u'test', 'description': u'test'}
+2017-12-05 09:48:21,151 inventoriesdb.py[line:140] INFO group_select start
+2017-12-05 09:48:21,153 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512438501047'>
+2017-12-05 09:48:21,165 inventoriesdb.py[line:184] INFO group_select end
+2017-12-05 09:48:23,628 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 09:48:23,628 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512438503519'>
+2017-12-05 09:48:23,634 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 09:48:24,967 inventoriesdb.py[line:646] INFO init_cmdb_system end
+2017-12-05 09:48:24,971 inventoriesdb.py[line:616] INFO selectBySomething end
+2017-12-05 09:48:24,980 inventoriesdb.py[line:665] INFO init_cmdb_system end
+2017-12-05 09:48:24,996 inventoriesdb.py[line:642] INFO selectBySomething end
+2017-12-05 09:48:29,098 inventoriesdb.py[line:339] INFO host_add start
+2017-12-05 09:48:29,098 inventoriesdb.py[line:340] INFO request: <WSGIRequest: POST '/app_tower/host/add'>
+2017-12-05 09:48:29,098 inventoriesdb.py[line:350] INFO form:{'hostList': u'["10.200.86.172","10.200.86.173","10.200.86.174"]', 'id': u'1'}
+2017-12-05 09:48:29,131 inventoriesdb.py[line:367] INFO host_add end
+2017-12-05 09:48:29,176 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 09:48:29,176 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512438503520'>
+2017-12-05 09:48:29,187 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:29:20,082 inventoriesdb.py[line:140] INFO group_select start
+2017-12-05 17:29:20,082 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512466159938'>
+2017-12-05 17:29:20,092 inventoriesdb.py[line:184] INFO group_select end
+2017-12-05 17:29:21,351 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:29:21,351 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512466161203'>
+2017-12-05 17:29:21,359 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:29:23,240 inventoriesdb.py[line:495] INFO host_delete start
+2017-12-05 17:29:23,240 inventoriesdb.py[line:496] INFO request: <WSGIRequest: POST '/app_tower/host/delete'>
+2017-12-05 17:29:23,255 inventoriesdb.py[line:519] INFO host_delete end
+2017-12-05 17:29:23,308 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:29:23,308 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512466161204'>
+2017-12-05 17:29:23,319 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:29:26,690 inventoriesdb.py[line:495] INFO host_delete start
+2017-12-05 17:29:26,690 inventoriesdb.py[line:496] INFO request: <WSGIRequest: POST '/app_tower/host/delete'>
+2017-12-05 17:29:26,707 inventoriesdb.py[line:519] INFO host_delete end
+2017-12-05 17:29:26,763 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:29:26,766 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512466161205'>
+2017-12-05 17:29:26,776 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:29:30,003 inventoriesdb.py[line:495] INFO host_delete start
+2017-12-05 17:29:30,003 inventoriesdb.py[line:496] INFO request: <WSGIRequest: POST '/app_tower/host/delete'>
+2017-12-05 17:29:30,016 inventoriesdb.py[line:519] INFO host_delete end
+2017-12-05 17:29:30,061 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:29:30,062 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512466161206'>
+2017-12-05 17:29:30,066 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:41:37,605 inventoriesdb.py[line:140] INFO group_select start
+2017-12-05 17:41:37,605 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512466897489'>
+2017-12-05 17:41:37,615 inventoriesdb.py[line:184] INFO group_select end
+2017-12-05 17:41:39,805 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:41:39,805 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512466899711'>
+2017-12-05 17:41:39,813 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:41:40,441 inventoriesdb.py[line:646] INFO init_cmdb_system end
+2017-12-05 17:41:40,444 inventoriesdb.py[line:616] INFO selectBySomething end
+2017-12-05 17:41:40,457 inventoriesdb.py[line:665] INFO init_cmdb_system end
+2017-12-05 17:41:40,480 inventoriesdb.py[line:642] INFO selectBySomething end
+2017-12-05 17:41:44,311 inventoriesdb.py[line:339] INFO host_add start
+2017-12-05 17:41:44,312 inventoriesdb.py[line:340] INFO request: <WSGIRequest: POST '/app_tower/host/add'>
+2017-12-05 17:41:44,312 inventoriesdb.py[line:350] INFO form:{'hostList': u'["10.200.86.172","10.200.86.173"]', 'id': u'1'}
+2017-12-05 17:41:44,339 inventoriesdb.py[line:367] INFO host_add end
+2017-12-05 17:41:44,384 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:41:44,384 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=1&_=1512466899712'>
+2017-12-05 17:41:44,394 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:41:46,529 inventoriesdb.py[line:140] INFO group_select start
+2017-12-05 17:41:46,529 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512466906438'>
+2017-12-05 17:41:46,536 inventoriesdb.py[line:184] INFO group_select end
+2017-12-05 17:41:53,582 inventoriesdb.py[line:26] INFO group_add start
+2017-12-05 17:41:53,584 inventoriesdb.py[line:27] INFO request: <WSGIRequest: POST '/app_tower/group/add'>
+2017-12-05 17:41:53,584 inventoriesdb.py[line:40] INFO form:{'owner': u'onlyOne', 'variables': u'', 'name': u'test2', 'description': u'tesw'}
+2017-12-05 17:41:55,447 inventoriesdb.py[line:140] INFO group_select start
+2017-12-05 17:41:55,448 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512466915359'>
+2017-12-05 17:41:55,463 inventoriesdb.py[line:184] INFO group_select end
+2017-12-05 17:41:56,328 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:41:56,328 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=2&_=1512466916230'>
+2017-12-05 17:41:56,335 inventoriesdb.py[line:489] INFO host_select end
+2017-12-05 17:41:57,250 inventoriesdb.py[line:646] INFO init_cmdb_system end
+2017-12-05 17:41:57,252 inventoriesdb.py[line:616] INFO selectBySomething end
+2017-12-05 17:41:57,276 inventoriesdb.py[line:665] INFO init_cmdb_system end
+2017-12-05 17:41:57,296 inventoriesdb.py[line:642] INFO selectBySomething end
+2017-12-05 17:42:01,526 inventoriesdb.py[line:339] INFO host_add start
+2017-12-05 17:42:01,526 inventoriesdb.py[line:340] INFO request: <WSGIRequest: POST '/app_tower/host/add'>
+2017-12-05 17:42:01,529 inventoriesdb.py[line:350] INFO form:{'hostList': u'["10.200.86.175","10.200.86.176"]', 'id': u'2'}
+2017-12-05 17:42:01,563 inventoriesdb.py[line:367] INFO host_add end
+2017-12-05 17:42:01,611 inventoriesdb.py[line:452] INFO host_select start
+2017-12-05 17:42:01,611 inventoriesdb.py[line:453] INFO request: <WSGIRequest: GET '/app_tower/host/select?limit=5&offset=0&order=asc&id=2&_=1512466916231'>
+2017-12-05 17:42:01,621 inventoriesdb.py[line:489] INFO host_select end

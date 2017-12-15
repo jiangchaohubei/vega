@@ -1,0 +1,38 @@
+2017-11-30 15:51:58,832 systemdb.py[line:188] INFO init_system_select start
+2017-11-30 15:51:58,848 systemdb.py[line:195] INFO init_system_select end
+2017-11-30 16:01:38,321 systemdb.py[line:59] INFO system_select start
+2017-11-30 16:01:38,326 systemdb.py[line:60] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1512028898229'>
+2017-11-30 16:01:38,335 systemdb.py[line:105] INFO system_select end
+2017-11-30 17:20:19,191 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:20:19,191 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1512033619044'>
+2017-11-30 17:20:19,200 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:20:23,505 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:20:23,506 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=5&order=asc&name=&description=&company=&_=1512033619045'>
+2017-11-30 17:20:23,515 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:20:23,980 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:20:23,980 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=15&order=asc&name=&description=&company=&_=1512033619046'>
+2017-11-30 17:20:23,986 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:20:25,767 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:20:25,770 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1512033619047'>
+2017-11-30 17:20:25,780 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:20:34,540 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:20:34,542 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=%E7%BD%91%E8%BE%BE&_=1512033619048'>
+2017-11-30 17:20:34,549 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:20:37,654 systemdb.py[line:204] INFO system_export start
+2017-11-30 17:20:37,665 systemdb.py[line:269] ERROR 'RelatedManager' object is not iterable
+2017-11-30 17:20:37,667 systemdb.py[line:272] INFO system_export end
+2017-11-30 17:22:49,959 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:22:49,960 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1512033769835'>
+2017-11-30 17:22:49,969 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:22:51,579 systemdb.py[line:204] INFO system_export start
+2017-11-30 17:22:51,598 systemdb.py[line:269] ERROR 'T_SYSTEM' object has no attribute 'LOG_EXPORT'
+2017-11-30 17:22:51,598 systemdb.py[line:272] INFO system_export end
+2017-11-30 17:23:30,234 systemdb.py[line:62] INFO system_select start
+2017-11-30 17:23:30,236 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1512033810144'>
+2017-11-30 17:23:30,246 systemdb.py[line:108] INFO system_select end
+2017-11-30 17:23:31,799 systemdb.py[line:204] INFO system_export start
+2017-11-30 17:23:31,920 systemdb.py[line:269] ERROR No module named xlwt
+2017-11-30 17:23:31,924 systemdb.py[line:272] INFO system_export end
+2017-11-30 17:24:33,835 systemdb.py[line:204] INFO system_export start
+2017-11-30 17:24:33,927 systemdb.py[line:269] ERROR No module named xlwt
+2017-11-30 17:24:33,928 systemdb.py[line:272] INFO system_export end

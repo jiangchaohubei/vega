@@ -1,0 +1,8 @@
+2017-12-12 10:51:43,530 playbook.py[line:121] INFO playbook_select start
+2017-12-12 10:51:43,532 playbook.py[line:122] INFO request: <WSGIRequest: GET '/app_tower/playbook/select?limit=5&offset=0&order=asc&name=&userName=&_=1513047103441'>
+2017-12-12 10:51:43,542 playbook.py[line:149] INFO 6
+2017-12-12 10:51:43,543 playbook.py[line:165] INFO playbook_select end
+2017-12-12 10:51:59,013 playbook.py[line:121] INFO playbook_select start
+2017-12-12 10:51:59,015 playbook.py[line:122] INFO request: <WSGIRequest: GET '/app_tower/playbook/select?limit=5&offset=0&order=asc&name=&userName=&_=1513047118903'>
+2017-12-12 10:51:59,023 playbook.py[line:149] INFO 6
+2017-12-12 10:51:59,026 playbook.py[line:165] INFO playbook_select end

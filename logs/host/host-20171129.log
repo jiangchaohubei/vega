@@ -1,0 +1,97 @@
+2017-11-29 10:23:09,316 hostdb.py[line:62] INFO host_select start
+2017-11-29 10:23:09,319 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511922189228'>
+2017-11-29 10:23:09,348 hostdb.py[line:113] INFO host_select end
+2017-11-29 14:33:52,321 hostdb.py[line:62] INFO host_select start
+2017-11-29 14:33:52,322 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511937232226'>
+2017-11-29 14:33:52,348 hostdb.py[line:113] INFO host_select end
+2017-11-29 14:40:09,321 hostdb.py[line:62] INFO host_select start
+2017-11-29 14:40:09,322 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511937232227'>
+2017-11-29 14:40:09,334 hostdb.py[line:113] INFO host_select end
+2017-11-29 14:40:23,319 hostdb.py[line:62] INFO host_select start
+2017-11-29 14:40:23,319 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511937232228'>
+2017-11-29 14:40:23,329 hostdb.py[line:113] INFO host_select end
+2017-11-29 14:40:23,900 hostdb.py[line:62] INFO host_select start
+2017-11-29 14:40:23,901 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511937232229'>
+2017-11-29 14:40:23,913 hostdb.py[line:113] INFO host_select end
+2017-11-29 14:40:24,369 hostdb.py[line:62] INFO host_select start
+2017-11-29 14:40:24,371 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511937232230'>
+2017-11-29 14:40:24,381 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:21:18,207 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:21:18,207 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511940078044'>
+2017-11-29 15:21:18,237 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:39,588 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:39,589 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511940279473'>
+2017-11-29 15:24:39,614 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:40,667 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:40,667 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279474'>
+2017-11-29 15:24:40,690 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:42,096 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:42,098 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279475'>
+2017-11-29 15:24:42,111 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:57,848 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:57,849 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279476'>
+2017-11-29 15:24:57,862 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:58,328 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:58,328 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279477'>
+2017-11-29 15:24:58,348 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:58,480 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:58,480 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279478'>
+2017-11-29 15:24:58,493 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:24:58,648 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:24:58,648 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279479'>
+2017-11-29 15:24:58,661 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:32:16,255 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:32:16,255 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=85&order=asc&name=&description=&systemId=0&_=1511940279480'>
+2017-11-29 15:32:16,269 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:32:17,538 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:32:17,539 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=80&order=asc&name=&description=&systemId=0&_=1511940279481'>
+2017-11-29 15:32:17,552 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:32:18,049 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:32:18,049 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=75&order=asc&name=&description=&systemId=0&_=1511940279482'>
+2017-11-29 15:32:18,065 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:32:18,743 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:32:18,743 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511940279483'>
+2017-11-29 15:32:18,762 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:32:20,154 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:32:20,155 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=90&order=asc&name=&description=&systemId=0&_=1511940279484'>
+2017-11-29 15:32:20,167 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:32:52,979 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:32:52,980 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=85&order=asc&name=&description=&systemId=0&_=1511940279485'>
+2017-11-29 15:32:52,996 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:33:02,153 hostdb.py[line:144] INFO host_update start
+2017-11-29 15:33:02,161 hostdb.py[line:145] INFO request: <WSGIRequest: POST '/app_cmdb/host/update'>
+2017-11-29 15:33:02,174 hostdb.py[line:192] INFO update host:{'NAME': u'10.200.556.25', 'ENABLED': None, 'LAST_JOB_ID': None, 'ARGS3': None, u'id': 100L, 'NOTE': u'', 'MACHINE_POSITION': u'', 'PHYSICAL_MACHINE_TYPE': u'', 'VARIABLES': u'', 'OWNER_ALL': False, 'HAS_ACTIVE_FAILURES': True, 'SN_NUMBER': u'', 'CREATE_USER_NAME': u'jzyuan', 'ARGS1': None, 'ARGS2': None, 'MACHINE_ROOM': u'', 'OWNER_ID': None, 'OWNER_NAME': None, 'CREATE_USER_ID': 2L, 'DESCRIPTION': u'\u6d4b\u8bd5', 'MODIFY_USER_ID': 2, 'HAS_EXTENRN_SOURCE': True, 'INVENTORY_ID': 0L, 'CUTTER_NUMBER': u'', 'SYSTEM_ID': 6L, 'MACHINE_TYPE': u'', 'OWNER_PROJECT_ID': u'1', 'OS': u''}
+2017-11-29 15:33:02,174 hostdb.py[line:201] INFO host_update end
+2017-11-29 15:33:02,200 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:33:02,203 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=85&order=asc&name=&description=&systemId=0&_=1511940279486'>
+2017-11-29 15:33:02,220 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:48:15,331 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:48:15,332 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511941695203'>
+2017-11-29 15:48:15,361 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:49:24,838 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:49:24,839 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511941764732'>
+2017-11-29 15:49:24,864 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:50:06,075 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:50:06,075 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=10&order=asc&name=&description=&systemId=0&_=1511941764733'>
+2017-11-29 15:50:06,089 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:51:41,565 hostdb.py[line:144] INFO host_update start
+2017-11-29 15:51:41,568 hostdb.py[line:145] INFO request: <WSGIRequest: POST '/app_cmdb/host/update'>
+2017-11-29 15:51:41,582 hostdb.py[line:192] INFO update host:{'NAME': u'10.200.556.41', 'ENABLED': None, 'LAST_JOB_ID': None, 'ARGS3': None, u'id': 23L, 'NOTE': u'', 'MACHINE_POSITION': u'', 'PHYSICAL_MACHINE_TYPE': u'', 'VARIABLES': u'', 'OWNER_ALL': True, 'HAS_ACTIVE_FAILURES': True, 'SN_NUMBER': u'', 'CREATE_USER_NAME': u'jzyuan', 'ARGS1': None, 'ARGS2': None, 'MACHINE_ROOM': u'', 'OWNER_ID': None, 'OWNER_NAME': None, 'CREATE_USER_ID': 2L, 'DESCRIPTION': u'\u6d4b\u8bd5', 'MODIFY_USER_ID': 2, 'HAS_EXTENRN_SOURCE': True, 'INVENTORY_ID': 0L, 'CUTTER_NUMBER': u'', 'SYSTEM_ID': 1L, 'MACHINE_TYPE': u'', 'OWNER_PROJECT_ID': None, 'OS': u''}
+2017-11-29 15:51:41,582 hostdb.py[line:201] INFO host_update end
+2017-11-29 15:51:41,614 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:51:41,615 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=10&order=asc&name=&description=&systemId=0&_=1511941764734'>
+2017-11-29 15:51:41,640 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:51:45,052 hostdb.py[line:144] INFO host_update start
+2017-11-29 15:51:45,052 hostdb.py[line:145] INFO request: <WSGIRequest: POST '/app_cmdb/host/update'>
+2017-11-29 15:51:45,066 hostdb.py[line:192] INFO update host:{'NAME': u'10.200.556.42', 'ENABLED': None, 'LAST_JOB_ID': None, 'ARGS3': None, u'id': 24L, 'NOTE': u'', 'MACHINE_POSITION': u'', 'PHYSICAL_MACHINE_TYPE': u'', 'VARIABLES': u'', 'OWNER_ALL': True, 'HAS_ACTIVE_FAILURES': True, 'SN_NUMBER': u'', 'CREATE_USER_NAME': u'jzyuan', 'ARGS1': None, 'ARGS2': None, 'MACHINE_ROOM': u'', 'OWNER_ID': None, 'OWNER_NAME': None, 'CREATE_USER_ID': 2L, 'DESCRIPTION': u'\u6d4b\u8bd5', 'MODIFY_USER_ID': 2, 'HAS_EXTENRN_SOURCE': True, 'INVENTORY_ID': 0L, 'CUTTER_NUMBER': u'', 'SYSTEM_ID': 1L, 'MACHINE_TYPE': u'', 'OWNER_PROJECT_ID': None, 'OS': u''}
+2017-11-29 15:51:45,066 hostdb.py[line:201] INFO host_update end
+2017-11-29 15:51:45,104 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:51:45,105 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=10&order=asc&name=&description=&systemId=0&_=1511941764735'>
+2017-11-29 15:51:45,125 hostdb.py[line:113] INFO host_select end
+2017-11-29 15:51:48,697 hostdb.py[line:144] INFO host_update start
+2017-11-29 15:51:48,697 hostdb.py[line:145] INFO request: <WSGIRequest: POST '/app_cmdb/host/update'>
+2017-11-29 15:51:48,713 hostdb.py[line:192] INFO update host:{'NAME': u'10.200.556.43', 'ENABLED': None, 'LAST_JOB_ID': None, 'ARGS3': None, u'id': 25L, 'NOTE': u'', 'MACHINE_POSITION': u'', 'PHYSICAL_MACHINE_TYPE': u'', 'VARIABLES': u'', 'OWNER_ALL': True, 'HAS_ACTIVE_FAILURES': True, 'SN_NUMBER': u'', 'CREATE_USER_NAME': u'jzyuan', 'ARGS1': None, 'ARGS2': None, 'MACHINE_ROOM': u'', 'OWNER_ID': None, 'OWNER_NAME': None, 'CREATE_USER_ID': 2L, 'DESCRIPTION': u'\u6d4b\u8bd5', 'MODIFY_USER_ID': 2, 'HAS_EXTENRN_SOURCE': True, 'INVENTORY_ID': 0L, 'CUTTER_NUMBER': u'', 'SYSTEM_ID': 1L, 'MACHINE_TYPE': u'', 'OWNER_PROJECT_ID': None, 'OS': u''}
+2017-11-29 15:51:48,713 hostdb.py[line:201] INFO host_update end
+2017-11-29 15:51:48,740 hostdb.py[line:62] INFO host_select start
+2017-11-29 15:51:48,740 hostdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=10&order=asc&name=&description=&systemId=0&_=1511941764736'>
+2017-11-29 15:51:48,766 hostdb.py[line:113] INFO host_select end

@@ -1,3 +1,5 @@
+# /usr/bin/python2
+# -*- coding:utf8 -*-
 """
 WSGI config for vega project.
 

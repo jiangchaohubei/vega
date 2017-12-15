@@ -1,0 +1,11 @@
+2017-12-13 16:25:24,961 softwaredb.py[line:218] INFO init_system_module_select start
+2017-12-13 16:25:24,973 softwaredb.py[line:234] INFO init_system_module_select end
+2017-12-13 16:25:25,019 softwaredb.py[line:63] INFO software_select start
+2017-12-13 16:25:25,019 softwaredb.py[line:64] INFO request: <WSGIRequest: GET '/app_cmdb/software/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&moduleId=0&_=1513153524869'>
+2017-12-13 16:25:25,038 softwaredb.py[line:122] INFO software_select end
+2017-12-13 16:25:26,887 softwaredb.py[line:218] INFO init_system_module_select start
+2017-12-13 16:25:26,895 softwaredb.py[line:234] INFO init_system_module_select end
+2017-12-13 16:25:32,950 softwaredb.py[line:218] INFO init_system_module_select start
+2017-12-13 16:25:32,957 softwaredb.py[line:234] INFO init_system_module_select end
+2017-12-13 16:25:35,328 softwaredb.py[line:218] INFO init_system_module_select start
+2017-12-13 16:25:35,332 softwaredb.py[line:234] INFO init_system_module_select end

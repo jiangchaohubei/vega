@@ -1,0 +1,201 @@
+<html lang="zh_CN">
+<head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>历史版本</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+
+
+
+    <!--bootstrap/表格-->
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap-table.css">
+    <link rel="stylesheet" href="/static/js/bootstrap/css/table.css">
+
+
+
+
+</head>
+
+<body class="change-list" onload="onload_version()">
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+<!--足迹导航-->
+        <ul class="breadcrumb">
+            <li>
+                <a href="/static/templates/pages/app_cmdb_pages/software/software.html">程序列表</a>
+            </li>
+
+            <li id="softwareName">
+                历史版本
+            </li>
+        </ul>
+        <input type="hidden" id="softwareId">
+
+           <form  role="form" style="margin:0;display:block">
+               <div class="form-group form-group-xs col-xs-12" >
+                   <div class="col-md-12">
+                       <div class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-2 " style="margin-top:5px;padding:0;height: 34px">
+                            <label title="版本名称" style="font-size:13px;float: right;padding-top:20px;margin-bottom:20px;" for="name">
+                                版本名称:
+                             </label>
+                       </div>
+                       <div class="col-lg-2 col-md-2 col-sm-5 col-xs-10" style="margin-top:20px;margin-bottom:20px;height: 34px">
+                              <span class="block input-icon input-icon-right">
+                                  <input type="text" class="form-control" placeholder="请输入版本名称" id="name">
+                              </span>
+                       </div>
+
+
+                        <div class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-2 " style="margin-top:5px;padding:0;height: 34px">
+                            <label title="描述" style="font-size:13px;float: right;padding-top:20px;margin-bottom:20px;" for="name">
+                                描述:
+                             </label>
+                       </div>
+                       <div class="col-lg-2 col-md-2 col-sm-5 col-xs-10" style="margin-top:20px;margin-bottom:20px;height: 34px">
+                              <span class="block input-icon input-icon-right">
+                                  <input type="text" class="form-control" placeholder="请输入描述" id="description">
+                              </span>
+                       </div>
+                   </div>
+               </div>
+           </form>
+                <div  style="margin-top: 15px;text-align: center">
+                      <div>
+                          <button type="button" class="btn btn-primary" style="margin-top:20px;width: 80px;" onclick="search();">查询</button>
+                          <button type="button" class="btn btn-warning" style="margin-top:20px;margin-left:20px;width: 80px;"  onclick="searchReset();">重置</button>
+
+                      </div>
+                </div>
+
+ <!--标题栏-->
+        <div class="navbar content-navbar navbar-default navbar-xs" data-toggle="breakpoint"
+             data-class-xs="navbar content-navbar navbar-inverse navbar-xs"
+             data-class-sm="navbar content-navbar navbar-default navbar-xs">
+            <div class="navbar-header">
+                <a href="/static/templates/pages/app_cmdb_pages/version/version_create.html" class="navbar-toggle pull-right"><i
+                        class="fa fa-plus"></i></a>
+                <a class="navbar-brand" data-toggle="collapse" data-target="#top-nav .navbar-collapse">
+                    <i class="fa fa-cog"></i> 版本列表
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+
+                <div class="navbar-btn navbar-right hide-xs">
+
+                    <a id="toCreateVersion" href="/static/templates/pages/app_cmdb_pages/version/version_create.html" class="btn btn-primary"><i
+                            class="fa fa-plus"></i>
+                        新建版本</a>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+<!--表/表单-->
+        <form id="changelist-form" action="" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="gE3YzdP0TGKtm63NS3jQFTHj1BSKfOWB">
+            <div class="results table-responsive">
+
+                  <table id="version_table" ></table>
+
+            </div>
+<!--底部表单操作栏-->
+
+        </form>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteVersionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel" title="删除版本记录">删除版本记录</h4>
+            </div>
+            <div class="modal-body">
+          <input type="text" style="margin-left:35px;height:25px"  id="delete_id"  hidden>
+         <div class="profile-user-info profile-user-info-striped">
+
+        <div class="profile-info-row">
+            <div class="profile-info-name" title="版本名称">版本号</div>
+            <div class="profile-info-value">
+                <span class="editable" id="DELETE_NAME"></span>
+            </div>
+        </div>
+         <div class="profile-info-row">
+            <div class="profile-info-name" title="描述">描述</div>
+            <div class="profile-info-value">
+                <span class="editable" id="DELETE_DESCRIPTION"></span>
+            </div>
+         </div>
+             <div class="profile-info-row">
+            <div class="profile-info-name" title="包存储路径">包存储路径</div>
+            <div class="profile-info-value">
+                <span class="editable" id="DELETE_PACKAGE_PATH"></span>
+            </div>
+             </div>
+             <div class="profile-info-row">
+            <div class="profile-info-name" title="所属程序">所属程序</div>
+            <div class="profile-info-value">
+                <span class="editable" id="DELETE_SOFTWARE_ID"></span>
+            </div>
+             </div>
+             <div class="profile-info-row">
+             <div class="profile-info-name" title="使用授权">使用授权</div>
+             <div class="profile-info-value">
+                 <span class="editable" id="DELETE_OWNER">仅自己</span>
+
+             </div>
+         </div>
+
+
+    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" onclick="deleteVersion()" class="btn btn-primary" data-dismiss="modal">确定删除</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+    <script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+
+    <script src="/static/javascript/bootstrap-table.js"></script>
+    <script src="/static/javascript/bootstrap-table-zh-CN.js"></script>
+    <script src="/static/javascript/jquery.validate.js"></script>
+    <script src="/static/javascript/common.js"></script>
+    <script type="text/javascript" src="/static/javascript/js/app_cmdb_js/version/version.js"></script>
+
+
+</body></html>
+

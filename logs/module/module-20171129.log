@@ -1,0 +1,40 @@
+2017-11-29 09:45:39,065 moduledb.py[line:62] INFO module_select start
+2017-11-29 09:45:39,065 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511919938958'>
+2017-11-29 09:45:39,091 moduledb.py[line:109] INFO module_select end
+2017-11-29 10:10:53,915 moduledb.py[line:222] INFO init_module_select start
+2017-11-29 10:10:53,950 moduledb.py[line:229] INFO init_module_select end
+2017-11-29 10:11:07,098 moduledb.py[line:62] INFO module_select start
+2017-11-29 10:11:07,099 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511921467003'>
+2017-11-29 10:11:07,118 moduledb.py[line:109] INFO module_select end
+2017-11-29 10:18:30,884 moduledb.py[line:222] INFO init_module_select start
+2017-11-29 10:18:30,904 moduledb.py[line:229] INFO init_module_select end
+2017-11-29 10:18:33,490 moduledb.py[line:62] INFO module_select start
+2017-11-29 10:18:33,492 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511921913399'>
+2017-11-29 10:18:33,515 moduledb.py[line:109] INFO module_select end
+2017-11-29 10:18:40,131 moduledb.py[line:222] INFO init_module_select start
+2017-11-29 10:18:40,151 moduledb.py[line:229] INFO init_module_select end
+2017-11-29 10:18:59,571 moduledb.py[line:62] INFO module_select start
+2017-11-29 10:18:59,572 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511921939471'>
+2017-11-29 10:18:59,589 moduledb.py[line:109] INFO module_select end
+2017-11-29 14:03:47,565 moduledb.py[line:62] INFO module_select start
+2017-11-29 14:03:47,566 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511935427473'>
+2017-11-29 14:03:47,592 moduledb.py[line:109] INFO module_select end
+2017-11-29 15:22:31,467 moduledb.py[line:62] INFO module_select start
+2017-11-29 15:22:31,469 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=3&_=1511940151391'>
+2017-11-29 15:22:31,479 moduledb.py[line:109] INFO module_select end
+2017-11-29 15:22:41,855 moduledb.py[line:167] INFO module_update start
+2017-11-29 15:22:41,857 moduledb.py[line:168] INFO request: <WSGIRequest: POST '/app_cmdb/module/update'>
+2017-11-29 15:22:41,867 moduledb.py[line:208] INFO update module:{'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': 2L, 'DESCRIPTION': u'test', 'MODIFY_USER_ID': 2, 'NAME': u'common', 'OWNER_PROJECT_ID': None, 'OWNER_ALL': False, 'SYSTEM_ID': 1, 'CREATE_USER_NAME': u'jzyuan', 'RESPONSIBLE_PERSON': u'test', u'id': 1L, 'OWNER_ID': 2}
+2017-11-29 15:22:41,868 moduledb.py[line:217] INFO module_update end
+2017-11-29 15:22:41,895 moduledb.py[line:62] INFO module_select start
+2017-11-29 15:22:41,897 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=3&_=1511940151392'>
+2017-11-29 15:22:41,904 moduledb.py[line:109] INFO module_select end
+2017-11-29 15:30:07,405 moduledb.py[line:62] INFO module_select start
+2017-11-29 15:30:07,405 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511940607304'>
+2017-11-29 15:30:07,427 moduledb.py[line:109] INFO module_select end
+2017-11-29 15:31:03,010 moduledb.py[line:62] INFO module_select start
+2017-11-29 15:31:03,012 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=1&_=1511940662907'>
+2017-11-29 15:31:03,030 moduledb.py[line:109] INFO module_select end
+2017-11-29 17:25:35,253 moduledb.py[line:62] INFO module_select start
+2017-11-29 17:25:35,255 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1511947535144'>
+2017-11-29 17:25:35,279 moduledb.py[line:109] INFO module_select end

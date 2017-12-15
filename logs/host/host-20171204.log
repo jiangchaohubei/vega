@@ -1,0 +1,6 @@
+2017-12-04 09:56:28,273 hostdb.py[line:65] INFO host_select start
+2017-12-04 09:56:28,279 hostdb.py[line:66] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1512352588113'>
+2017-12-04 09:56:28,309 hostdb.py[line:116] INFO host_select end
+2017-12-04 09:56:38,028 hostdb.py[line:65] INFO host_select start
+2017-12-04 09:56:38,029 hostdb.py[line:66] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?limit=5&offset=0&order=asc&name=&description=&systemId=1&_=1512352588114'>
+2017-12-04 09:56:38,052 hostdb.py[line:116] INFO host_select end

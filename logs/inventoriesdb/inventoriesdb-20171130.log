@@ -1,0 +1,6 @@
+2017-11-30 17:14:20,730 inventoriesdb.py[line:140] INFO group_select start
+2017-11-30 17:14:20,732 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1512033260619'>
+2017-11-30 17:14:20,750 inventoriesdb.py[line:184] INFO group_select end
+2017-11-30 17:14:27,994 inventoriesdb.py[line:274] INFO group_export start
+2017-11-30 17:14:28,039 inventoriesdb.py[line:303] ERROR No module named xlwt
+2017-11-30 17:14:28,040 inventoriesdb.py[line:306] INFO group_export end

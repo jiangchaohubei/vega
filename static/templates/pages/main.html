@@ -7,9 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>主页 | </title>
-
+    <!--收藏用logo图标-->
+    <link rel="bookmark"  type="image/x-icon"  href="/static/images/vega.ico"/>
+    <!--网站显示页logo图标-->
+    <link rel="shortcut icon" href="/static/images/vega.ico">
+    <link rel="icon" href="/static/images/vega.ico">
     <link href="/static/inspinia/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="/static/ace/assets/css/ace.css" />-->
 
     <!-- 通知插件 Toastr style -->
     <link href="/static/inspinia/css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -30,7 +35,7 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <span>
-                            <A href="https://github.com/JoneXiong/DjangoX" target="_blank"><h1>主页</h1></A>
+                            <A href="#" target="_blank"><h1>自动化部署(预览)</h1></A>
                             <!--<img alt="image" class="img-circle"
                             src="img/profile_small.jpg" />-->
                         </span>
@@ -40,27 +45,71 @@
                         DjX
                     </div>
                 </li>
-                <li>
+               <!-- <li>
                     <a class="J_menuItem" menu-url="/static/templates/pages/example.html"
-                       href="/static/templates/pages/example.html" data-index="0"><i class="fa fa-home"></i>
+                       href="/static/templates/pages/app_tower_pages/login/login_credentials.html" data-index="0"><i class="fa fa-home"></i>
                         <span class="nav-label">example</span></a>
-                </li>
+                </li>-->
                 <li class="active">
-                    <a><i class="fa fa-fw fa-user-plus"></i>
-           <span class="nav-label">ansible tower</span><span class="fa arrow"></span></a>
+                    <a><i class="fa fa-fw  fa-home"></i>
+                         <span class="nav-label">自动化部署</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse in">
+                            <li {% if 'credentials_select' not in PERMISSIONNAMELIST and 'credentials_add' not in PERMISSIONNAMELIST and 'credentials_delete' not in PERMISSIONNAMELIST and 'credentials_update'  not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/login/login_credentials.html" data-index="1"><i class="fa-fw fa fa-user"></i>登录凭据</a></li>
+                            <li {% if 'group_select' not in PERMISSIONNAMELIST and 'group_add' not in PERMISSIONNAMELIST and 'group_delete' not in PERMISSIONNAMELIST and 'group_update'  not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/group/group.html" data-index="3"><i class="fa-fw fa fa-desktop"></i>主机组</a></li>
+                            <li {% if 'playbook_select' not in PERMISSIONNAMELIST and 'playbook_add' not in PERMISSIONNAMELIST and 'playbook_delete' not in PERMISSIONNAMELIST and 'playbook_update' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/playbook/playbook.html" data-index="3"><i class="fa fa-fw fa-file-text"></i>playbook</a></li>
+                            <li {% if 'jobTemplete_select' not in PERMISSIONNAMELIST and 'jobTemplete_add' not in PERMISSIONNAMELIST and 'jobTemplete_delete' not in PERMISSIONNAMELIST and 'jobTemplete_update' not in PERMISSIONNAMELIST and 'jobTemplete_run' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobTemplete/jobTemplate.html" data-index="3"><i class="fa-fw fa fa-book"></i>任务模板</a></li>
+                            <li {% if 'jobs_select' not in PERMISSIONNAMELIST and 'jobs_delete' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobs/jobs.html" data-index="3"><i class="fa-fw fa fa-tasks"></i>任务</a></li>
+                            <li {% if 'runSH' not in PERMISSIONNAMELIST and 'searchProcess' not in PERMISSIONNAMELIST and 'changeProcess' not in PERMISSIONNAMELIST and 'updateSudo' not in PERMISSIONNAMELIST and 'searchLog' not in PERMISSIONNAMELIST and 'copyFile' not in PERMISSIONNAMELIST and 'searchSN' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/commands/commands.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>commands</a></li>
+                            <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/timerTask/timerTask.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>定时任务</a></li>
 
-                            <li><a class="J_menuItem" href="/static/templates/pages/example.html" data-index="1"><i class="fa-fw fa fa-group"></i>创建登录凭据</a></li>
-
-                            <li><a class="J_menuItem" href="/static/templates/pages/example1.html" data-index="2"><i class="fa-fw fa fa-user"></i>创建项目</a></li>
-
-                            <li><a class="J_menuItem" href="/static/templates/pages/inventories.html" data-index="3"><i class="fa-fw fa fa-lock"></i>创建主机清单</a></li>
-                            <li><a class="J_menuItem" href="/static/templates/pages/jobTemplate.html" data-index="3"><i class="fa-fw fa fa-lock"></i>创建任务模板</a></li>
-                            <li><a class="J_menuItem" href="/static/templates/pages/example4.html" data-index="3"><i class="fa-fw fa fa-lock"></i>查看任务模板</a></li>
 
                         </ul>
-                    </li>
+                </li>
+                <li class="">
+                    <a><i class="fa fa fa-comment-o"></i>
+                        <span class="nav-label">系统配置管理</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/system/system.html" data-index="3"><i class="fa fa fa-comment-o"></i>系统管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/module/module.html" data-index="3"><i class="fa fa fa-comment-o"></i>模块管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/software/software.html" data-index="3"><i class="fa fa fa-comment-o"></i>程序管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/host/host.html" data-index="3"><i class="fa fa fa-comment-o"></i>主机管理</a></li>
 
+
+                    </ul>
+                </li>
+                <li class="" {% if 'project_select' not in PERMISSIONNAMELIST and 'user_select' not in PERMISSIONNAMELIST and 'role_select' not in PERMISSIONNAMELIST and 'project_add' not in PERMISSIONNAMELIST and 'project_delete' not in PERMISSIONNAMELIST and 'project_update' not in PERMISSIONNAMELIST and 'user_add' not in PERMISSIONNAMELIST and 'user_update' not in PERMISSIONNAMELIST and 'user_delete' not in PERMISSIONNAMELIST and 'role_add' not in PERMISSIONNAMELIST and 'role_update' not in PERMISSIONNAMELIST and 'role_delete' not in PERMISSIONNAMELIST%}style="display:none " {% endif %}>
+                    <a><i class="fa fa-fw fa-user-plus"></i>
+                        <span class="nav-label">权限管理</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li {% if 'project_select' not in PERMISSIONNAMELIST and 'project_add' not in PERMISSIONNAMELIST and 'project_delete' not in PERMISSIONNAMELIST and 'project_update' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/project/project.html" data-index="2"><i class="fa-fw fa fa-group"></i>项目组</a></li>
+                        <li {% if 'user_select' not in PERMISSIONNAMELIST and 'role_select' not in PERMISSIONNAMELIST and 'user_add' not in PERMISSIONNAMELIST and 'user_update' not in PERMISSIONNAMELIST and 'user_delete' not in PERMISSIONNAMELIST and 'role_add' not in PERMISSIONNAMELIST and 'role_update' not in PERMISSIONNAMELIST and 'role_delete' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/authority/authority.html" data-index="3"><i class="fa-fw fa fa-lock"></i>用户角色管理</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a><i class="fa fa-fw fa-bar-chart-o"></i>
+                        <span class="nav-label">数据统计</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li {% if 'JobStatus_select' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/authority/datastatistics.html" data-index="3"><i class="fa-fw fa fa-line-chart"></i>数据统计</a></li>
+                        <li {% if 'sudo_select' not in PERMISSIONNAMELIST and 'callbackSudo' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/commands/commandstatistics.html" data-index="3"><i class="fa-fw fa fa-table"></i>sudo权限统计</a></li>
+                        <li {% if 'operation_select' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/operation/operation_recoder.html" data-index="3"><i class="fa-fw fa fa-table"></i>操作记录统计</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a><i class="fa fa-question-circle"></i>
+                        <span class="nav-label">帮助文档</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li><a class="J_menuItem" href="/static/templates/pages/helpDoc.html" data-index="3"><i class="fa fa-file-pdf-o"></i>帮助文档</a></li>
+
+                    </ul>
+                </li>
+                <li class="">
+                    <a><i class="fa fa fa-comment-o"></i>
+                        <span class="nav-label">意见反馈</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li><a class="J_menuItem" href="/static/templates/pages/feedback/feedback.html" data-index="3"><i class="fa fa fa-comment-o"></i>意见反馈</a></li>
+
+                    </ul>
+                </li>
             </ul>
 
         </div>
@@ -72,7 +121,7 @@
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
 
 
-                <div class="navbar-header">
+              <!--  <div class="navbar-header">
 
 
                     <ul class="nav navbar-top-links">
@@ -105,6 +154,8 @@
 
                 </div>
 
+                -->
+
 
                 <ul class="nav navbar-top-links navbar-right">
 
@@ -125,87 +176,20 @@
                     </li>
 
 
-                    <li class="dropdown g-add">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="fa fa-plus"></i> <span class="hide-sm">增加 <i class="caret"></i></span></a>
-                        <ul id="g-add-menu" class="dropdown-menu" role="menu">
 
-                            <li><a class="J_menuItem" href="/xadmin/app/accessrecord/add/" data-index="21"><i
-                                    class="fa fa-plus"></i> 增加 Access Record</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/app/a/add/" data-index="22"><i
-                                    class="fa fa-plus"></i> 增加 A</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/auth/group/add/" data-index="23"><i
-                                    class="fa fa-plus"></i> 增加 组</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/auth/permission/add/" data-index="24"><i
-                                    class="fa fa-plus"></i> 增加 权限</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/auth/user/add/" data-index="25"><i
-                                    class="fa fa-plus"></i> 增加 用户</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/xadmin/systemsettings/add/" data-index="26"><i
-                                    class="fa fa-plus"></i> 增加 系统设置</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/app/maintainlog/add/" data-index="27"><i
-                                    class="fa fa-plus"></i> 增加 Maintain Log</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/app/host/add/" data-index="28"><i
-                                    class="fa fa-plus"></i> 增加 Host</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/app/hostgroup/add/" data-index="29"><i
-                                    class="fa fa-plus"></i> 增加 Host Group</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/app/b/add/" data-index="30"><i
-                                    class="fa fa-plus"></i> 增加 B</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/app/idc/add/" data-index="31"><i
-                                    class="fa fa-plus"></i> 增加 IDC</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/xadmin/usersettings/add/" data-index="32"><i
-                                    class="fa fa-plus"></i> 增加 用户设置</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/admin/logentry/add/" data-index="33"><i
-                                    class="fa fa-plus"></i> 增加 日志记录</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/contenttypes/contenttype/add/" data-index="34"><i
-                                    class="fa fa-plus"></i> 增加 内容类型</a></li>
-
-                            <li><a class="J_menuItem" href="/xadmin/xadmin/userwidget/add/" data-index="35"><i
-                                    class="fa fa-plus"></i> 增加 用户小组件</a></li>
-
-                        </ul>
-                    </li>
-
-
-                    <li class="dropdown g-theme">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="fa fa-magic"></i> <span class="hide-sm">主题 <i class="caret"></i></span></a>
-                        <ul id="g-theme-menu" class="dropdown-menu" role="menu">
-
-                            <li class="active"><a class="J_menuItem"
-                                                  data-css-href="/static/xadmin/css/themes/bootstrap-xadmin.css"
-                                                  data-index="36">默认</a></li>
-
-                            <li><a class="J_menuItem" data-css-href="/static/xadmin/css/themes/bootstrap-theme.css"
-                                   data-index="37">Bootstrap2</a></li>
-
-                        </ul>
-                    </li>
 
 
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="fa fa-user"></i>
-                            <strong>admin</strong> <span class="caret"></span></a>
+                            <strong>{{USERNAME  }}</strong> <span class="caret"></span></a>
                         <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li><a class="J_menuItem" href="/xadmin/account/password/" data-index="38"><i
+                            <li><a href="#" data-toggle="modal" data-target="#changePasswordModal"><i
                                     class="fa fa-key"></i> 更改密码</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="/xadmin/logout/"><i class="fa fa-sign-out"></i><span class="hide-sm">注销</span></a></li>
+                    <li><a href="/authority/user/logout/"><i class="fa fa-sign-out"></i><span class="hide-sm">注销</span></a></li>
 
                 </ul>
 
@@ -250,13 +234,13 @@
         <!-- 右侧iframe展示区域  -->
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%"
-                    height="100%" src="" frameborder="0" data-id="" seamless>主页
+                    height="100%" src="/static/templates/pages/authority/datastatistics.html" frameborder="0" data-id="/static/templates/pages/authority/datastatistics.html" seamless>数据统计
             </iframe>
         </div>
 
         <!-- 底部footer展示区域  -->
         <div class="footer">
-            <div class="pull-right">&copy; 2015-2016 <a
+            <div class="pull-right">&copy; 2017-2018 <a
                     href="https://github.com/JoneXiong/DjangoX" target="_blank"></a>
             </div>
         </div>
@@ -264,6 +248,56 @@
     </div>
 
 
+</div>
+
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    修改密码
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="updatePassword_form" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right" for="old_password"> 原密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" id="old_password" placeholder="原密码" class="col-xs-10 col-sm-10"
+                                    required/>
+                        </div>
+                    </div>
+                    <div class="hr hr-dotted"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right" for="new_password">新密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" id="new_password" placeholder="新密码"
+                                   class="col-xs-10 col-sm-10"  required/>
+                        </div>
+                    </div>
+                    <div class="hr hr-dotted"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right" for="new_repassword">确认密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" id="new_repassword" placeholder="确认密码"
+                                   class="col-xs-10 col-sm-10"  required/>
+                        </div>
+                    </div>
+                    <div class="hr hr-dotted"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button id="updatePassword" type="button" class=" btn btn-primary" onclick="updatePassword()">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 
 <!-- 遮罩层start -->
@@ -274,6 +308,20 @@
 
 <!-- Mainly scripts -->
 <script src="/static/inspinia/js/jquery-2.1.1.js"></script>
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement)
+        document
+                .write("<script src='/static/ace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.js'>"
+                        + "<" + "/script>");
+    jQuery(function($) {
+        $(document).on('click', '.toolbar a[data-target]', function(e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            $('.widget-box.visible').removeClass('visible');//hide others
+            $(target).addClass('visible');//show target
+        });
+    });
+</script>
 <script src="/static/inspinia/js/bootstrap.min.js"></script>
 <script src="/static/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="/static/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -287,6 +335,11 @@
 
 <script src="/static/inspinia/js/contabs.min.js" type="text/javascript"></script>
 
+<script src="/static/ace/components/bootbox.js/bootbox.js"></script>
+
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+<script type="text/javascript" src="/static/javascript/js/index.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -297,27 +350,12 @@
                 showMethod: 'slideDown',
                 timeOut: 4000
             };
-            toastr.success("Everything is ok, Let's go !", 'Welcome to DjangoX');
+            toastr.success("Everything is ok, Let's go !", 'Welcome to Vega');
 
         }, 1300);
     });
 
-    //        $('.metismenu a').each(function (n, v) {
-    //        var url = $(v).attr("menu-url");
-    //        if (url) {
-    //            $(v).unbind("click").click(function (e) {
-    //
-    //                $("#content-main").load(url);
-    //                // $('.nav-list .active').each(function (nn, vv) {
-    //                //     $(vv).removeClass("active");
-    //                //
-    //                // });
-    //                // $(this).parents("li").each(function (nn, vv) {
-    //                //     $(vv).addClass("active");
-    //                // });
-    //            });
-    //        }
-    //    });
+
 </script>
 </body>
 </html>

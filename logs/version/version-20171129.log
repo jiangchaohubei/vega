@@ -1,0 +1,29 @@
+2017-11-29 09:46:59,257 versiondb.py[line:81] INFO version_select start
+2017-11-29 09:46:59,259 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1511920019199'>
+2017-11-29 09:46:59,282 versiondb.py[line:131] INFO version_select end
+2017-11-29 09:47:05,072 versiondb.py[line:81] INFO version_select start
+2017-11-29 09:47:05,073 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=2&_=1511920025012'>
+2017-11-29 09:47:05,085 versiondb.py[line:131] INFO version_select end
+2017-11-29 10:07:58,753 versiondb.py[line:81] INFO version_select start
+2017-11-29 10:07:58,756 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1511921278670'>
+2017-11-29 10:07:58,775 versiondb.py[line:131] INFO version_select end
+2017-11-29 10:08:14,888 versiondb.py[line:81] INFO version_select start
+2017-11-29 10:08:14,888 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1511921294839'>
+2017-11-29 10:08:14,905 versiondb.py[line:131] INFO version_select end
+2017-11-29 14:21:19,301 versiondb.py[line:81] INFO version_select start
+2017-11-29 14:21:19,302 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1511936479247'>
+2017-11-29 14:21:19,322 versiondb.py[line:131] INFO version_select end
+2017-11-29 15:21:53,286 versiondb.py[line:81] INFO version_select start
+2017-11-29 15:21:53,288 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=2&_=1511940113239'>
+2017-11-29 15:21:53,298 versiondb.py[line:131] INFO version_select end
+2017-11-29 16:18:11,335 versiondb.py[line:81] INFO version_select start
+2017-11-29 16:18:11,335 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1511943491240'>
+2017-11-29 16:18:11,354 versiondb.py[line:131] INFO version_select end
+2017-11-29 16:18:17,756 versiondb.py[line:136] INFO version_delete start
+2017-11-29 16:18:17,756 versiondb.py[line:137] INFO request: <WSGIRequest: POST '/app_cmdb/version/delete'>
+2017-11-29 16:18:17,756 versiondb.py[line:141] INFO form:{'id': u'4'}
+2017-11-29 16:18:17,756 versiondb.py[line:147] INFO delete id:4
+2017-11-29 16:18:17,763 versiondb.py[line:157] INFO version_delete end
+2017-11-29 16:18:17,786 versiondb.py[line:81] INFO version_select start
+2017-11-29 16:18:17,788 versiondb.py[line:82] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1511943491241'>
+2017-11-29 16:18:17,801 versiondb.py[line:131] INFO version_select end

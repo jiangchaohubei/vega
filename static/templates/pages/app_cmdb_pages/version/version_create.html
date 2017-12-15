@@ -1,0 +1,189 @@
+<html lang="zh_CN">
+<head>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>新建版本</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen"
+          rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.widget.select-related.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/formvalidate.css">
+
+</head>
+<body class="auth-group change-form">
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/static/templates/pages/app_cmdb_pages/software/software.html">程序列表</a>
+            </li>
+            <li>
+                <a id="softwareName" href="/static/templates/pages/app_cmdb_pages/version/version.html">mysql</a>
+            </li>
+            <li>
+                新建版本
+            </li>
+        </ul>
+        <input type="hidden" id="softwareId">
+
+        <div class="navbar content-navbar navbar-default navbar-xs" data-toggle="breakpoint"
+             data-class-xs="navbar content-navbar navbar-inverse navbar-xs"
+             data-class-sm="navbar content-navbar navbar-default navbar-xs">
+            <div class="navbar-header">
+
+
+                <button type="button" class="navbar-toggle pull-left" onclick="javascript: history.back();"><i
+                        class="fa fa-arrow-left"></i></button>
+
+
+                <a class="navbar-brand" data-toggle="collapse" data-target="#top-nav .navbar-collapse">
+                    <i class="fa fa-group"><sub class="fa fa-plus"></sub></i>
+                    新建版本
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+
+
+                <div class="navbar-btn navbar-right hide-xs">
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <form class="exform rended" enctype="multipart/form-data" action="/app_cmdb/version/add" method="post"
+              id="version_form">
+            <div class="form-container row clearfix">
+                <div id="column-0" class="formColumn column form-column full col col-sm-12 form-horizontal ui-sortable"
+                     horizontal="True" span="12">
+                    <div class="panel panel-default fieldset unsort no_title" id="box-0">
+                        <div class="panel-heading"><i class="icon fa fa-chevron-up chevron"></i>
+                            <h3 class="panel-title"></h3></div>
+                        <div class="panel-body ">
+                            <div  class="form-group">
+
+
+                                <label for="id_name" class="control-label  requiredField">
+                                    版本号<span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls ">
+                                    <div class="col-lg-2 col-md-2 col-sm-5 col-xs-10" style="padding:3px;">
+                                              <span class="block input-icon input-icon-right"  >
+                                                  <input style="width:300px;" type="number" class="form-control" placeholder="请输入版本号" id="VERSION_NAME" name="agree" min="0" step="0.1"
+                                                         onkeypress="if(!this.value.match(/^[\+\-]?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/))this.o_value=this.value" onkeyup="if(!this.value.match(/^[\+\-]?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/))this.o_value=this.value" onblur="if(!this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?|\.\d*?)?$/))this.value=this.o_value;else{if(this.value.match(/^\.\d+$/))this.value=0+this.value;if(this.value.match(/^\.$/))this.value=0;this.o_value=this.value}"                                              </span>
+                                    </div>
+
+                                 </div>
+                            </div>
+                            <div  class="form-group">
+                                <label for="id_name" class="control-label  requiredField">
+                                    描述<span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls ">
+                                    <div class="col-lg-2 col-md-2 col-sm-5 col-xs-10" style="padding:3px;">
+                                              <span class="block input-icon input-icon-right"  >
+                                    <input style="width:300px;" class="text-field admintextinputwidget form-control" id="VERSION_DESCRIPTION" placeholder="描述"
+                                           maxlength="80" name="agree" type="text">
+                                     </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                             <div  class="form-group">
+
+                                <label for="id_name" class="control-label  requiredField">
+                                    默认安装路径<span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls ">
+                                    <div class="col-lg-2 col-md-2 col-sm-5 col-xs-10" style="padding:3px;">
+                                              <span class="block input-icon input-icon-right"  >
+                                    <input style="width:300px;" class="text-field admintextinputwidget form-control" id="VERSION_INSTALL_PATH" placeholder="默认安装路径"
+                                           maxlength="80" name="agree" type="text">
+                                     </span>
+                                    </div>
+                                </div>
+                              </div>
+
+
+
+                            <div  class="form-group">
+
+
+                                    <label for="id_name" class="control-label  requiredField">
+                                        文件上传
+                                    </label>
+                                    <div class="controls ">
+                                        <div class="col-lg-2 col-md-2 col-sm-5 col-xs-10" style="padding:3px;">
+                                              <span class="block input-icon input-icon-right"  >
+                                                  <input id="VERSION_INPUTFILE" name="inputFile" type="file">
+
+                                              </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                        </div>
+            </div>
+                </div>
+            </div>
+
+            <div class="form-actions well well-sm clearfix fixed2left" style="text-align: center">
+                <button type="button" onclick="save_version()" class="default btn btn-primary hide-xs" name="_save"
+                        data-loading-text="保存中.."><i
+                        class="fa fa-save"></i> 保存
+                </button>
+                <div class="nav-collapse collapse more-btns">
+                    <input type="reset" class="btn btn-warning" value="取消" name="_addanother">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+<!--进度条模态框-->
+<div class="modal fade" id="ProgressModal">
+    <div class="modal-dialog" style="width:650px">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" title="预览">上传进度</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div id="pros" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+<script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+
+<script type="text/javascript" src="/static/javascript/js/app_cmdb_js/version/create_version.js"></script>
+
+</body>
+</html>
