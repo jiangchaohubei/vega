@@ -765,11 +765,7 @@ class T_VERSION(models.Model):
 	
 
 
-   class T_PROJECT_User_ID(models.Model):
 
-	    PROJECT_ID=models.ForeignKey(T_PROJECT, related_name='relations')
-	    # User id
-	    User_ID=models.ForeignKey(User, related_name='relations')
 
 
 
