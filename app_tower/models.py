@@ -763,6 +763,12 @@ class T_VERSION(models.Model):
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
 	
 	
+class T_HOST(models.Model):
+    objects=checkOwnManager()
+    #18	id,自增长
+    #ID=models.AutoField(primary_key=True)
+    #名字
+    NAME=models.CharField(max_length=128)
 
 
 
