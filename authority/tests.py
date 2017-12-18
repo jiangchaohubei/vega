@@ -78,12 +78,12 @@ class authoritydbTestCase(TestCase):
         self.assertEqual(eval(res.content)['result'],"Success!")
 
     #测试发送短信验证码
-    def test_getResponseData(self):
-        Usermobile='15001994524'
-        content="【咪咕视讯】，动态密码：" + '666666' + "（切勿告诉他人）,该验证码用于自动化部署系统登陆,5分钟有效"
-        url = 'http://172.16.9.132/mtv/HttpSendSM?userName=ZDHBS&password=1qaz!QAZ&srcId=1065802710111&channel=1&destMsisdn='+Usermobile+'&content='+content+'&needReport=1'
-        str=authoritydb.getResponseData(url)
-        print str
+#     def test_getResponseData(self):
+#         Usermobile='15001994524'
+#         content="【咪咕视讯】，动态密码：" + '666666' + "（切勿告诉他人）,该验证码用于自动化部署系统登陆,5分钟有效"
+#         url = 'http://172.16.9.132/mtv/HttpSendSM?userName=ZDHBS&password=1qaz!QAZ&srcId=1065802710111&channel=1&destMsisdn='+Usermobile+'&content='+content+'&needReport=1'
+#         str=authoritydb.getResponseData(url)
+#         print str
 
     #测试查询用户
     def test_selectUser(self):
