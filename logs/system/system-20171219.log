@@ -1,0 +1,106 @@
+2017-12-19 09:52:08,822 systemdb.py[line:62] INFO system_select start
+2017-12-19 09:52:08,823 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513648328741'>
+2017-12-19 09:52:08,832 systemdb.py[line:108] INFO system_select end
+2017-12-19 09:52:09,898 systemdb.py[line:191] INFO init_system_select start
+2017-12-19 09:52:09,907 systemdb.py[line:198] INFO init_system_select end
+2017-12-19 09:52:14,163 systemdb.py[line:191] INFO init_system_select start
+2017-12-19 09:52:14,180 systemdb.py[line:198] INFO init_system_select end
+2017-12-19 09:52:18,589 systemdb.py[line:62] INFO system_select start
+2017-12-19 09:52:18,591 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513648338523'>
+2017-12-19 09:52:18,604 systemdb.py[line:108] INFO system_select end
+2017-12-19 09:52:27,128 systemdb.py[line:113] INFO system_delete start
+2017-12-19 09:52:27,131 systemdb.py[line:114] INFO request: <WSGIRequest: POST '/app_cmdb/system/delete'>
+2017-12-19 09:52:27,132 systemdb.py[line:118] INFO form:{'id': u'1'}
+2017-12-19 09:52:27,132 systemdb.py[line:124] INFO delete id:1
+2017-12-19 09:52:27,151 systemdb.py[line:131] ERROR ("Cannot delete some instances of model 'T_SYSTEM' because they are referenced through a protected foreign key: 'T_MODULE.SYSTEM_ID'", [<T_MODULE: T_MODULE object>, <T_MODULE: T_MODULE object>, <T_MODULE: T_MODULE object>, <T_MODULE: T_MODULE object>])
+2017-12-19 09:52:27,151 systemdb.py[line:134] INFO system_delete end
+2017-12-19 09:52:27,184 systemdb.py[line:62] INFO system_select start
+2017-12-19 09:52:27,187 systemdb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513648338524'>
+2017-12-19 09:52:27,197 systemdb.py[line:108] INFO system_select end
+2017-12-19 10:20:27,661 systemdb.py[line:22] INFO system_add start
+2017-12-19 10:20:27,661 systemdb.py[line:23] INFO request: <WSGIRequest: POST '/app_cmdb/system/add'>
+2017-12-19 10:20:27,663 systemdb.py[line:57] INFO system_add end
+2017-12-19 10:27:08,480 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:27:08,480 systemdb.py[line:69] INFO request: <WSGIRequest: POST '/app_cmdb/system/select'>
+2017-12-19 10:27:08,487 systemdb.py[line:110] ERROR int() argument must be a string or a number, not 'NoneType'
+2017-12-19 10:27:08,487 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:29:03,990 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:29:03,990 systemdb.py[line:69] INFO request: <WSGIRequest: POST '/app_cmdb/system/select'>
+2017-12-19 10:29:03,996 systemdb.py[line:110] ERROR int() argument must be a string or a number, not 'NoneType'
+2017-12-19 10:29:03,996 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:29:13,901 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:29:13,901 systemdb.py[line:69] INFO request: <WSGIRequest: POST '/app_cmdb/system/select'>
+2017-12-19 10:29:13,907 systemdb.py[line:110] ERROR int() argument must be a string or a number, not 'NoneType'
+2017-12-19 10:29:13,907 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:35:16,321 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:35:16,321 systemdb.py[line:69] INFO request: <WSGIRequest: POST '/app_cmdb/system/select'>
+2017-12-19 10:35:16,323 systemdb.py[line:110] ERROR int() argument must be a string or a number, not 'NoneType'
+2017-12-19 10:35:16,325 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:36:13,986 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:36:13,987 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513650973915'>
+2017-12-19 10:36:13,994 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:36:18,931 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:36:18,931 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513650973916'>
+2017-12-19 10:36:18,940 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:36:30,923 systemdb.py[line:68] INFO system_select start
+2017-12-19 10:36:30,923 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?description=&company=&ordername=id&limit=5&offset=1&order=asc&name='>
+2017-12-19 10:36:30,927 systemdb.py[line:114] INFO system_select end
+2017-12-19 10:51:55,908 systemdb.py[line:122] INFO system_delete start
+2017-12-19 10:51:55,910 systemdb.py[line:123] INFO request: <WSGIRequest: GET '/app_cmdb/system/delete?id=20'>
+2017-12-19 10:51:55,911 systemdb.py[line:140] ERROR 'id'
+2017-12-19 10:51:55,911 systemdb.py[line:143] INFO system_delete end
+2017-12-19 10:52:09,622 systemdb.py[line:122] INFO system_delete start
+2017-12-19 10:52:09,622 systemdb.py[line:123] INFO request: <WSGIRequest: POST '/app_cmdb/system/delete'>
+2017-12-19 10:52:09,624 systemdb.py[line:127] INFO form:{'id': u'21'}
+2017-12-19 10:52:09,625 systemdb.py[line:133] INFO delete id:21
+2017-12-19 10:52:09,628 systemdb.py[line:143] INFO system_delete end
+2017-12-19 10:54:56,075 systemdb.py[line:151] INFO system_update start
+2017-12-19 10:54:56,075 systemdb.py[line:152] INFO request: <WSGIRequest: POST '/app_cmdb/system/update'>
+2017-12-19 10:54:56,078 systemdb.py[line:188] INFO update system:{'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test1', 'MODIFY_USER_ID': 307, 'NAME': u'test', 'OWNER_PROJECT_ID': None, 'COMPANY': u'1', 'OWNER_ALL': False, 'CREATE_USER_NAME': None, u'id': 22L, 'OWNER_ID': 307}
+2017-12-19 10:54:56,078 systemdb.py[line:197] INFO system_update end
+2017-12-19 11:06:36,730 systemdb.py[line:201] INFO init_system_select start
+2017-12-19 11:06:36,739 systemdb.py[line:208] INFO init_system_select end
+2017-12-19 11:06:39,979 systemdb.py[line:201] INFO init_system_select start
+2017-12-19 11:06:39,986 systemdb.py[line:208] INFO init_system_select end
+2017-12-19 13:53:34,684 systemdb.py[line:68] INFO system_select start
+2017-12-19 13:53:34,684 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513662814573'>
+2017-12-19 13:53:34,693 systemdb.py[line:114] INFO system_select end
+2017-12-19 14:29:38,736 systemdb.py[line:68] INFO system_select start
+2017-12-19 14:29:38,736 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?limit=5&offset=0&order=asc&name=&description=&company=&_=1513664978612'>
+2017-12-19 14:29:38,744 systemdb.py[line:114] INFO system_select end
+2017-12-19 16:38:10,700 systemdb.py[line:25] INFO system_add start
+2017-12-19 16:38:10,700 systemdb.py[line:26] INFO request: <WSGIRequest: POST '/app_cmdb/system/add'>
+2017-12-19 16:38:10,703 systemdb.py[line:60] INFO system_add end
+2017-12-19 16:38:10,726 systemdb.py[line:122] INFO system_delete start
+2017-12-19 16:38:10,726 systemdb.py[line:123] INFO request: <WSGIRequest: POST '/app_cmdb/system/delete'>
+2017-12-19 16:38:10,727 systemdb.py[line:127] INFO form:{'id': u'48'}
+2017-12-19 16:38:10,727 systemdb.py[line:133] INFO delete id:48
+2017-12-19 16:38:10,733 systemdb.py[line:143] INFO system_delete end
+2017-12-19 16:38:10,759 systemdb.py[line:68] INFO system_select start
+2017-12-19 16:38:10,759 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?description=&company=&ordername=id&limit=5&offset=1&order=asc&name='>
+2017-12-19 16:38:10,762 systemdb.py[line:114] INFO system_select end
+2017-12-19 16:38:10,790 systemdb.py[line:151] INFO system_update start
+2017-12-19 16:38:10,790 systemdb.py[line:152] INFO request: <WSGIRequest: POST '/app_cmdb/system/update'>
+2017-12-19 16:38:10,793 systemdb.py[line:188] INFO update system:{'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test1', 'MODIFY_USER_ID': 341, 'NAME': u'test', 'OWNER_PROJECT_ID': None, 'COMPANY': u'1', 'OWNER_ALL': False, 'CREATE_USER_NAME': None, u'id': 49L, 'OWNER_ID': 341}
+2017-12-19 16:38:10,795 systemdb.py[line:197] INFO system_update end
+2017-12-19 16:57:54,211 systemdb.py[line:201] INFO init_system_select start
+2017-12-19 16:57:54,216 systemdb.py[line:208] INFO init_system_select end
+2017-12-19 17:03:01,632 systemdb.py[line:201] INFO init_system_select start
+2017-12-19 17:03:01,641 systemdb.py[line:208] INFO init_system_select end
+2017-12-19 17:04:26,180 systemdb.py[line:201] INFO init_system_select start
+2017-12-19 17:04:26,184 systemdb.py[line:208] INFO init_system_select end
+2017-12-19 17:24:47,871 systemdb.py[line:25] INFO system_add start
+2017-12-19 17:24:47,871 systemdb.py[line:26] INFO request: <WSGIRequest: POST '/app_cmdb/system/add'>
+2017-12-19 17:24:47,872 systemdb.py[line:60] INFO system_add end
+2017-12-19 17:24:47,901 systemdb.py[line:122] INFO system_delete start
+2017-12-19 17:24:47,901 systemdb.py[line:123] INFO request: <WSGIRequest: POST '/app_cmdb/system/delete'>
+2017-12-19 17:24:47,903 systemdb.py[line:127] INFO form:{'id': u'68'}
+2017-12-19 17:24:47,903 systemdb.py[line:133] INFO delete id:68
+2017-12-19 17:24:47,907 systemdb.py[line:143] INFO system_delete end
+2017-12-19 17:24:47,933 systemdb.py[line:68] INFO system_select start
+2017-12-19 17:24:47,934 systemdb.py[line:69] INFO request: <WSGIRequest: GET '/app_cmdb/system/select?description=&company=&ordername=id&limit=5&offset=1&order=asc&name='>
+2017-12-19 17:24:47,936 systemdb.py[line:114] INFO system_select end
+2017-12-19 17:24:47,963 systemdb.py[line:151] INFO system_update start
+2017-12-19 17:24:47,963 systemdb.py[line:152] INFO request: <WSGIRequest: POST '/app_cmdb/system/update'>
+2017-12-19 17:24:47,967 systemdb.py[line:188] INFO update system:{'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test1', 'MODIFY_USER_ID': 367, 'NAME': u'test', 'OWNER_PROJECT_ID': None, 'COMPANY': u'1', 'OWNER_ALL': False, 'CREATE_USER_NAME': None, u'id': 69L, 'OWNER_ID': 367}
+2017-12-19 17:24:47,967 systemdb.py[line:197] INFO system_update end

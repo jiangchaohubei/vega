@@ -1,0 +1,53 @@
+2017-12-19 09:52:09,953 moduledb.py[line:67] INFO module_select start
+2017-12-19 09:52:09,956 moduledb.py[line:68] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1513648329864'>
+2017-12-19 09:52:09,976 moduledb.py[line:114] INFO module_select end
+2017-12-19 09:52:14,194 moduledb.py[line:67] INFO module_select start
+2017-12-19 09:52:14,196 moduledb.py[line:68] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=1&_=1513648334122'>
+2017-12-19 09:52:14,216 moduledb.py[line:114] INFO module_select end
+2017-12-19 16:38:10,279 moduledb.py[line:22] INFO module_add start
+2017-12-19 16:38:10,279 moduledb.py[line:23] INFO request: <WSGIRequest: POST '/app_cmdb/module/add'>
+2017-12-19 16:38:10,282 moduledb.py[line:60] INFO module_add end
+2017-12-19 16:38:10,309 moduledb.py[line:121] INFO module_delete start
+2017-12-19 16:38:10,311 moduledb.py[line:122] INFO request: <WSGIRequest: POST '/app_cmdb/module/delete'>
+2017-12-19 16:38:10,311 moduledb.py[line:126] INFO form:{'id': u'23'}
+2017-12-19 16:38:10,312 moduledb.py[line:132] INFO delete id:23
+2017-12-19 16:38:10,315 moduledb.py[line:142] INFO module_delete end
+2017-12-19 16:38:10,341 moduledb.py[line:67] INFO module_select start
+2017-12-19 16:38:10,341 moduledb.py[line:68] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?ordername=id&systemId=0&limit=5&order=asc&offset=0'>
+2017-12-19 16:38:10,345 moduledb.py[line:114] INFO module_select end
+2017-12-19 16:38:10,371 moduledb.py[line:149] INFO module_unwarp start
+2017-12-19 16:38:10,371 moduledb.py[line:150] INFO request: <WSGIRequest: POST '/app_cmdb/module/unwarp'>
+2017-12-19 16:38:10,372 moduledb.py[line:154] INFO form:{'id': u'24'}
+2017-12-19 16:38:10,372 moduledb.py[line:160] INFO unwarp id:24
+2017-12-19 16:38:10,375 moduledb.py[line:171] INFO module_unwarp end
+2017-12-19 16:38:10,404 moduledb.py[line:179] INFO module_update start
+2017-12-19 16:38:10,404 moduledb.py[line:180] INFO request: <WSGIRequest: POST '/app_cmdb/module/update'>
+2017-12-19 16:38:10,408 moduledb.py[line:220] INFO update module:{'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test1', 'MODIFY_USER_ID': 330, 'NAME': u'test1', 'OWNER_PROJECT_ID': None, 'OWNER_ALL': False, 'SYSTEM_ID': 40, 'CREATE_USER_NAME': None, 'RESPONSIBLE_PERSON': u'1', u'id': 25L, 'OWNER_ID': 330}
+2017-12-19 16:38:10,408 moduledb.py[line:229] INFO module_update end
+2017-12-19 16:38:10,826 moduledb.py[line:22] INFO module_add start
+2017-12-19 16:38:10,826 moduledb.py[line:23] INFO request: <WSGIRequest: POST '/app_cmdb/module/add'>
+2017-12-19 16:38:10,831 moduledb.py[line:60] INFO module_add end
+2017-12-19 17:08:00,730 moduledb.py[line:22] INFO module_add start
+2017-12-19 17:08:00,730 moduledb.py[line:23] INFO request: <WSGIRequest: POST '/app_cmdb/module/add'>
+2017-12-19 17:08:00,733 moduledb.py[line:57] ERROR "'OWNER'"
+2017-12-19 17:08:00,733 moduledb.py[line:60] INFO module_add end
+2017-12-19 17:24:47,453 moduledb.py[line:22] INFO module_add start
+2017-12-19 17:24:47,453 moduledb.py[line:23] INFO request: <WSGIRequest: POST '/app_cmdb/module/add'>
+2017-12-19 17:24:47,457 moduledb.py[line:60] INFO module_add end
+2017-12-19 17:24:47,483 moduledb.py[line:121] INFO module_delete start
+2017-12-19 17:24:47,483 moduledb.py[line:122] INFO request: <WSGIRequest: POST '/app_cmdb/module/delete'>
+2017-12-19 17:24:47,483 moduledb.py[line:126] INFO form:{'id': u'40'}
+2017-12-19 17:24:47,483 moduledb.py[line:132] INFO delete id:40
+2017-12-19 17:24:47,487 moduledb.py[line:142] INFO module_delete end
+2017-12-19 17:24:47,513 moduledb.py[line:67] INFO module_select start
+2017-12-19 17:24:47,513 moduledb.py[line:68] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?ordername=id&systemId=0&limit=5&order=asc&offset=0'>
+2017-12-19 17:24:47,516 moduledb.py[line:114] INFO module_select end
+2017-12-19 17:24:47,542 moduledb.py[line:149] INFO module_unwarp start
+2017-12-19 17:24:47,542 moduledb.py[line:150] INFO request: <WSGIRequest: POST '/app_cmdb/module/unwarp'>
+2017-12-19 17:24:47,542 moduledb.py[line:154] INFO form:{'id': u'41'}
+2017-12-19 17:24:47,542 moduledb.py[line:160] INFO unwarp id:41
+2017-12-19 17:24:47,546 moduledb.py[line:171] INFO module_unwarp end
+2017-12-19 17:24:47,572 moduledb.py[line:179] INFO module_update start
+2017-12-19 17:24:47,572 moduledb.py[line:180] INFO request: <WSGIRequest: POST '/app_cmdb/module/update'>
+2017-12-19 17:24:47,575 moduledb.py[line:220] INFO update module:{'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test1', 'MODIFY_USER_ID': 356, 'NAME': u'test1', 'OWNER_PROJECT_ID': None, 'OWNER_ALL': False, 'SYSTEM_ID': 60, 'CREATE_USER_NAME': None, 'RESPONSIBLE_PERSON': u'1', u'id': 42L, 'OWNER_ID': 356}
+2017-12-19 17:24:47,575 moduledb.py[line:229] INFO module_update end

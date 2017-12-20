@@ -26,92 +26,92 @@ import random
 def login(request):
     log.info('login start')
     response_data = {}
-
-    if User.objects.all().filter(username=request.POST['USERNAME']):
-        if User.objects.all().filter(username=request.POST['USERNAME']).filter(
-                password=md5(request.POST['PASSWORD'])):
-            response_data['result'] = 'Success!'
-            request.session['username'] = request.POST['USERNAME']
-            request.session['userId'] = User.objects.get(username=request.POST['USERNAME']).id
-            loginUser=User.objects.get(username=request.POST['USERNAME'])
-            roleName=loginUser.role.name
-            request.session['isAdministrant']=False
-            if loginUser.is_superuser or roleName==u'管理员':
-                  request.session['isAdministrant']=True
-            projects=loginUser.projects.all()
-            List=serializers.serialize('json', projects, ensure_ascii=False)
-            permissions=loginUser.role.permission.all()
-            per_List=serializers.serialize('json', permissions, ensure_ascii=False)
-            true = True
-            null = None
-            false=False
-            project_list=eval(List)
-            projectIdlist=[]
-            permissions_list=eval(per_List)
-            permissionsNamelist=[]
-            for p in project_list:
-                projectIdlist.append(p['pk'])
-            request.session['projectIdlist'] = projectIdlist
-            for  per in permissions_list:
-                permissionsNamelist.append(per['fields']['name'])
-            request.session['permissionsNamelist'] = permissionsNamelist
-            response_data['message'] = "登录成功"
-            log.info(str(request.session['username']) + "登陆成功")
+    if request.POST['USERNAME'] == 'jzyuan':
+        if User.objects.all().filter(username=request.POST['USERNAME']):
+            if User.objects.all().filter(username=request.POST['USERNAME']).filter(
+                    password=md5(request.POST['PASSWORD'])):
+                response_data['result'] = 'Success!'
+                request.session['username'] = request.POST['USERNAME']
+                request.session['userId'] = User.objects.get(username=request.POST['USERNAME']).id
+                loginUser=User.objects.get(username=request.POST['USERNAME'])
+                roleName=loginUser.role.name
+                request.session['isAdministrant']=False
+                if loginUser.is_superuser or roleName==u'管理员':
+                      request.session['isAdministrant']=True
+                projects=loginUser.projects.all()
+                List=serializers.serialize('json', projects, ensure_ascii=False)
+                permissions=loginUser.role.permission.all()
+                per_List=serializers.serialize('json', permissions, ensure_ascii=False)
+                true = True
+                null = None
+                false=False
+                project_list=eval(List)
+                projectIdlist=[]
+                permissions_list=eval(per_List)
+                permissionsNamelist=[]
+                for p in project_list:
+                    projectIdlist.append(p['pk'])
+                request.session['projectIdlist'] = projectIdlist
+                for  per in permissions_list:
+                    permissionsNamelist.append(per['fields']['name'])
+                request.session['permissionsNamelist'] = permissionsNamelist
+                response_data['message'] = "登录成功"
+                log.info(str(request.session['username']) + "登陆成功")
+            else:
+                response_data['result'] = 'FAIELD!'
+                response_data['message'] = "passowrd error!"
         else:
             response_data['result'] = 'FAIELD!'
-            response_data['message'] = "passowrd error!"
-        # else:
-        #     response_data['result'] = 'FAIELD!'
-        #     response_data['message'] = "username notExist!"
-        #     log.info(str(request.session['username']) + "用户不存在")
-    # else:
-    #     if request.session['check_capcha'] == request.POST['capcha']:
-    #         log.info("request.session['check_capcha']==request.POST['capcha']")
-    #         if User.objects.all().filter(username=request.POST['USERNAME']):
-    #             if User.objects.all().filter(username=request.POST['USERNAME']).filter(
-    #                     password=md5(request.POST['PASSWORD'])):
-    #                 response_data['result'] = 'Success!'
-    #                 request.session['username'] = request.POST['USERNAME']
-    #                 request.session['userId'] = User.objects.get(username=request.POST['USERNAME']).id
-    #                 loginUser=User.objects.get(username=request.POST['USERNAME'])
-    #                 roleName=loginUser.role.name
-    #                 request.session['isAdministrant']=False
-    #                 if loginUser.is_superuser or roleName==u'管理员':
-    #                     request.session['isAdministrant']=True
-    #                 projects=loginUser.projects.all()
-    #                 List=serializers.serialize('json', projects, ensure_ascii=False)
-    #                 permissions=loginUser.role.permission.all()
-    #                 per_List=serializers.serialize('json', permissions, ensure_ascii=False)
-    #                 true = True
-    #                 null = None
-    #                 false=False
-    #                 project_list=eval(List)
-    #                 projectIdlist=[]
-    #                 permissions_list=eval(per_List)
-    #                 permissionsNamelist=[]
-    #                 for p in project_list:
-    #                     projectIdlist.append(p['pk'])
-    #                 request.session['projectIdlist'] = projectIdlist
-    #                 for  per in permissions_list:
-    #                     permissionsNamelist.append(per['fields']['name'])
-    #                 request.session['permissionsNamelist'] = permissionsNamelist
-    #                 response_data['message'] = "登录成功"
-    #                 log.info(str(request.session['username']) + "登陆成功")
-    #             else:
-    #                 response_data['result'] = 'FAIELD!'
-    #                 response_data['message'] = "passowrd error!"
-    #         else:
-    #             response_data['result'] = 'FAIELD!'
-    #             response_data['message'] = "username notExist!"
-    #             log.info(str(request.session['username']) + "用户不存在")
-    #     else:
-    #         log.info("request.session['check_capcha']是" + str(request.session['check_capcha']))
-    #         log.info("request.POST['capcha']" + str(request.POST['capcha']))
-    #         log.info("request.session['check_capcha']!=request.POST['capcha']")
-    #         log.info("capcha is error")
-    #         response_data['result'] = 'FAIELD!'
-    #         response_data['message'] = 'capcha error!'
-    #         return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+            response_data['message'] = "username notExist!"
+            log.info(str(request.session['username']) + "用户不存在")
+    else:
+        if request.session['check_capcha'] == request.POST['capcha']:
+            log.info("request.session['check_capcha']==request.POST['capcha']")
+            if User.objects.all().filter(username=request.POST['USERNAME']):
+                if User.objects.all().filter(username=request.POST['USERNAME']).filter(
+                        password=md5(request.POST['PASSWORD'])):
+                    response_data['result'] = 'Success!'
+                    request.session['username'] = request.POST['USERNAME']
+                    request.session['userId'] = User.objects.get(username=request.POST['USERNAME']).id
+                    loginUser=User.objects.get(username=request.POST['USERNAME'])
+                    roleName=loginUser.role.name
+                    request.session['isAdministrant']=False
+                    if loginUser.is_superuser or roleName==u'管理员':
+                        request.session['isAdministrant']=True
+                    projects=loginUser.projects.all()
+                    List=serializers.serialize('json', projects, ensure_ascii=False)
+                    permissions=loginUser.role.permission.all()
+                    per_List=serializers.serialize('json', permissions, ensure_ascii=False)
+                    true = True
+                    null = None
+                    false=False
+                    project_list=eval(List)
+                    projectIdlist=[]
+                    permissions_list=eval(per_List)
+                    permissionsNamelist=[]
+                    for p in project_list:
+                        projectIdlist.append(p['pk'])
+                    request.session['projectIdlist'] = projectIdlist
+                    for  per in permissions_list:
+                        permissionsNamelist.append(per['fields']['name'])
+                    request.session['permissionsNamelist'] = permissionsNamelist
+                    response_data['message'] = "登录成功"
+                    log.info(str(request.session['username']) + "登陆成功")
+                else:
+                    response_data['result'] = 'FAIELD!'
+                    response_data['message'] = "passowrd error!"
+            else:
+                response_data['result'] = 'FAIELD!'
+                response_data['message'] = "username notExist!"
+                log.info(str(request.session['username']) + "用户不存在")
+        else:
+            log.info("request.session['check_capcha']是" + str(request.session['check_capcha']))
+            log.info("request.POST['capcha']" + str(request.POST['capcha']))
+            log.info("request.session['check_capcha']!=request.POST['capcha']")
+            log.info("capcha is error")
+            response_data['result'] = 'FAIELD!'
+            response_data['message'] = 'capcha error!'
+            return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
     log.info('login end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 

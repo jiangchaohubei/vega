@@ -14,7 +14,9 @@ from authority.permission import PermissionVerify
 import logging
 log = logging.getLogger("version")
 
-
+#description:添加版本
+#params: request.POST {"softwareId":"softwareId","NAME":"1.0","DESCRIPTION":"","INSTALL_PATH":""}
+#return: {"resultCode":"","resultDesc":""}
 def version_add(request):
     log.info('version_add start')
     log.info("request: "+str(request))
@@ -54,11 +56,15 @@ def version_add(request):
         if not os.path.exists(rote_path):
             os.makedirs(rote_path)
         file =request.FILES.get("file", None)
-        PACKAGE_PATH=rote_path+"/"+file.name    ##根目录(/opt/versions)+所属系统名+模块名+程序名+版本号+文件名
-        # 分块写入文件
-        fo=open(PACKAGE_PATH,"wb")
-        for chunk in file.chunks():
-            fo.write(chunk)
+        PACKAGE_PATH=""
+        if file==None:
+            PACKAGE_PATH=""
+        else:
+            PACKAGE_PATH=rote_path+"/"+file.name    ##根目录(/opt/versions)+所属系统名+模块名+程序名+版本号+文件名
+            # 分块写入文件
+            fo=open(PACKAGE_PATH,"wb")
+            for chunk in file.chunks():
+                fo.write(chunk)
 
         version = T_VERSION(NAME=request.POST['NAME'], DESCRIPTION=DESCRIPTION,SOFTWARE_ID=software,INSTALL_PATH=INSTALL_PATH,PACKAGE_PATH=PACKAGE_PATH,
                              OWNER_ALL=software.OWNER_ALL,OWNER_PROJECT_ID=software.OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
@@ -76,7 +82,9 @@ def version_add(request):
     log.info('version_add end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-
+#description:查询版本
+#params: request.GET {"offset":"1","limit":"5","order":"asc","ordername":"id","name":"","description":"","softwareId":"softwareId"}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 def version_select(request):
     log.info('version_select start')
     log.info("request: "+str(request))
@@ -131,7 +139,9 @@ def version_select(request):
     log.info('version_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-
+#description:删除版本
+#params: request.POST   {"id":"versionId"}
+#return: {"resultCode":"","resultDesc":""}
 def version_delete(request):
     log.info('version_delete start')
     log.info("request: "+str(request))

@@ -17,7 +17,10 @@ from authority.permission import PermissionVerify
 import logging
 log = logging.getLogger("host")
 
-
+#description:添加主机
+#params: request.POST {"NAME":"10.200.86.172","DESCRIPTION":"test","VARIABLES":"","OWNER":"onlyOne","MACHINE_TYPE":"1","MACHINE_ROOM":"1","MACHINE_POSITION":"1","CUTTER_NUMBER":"1","SN_NUMBER":"1",
+# "OS":"1","PHYSICAL_MACHINE_TYPE":"1","NOTE":"1","SYSTEM_ID":system.id}
+#return: {"resultCode":"","resultDesc":""}
 def host_add(request):
     log.info('host_add start')
     log.info("request: "+str(request))
@@ -60,7 +63,9 @@ def host_add(request):
     log.info('host_add end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-
+#description:查询主机列表
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","systemId":"0"}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 def host_select(request):
     log.info('host_select start')
     log.info("request: "+str(request))
@@ -116,7 +121,9 @@ def host_select(request):
     log.info('host_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-
+#description:删除主机
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 def host_delete(request):
     log.info('host_delete start')
     log.info("request: "+str(request))
@@ -143,6 +150,10 @@ def host_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
+#description:修改主机
+#params: request.POST {"id":"","NAME":"jzyuan","DESCRIPTION":"test","VARIABLES":"","OWNER":"onlyOne","MACHINE_TYPE":"1","MACHINE_ROOM":"1","MACHINE_POSITION":"1","CUTTER_NUMBER":"1","SN_NUMBER":"1",
+# "OS":"1","PHYSICAL_MACHINE_TYPE":"1","NOTE":"1","SYSTEM_ID":system.id}
+#return: {"resultCode":"","resultDesc":""}
 def host_update(request):
     log.info('host_update start')
     log.info("request: "+str(request))
@@ -205,7 +216,9 @@ def host_update(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-
+#description:导出主机，程序列表
+#params: request.POST {"name":"","description":"","systemId":""}
+#return: {"resultCode":"","resultDesc":"","filepath":""}
 #导出系统组件程序主机关系xlsx文件
 def host_export(request):
     response_data = {}

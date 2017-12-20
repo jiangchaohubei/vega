@@ -18,6 +18,9 @@ import logging
 log = logging.getLogger("system")
 
 
+#description:新建系统
+#params: request.POST {"NAME":"test","DESCRIPTION":"test","OWNER":"onlyOne","COMPANY":"1"}
+#return: {"resultCode":"","resultDesc":""}
 def system_add(request):
     log.info('system_add start')
     log.info("request: "+str(request))
@@ -58,6 +61,9 @@ def system_add(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
+#description:查询系统
+#params: request.GET {"offset":"0","limit":"5","order":"asc","ordername":"id","name":"","description":"","company":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 def system_select(request):
     log.info('system_select start')
     log.info("request: "+str(request))
@@ -109,6 +115,9 @@ def system_select(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
+#description:删除系统
+#params: request.POST {"id":"0"}
+#return: {"resultCode":"","resultDesc":""}
 def system_delete(request):
     log.info('system_delete start')
     log.info("request: "+str(request))
@@ -135,8 +144,9 @@ def system_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 更新任务 根据id  更新
-
+#description:修改系统
+#params: request.POST {"id":"","NAME":"test","DESCRIPTION":"test","OWNER":"onlyOne","COMPANY":"1"}
+#return: {"resultCode":"","resultDesc":""}
 def system_update(request):
     log.info('system_update start')
     log.info("request: "+str(request))

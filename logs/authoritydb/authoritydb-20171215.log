@@ -1441,3 +1441,10 @@
 2017-12-15 15:35:53,072 authoritydb.py[line:302] INFO newPassword =new_repassword
 2017-12-15 15:35:53,075 authoritydb.py[line:278] INFO md5 start
 2017-12-15 15:35:53,075 authoritydb.py[line:281] INFO md5 end
+2017-12-15 15:54:51,776 authoritydb.py[line:27] INFO login start
+2017-12-15 15:54:51,792 authoritydb.py[line:278] INFO md5 start
+2017-12-15 15:54:51,792 authoritydb.py[line:281] INFO md5 end
+2017-12-15 15:54:51,851 authoritydb.py[line:59] INFO jzyuan登陆成功
+2017-12-15 15:54:51,852 authoritydb.py[line:115] INFO login end
+2017-12-15 15:54:52,467 authoritydb.py[line:766] INFO JobStatusStatics start
+2017-12-15 15:54:52,581 authoritydb.py[line:844] INFO JobStatusStatics end

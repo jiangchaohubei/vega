@@ -1,0 +1,30 @@
+2017-12-19 16:38:10,138 hostdb.py[line:25] INFO host_add start
+2017-12-19 16:38:10,138 hostdb.py[line:26] INFO request: <WSGIRequest: POST '/app_cmdb/host/add'>
+2017-12-19 16:38:10,144 hostdb.py[line:63] INFO host_add end
+2017-12-19 16:38:10,173 hostdb.py[line:128] INFO host_delete start
+2017-12-19 16:38:10,173 hostdb.py[line:129] INFO request: <WSGIRequest: POST '/app_cmdb/host/delete'>
+2017-12-19 16:38:10,173 hostdb.py[line:133] INFO form:{'id': u'24'}
+2017-12-19 16:38:10,173 hostdb.py[line:139] INFO delete id:24
+2017-12-19 16:38:10,177 hostdb.py[line:149] INFO host_delete end
+2017-12-19 16:38:10,210 hostdb.py[line:70] INFO host_select start
+2017-12-19 16:38:10,210 hostdb.py[line:71] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?ordername=id&systemId=0&limit=5&order=asc&offset=0'>
+2017-12-19 16:38:10,213 hostdb.py[line:121] INFO host_select end
+2017-12-19 16:38:10,243 hostdb.py[line:158] INFO host_update start
+2017-12-19 16:38:10,243 hostdb.py[line:159] INFO request: <WSGIRequest: POST '/app_cmdb/host/update'>
+2017-12-19 16:38:10,250 hostdb.py[line:206] INFO update host:{'NAME': u'10.200.86.173', 'ENABLED': None, 'LAST_JOB_ID': None, 'ARGS3': None, u'id': 25L, 'NOTE': u'1', 'MACHINE_POSITION': u'1', 'PHYSICAL_MACHINE_TYPE': u'1', 'VARIABLES': u'', 'OWNER_ALL': False, 'HAS_ACTIVE_FAILURES': True, 'SN_NUMBER': u'1', 'CREATE_USER_NAME': None, 'ARGS1': None, 'ARGS2': None, 'MACHINE_ROOM': u'1', 'OWNER_ID': 325, 'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test', 'MODIFY_USER_ID': 325, 'HAS_EXTENRN_SOURCE': True, 'INVENTORY_ID': 0L, 'CUTTER_NUMBER': u'1', 'SYSTEM_ID': 37L, 'MACHINE_TYPE': u'1', 'OWNER_PROJECT_ID': None, 'OS': u'1'}
+2017-12-19 16:38:10,250 hostdb.py[line:215] INFO host_update end
+2017-12-19 17:24:47,302 hostdb.py[line:25] INFO host_add start
+2017-12-19 17:24:47,302 hostdb.py[line:26] INFO request: <WSGIRequest: POST '/app_cmdb/host/add'>
+2017-12-19 17:24:47,308 hostdb.py[line:63] INFO host_add end
+2017-12-19 17:24:47,341 hostdb.py[line:128] INFO host_delete start
+2017-12-19 17:24:47,341 hostdb.py[line:129] INFO request: <WSGIRequest: POST '/app_cmdb/host/delete'>
+2017-12-19 17:24:47,342 hostdb.py[line:133] INFO form:{'id': u'30'}
+2017-12-19 17:24:47,342 hostdb.py[line:139] INFO delete id:30
+2017-12-19 17:24:47,346 hostdb.py[line:149] INFO host_delete end
+2017-12-19 17:24:47,377 hostdb.py[line:70] INFO host_select start
+2017-12-19 17:24:47,378 hostdb.py[line:71] INFO request: <WSGIRequest: GET '/app_cmdb/host/select?ordername=id&systemId=0&limit=5&order=asc&offset=0'>
+2017-12-19 17:24:47,381 hostdb.py[line:121] INFO host_select end
+2017-12-19 17:24:47,413 hostdb.py[line:158] INFO host_update start
+2017-12-19 17:24:47,413 hostdb.py[line:159] INFO request: <WSGIRequest: POST '/app_cmdb/host/update'>
+2017-12-19 17:24:47,418 hostdb.py[line:206] INFO update host:{'NAME': u'10.200.86.173', 'ENABLED': None, 'LAST_JOB_ID': None, 'ARGS3': None, u'id': 31L, 'NOTE': u'1', 'MACHINE_POSITION': u'1', 'PHYSICAL_MACHINE_TYPE': u'1', 'VARIABLES': u'', 'OWNER_ALL': False, 'HAS_ACTIVE_FAILURES': True, 'SN_NUMBER': u'1', 'CREATE_USER_NAME': None, 'ARGS1': None, 'ARGS2': None, 'MACHINE_ROOM': u'1', 'OWNER_ID': 351, 'OWNER_NAME': u'jzyuan', 'CREATE_USER_ID': None, 'DESCRIPTION': u'test', 'MODIFY_USER_ID': 351, 'HAS_EXTENRN_SOURCE': True, 'INVENTORY_ID': 0L, 'CUTTER_NUMBER': u'1', 'SYSTEM_ID': 57L, 'MACHINE_TYPE': u'1', 'OWNER_PROJECT_ID': None, 'OS': u'1'}
+2017-12-19 17:24:47,418 hostdb.py[line:215] INFO host_update end

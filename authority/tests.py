@@ -22,10 +22,10 @@ class authoritydbTestCase(TestCase):
         print verifyCode
         self.assertRegexpMatches(verifyCode,'[0-9]{6}')
 
-    #获取验证码
-    def test_loginCapcha_success(self):
-        res=self.client.post('/authority/user/loginCapcha',{"userName":"jzyuan","password":"88888888"})
-        self.assertEqual(res.status_code,200)
+    # #获取验证码
+    # def test_loginCapcha_success(self):
+    #     res=self.client.post('/authority/user/loginCapcha',{"userName":"jzyuan","password":"88888888"})
+    #     self.assertEqual(res.status_code,200)
 
     #登录
     def test_login(self):
@@ -58,17 +58,17 @@ class authoritydbTestCase(TestCase):
         print res.content
         self.assertEqual(eval(res.content)['result'],'FAIELD!')
 
-        #测试根据邮箱重置密码
-    def test_resetPasswordByEmail(self):
-        res=self.client.post('/authority/user/reset/password/email',{'userName':'jzyuan','email':'jiangchao_hubei@163.com'})
-        print res.content
-        self.assertEqual(eval(res.content)['result'],'Success!')
+    #     #测试根据邮箱重置密码
+    # def test_resetPasswordByEmail(self):
+    #     res=self.client.post('/authority/user/reset/password/email',{'userName':'jzyuan','email':'jiangchao_hubei@163.com'})
+    #     print res.content
+    #     self.assertEqual(eval(res.content)['result'],'Success!')
 
-        #测试根据手机号重置密码
-    def test_resetPasswordByMobile(self):
-        res=self.client.post('/authority/user/reset/password/mobile',{'userName':'jzyuan','mobile':'15001994524'})
-        print res.content
-        self.assertEqual(res.status_code,200)
+    #     #测试根据手机号重置密码
+    # def test_resetPasswordByMobile(self):
+    #     res=self.client.post('/authority/user/reset/password/mobile',{'userName':'jzyuan','mobile':'15001994524'})
+    #     print res.content
+    #     self.assertEqual(res.status_code,200)
 
     #测试用户修改密码
     def test_updatepassword(self):

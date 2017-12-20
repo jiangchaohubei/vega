@@ -1,0 +1,76 @@
+2017-12-19 16:58:01,364 versiondb.py[line:84] INFO version_select start
+2017-12-19 16:58:01,365 versiondb.py[line:85] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513673881280'>
+2017-12-19 16:58:01,384 versiondb.py[line:134] INFO version_select end
+2017-12-19 16:59:38,638 versiondb.py[line:83] INFO version_select start
+2017-12-19 16:59:38,640 versiondb.py[line:84] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513673978460'>
+2017-12-19 16:59:38,664 versiondb.py[line:133] INFO version_select end
+2017-12-19 16:59:45,040 versiondb.py[line:21] INFO version_add start
+2017-12-19 16:59:45,043 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 16:59:45,069 versiondb.py[line:75] ERROR 'NoneType' object has no attribute 'name'
+2017-12-19 16:59:45,069 versiondb.py[line:78] INFO version_add end
+2017-12-19 16:59:50,293 versiondb.py[line:21] INFO version_add start
+2017-12-19 16:59:50,298 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 16:59:50,309 versiondb.py[line:75] ERROR 'NoneType' object has no attribute 'name'
+2017-12-19 16:59:50,309 versiondb.py[line:78] INFO version_add end
+2017-12-19 17:03:02,982 versiondb.py[line:87] INFO version_select start
+2017-12-19 17:03:02,983 versiondb.py[line:88] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513674182917'>
+2017-12-19 17:03:03,000 versiondb.py[line:137] INFO version_select end
+2017-12-19 17:03:08,408 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:03:08,410 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:03:08,426 versiondb.py[line:79] ERROR [Errno 22] invalid mode ('wb') or filename: ''
+2017-12-19 17:03:08,426 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:04:19,312 versiondb.py[line:87] INFO version_select start
+2017-12-19 17:04:19,312 versiondb.py[line:88] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513674259142'>
+2017-12-19 17:04:19,336 versiondb.py[line:137] INFO version_select end
+2017-12-19 17:04:27,181 versiondb.py[line:87] INFO version_select start
+2017-12-19 17:04:27,181 versiondb.py[line:88] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513674267128'>
+2017-12-19 17:04:27,197 versiondb.py[line:137] INFO version_select end
+2017-12-19 17:04:34,808 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:04:34,813 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:04:34,828 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:04:38,071 versiondb.py[line:87] INFO version_select start
+2017-12-19 17:04:38,073 versiondb.py[line:88] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513674278011'>
+2017-12-19 17:04:38,094 versiondb.py[line:137] INFO version_select end
+2017-12-19 17:04:43,423 versiondb.py[line:142] INFO version_delete start
+2017-12-19 17:04:43,424 versiondb.py[line:143] INFO request: <WSGIRequest: POST '/app_cmdb/version/delete'>
+2017-12-19 17:04:43,426 versiondb.py[line:147] INFO form:{'id': u'4'}
+2017-12-19 17:04:43,426 versiondb.py[line:153] INFO delete id:4
+2017-12-19 17:04:43,447 versiondb.py[line:163] INFO version_delete end
+2017-12-19 17:04:43,484 versiondb.py[line:87] INFO version_select start
+2017-12-19 17:04:43,486 versiondb.py[line:88] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?limit=5&offset=0&order=desc&name=&description=&softwareId=1&_=1513674278012'>
+2017-12-19 17:04:43,509 versiondb.py[line:137] INFO version_select end
+2017-12-19 17:08:59,345 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:08:59,345 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:08:59,355 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:14:08,993 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:14:08,993 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:14:09,003 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:14:09,007 versiondb.py[line:89] INFO version_select start
+2017-12-19 17:14:09,007 versiondb.py[line:90] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?description=&ordername=id&limit=5&offset=1&systemId=24&order=asc&name='>
+2017-12-19 17:14:09,015 versiondb.py[line:135] ERROR local variable 'softwareId' referenced before assignment
+2017-12-19 17:14:09,015 versiondb.py[line:139] INFO version_select end
+2017-12-19 17:14:55,431 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:14:55,431 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:14:55,438 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:14:55,441 versiondb.py[line:89] INFO version_select start
+2017-12-19 17:14:55,441 versiondb.py[line:90] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?description=&softwareId=25&ordername=id&limit=5&offset=1&order=asc&name='>
+2017-12-19 17:14:55,444 versiondb.py[line:139] INFO version_select end
+2017-12-19 17:24:24,494 versiondb.py[line:146] INFO version_delete start
+2017-12-19 17:24:24,494 versiondb.py[line:147] INFO request: <WSGIRequest: POST '/app_cmdb/version/delete'>
+2017-12-19 17:24:24,494 versiondb.py[line:151] INFO form:{'id': u'4'}
+2017-12-19 17:24:24,494 versiondb.py[line:157] INFO delete id:4
+2017-12-19 17:24:24,497 versiondb.py[line:167] INFO version_delete end
+2017-12-19 17:24:48,002 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:24:48,002 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:24:48,007 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:24:48,036 versiondb.py[line:146] INFO version_delete start
+2017-12-19 17:24:48,036 versiondb.py[line:147] INFO request: <WSGIRequest: POST '/app_cmdb/version/delete'>
+2017-12-19 17:24:48,036 versiondb.py[line:151] INFO form:{'id': u'6'}
+2017-12-19 17:24:48,036 versiondb.py[line:157] INFO delete id:6
+2017-12-19 17:24:48,038 versiondb.py[line:167] INFO version_delete end
+2017-12-19 17:24:48,063 versiondb.py[line:21] INFO version_add start
+2017-12-19 17:24:48,063 versiondb.py[line:22] INFO request: <WSGIRequest: POST '/app_cmdb/version/add'>
+2017-12-19 17:24:48,071 versiondb.py[line:82] INFO version_add end
+2017-12-19 17:24:48,075 versiondb.py[line:89] INFO version_select start
+2017-12-19 17:24:48,075 versiondb.py[line:90] INFO request: <WSGIRequest: GET '/app_cmdb/version/select?description=&softwareId=36&ordername=id&limit=5&offset=1&order=asc&name='>
+2017-12-19 17:24:48,079 versiondb.py[line:139] INFO version_select end

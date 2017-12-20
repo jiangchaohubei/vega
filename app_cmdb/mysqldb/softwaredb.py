@@ -14,7 +14,10 @@ from authority.permission import PermissionVerify
 import logging
 log = logging.getLogger("software")
 
-
+#description:添加程序
+#params: request.POST {"NAME":"test","DESCRIPTION":"test","RESPONSIBLE_PERSON":"1","OWNER":"onlyOne","MODULE_ID":module.id,"LISTEN_PORT":"1",
+#"DEPLOY_DIR":"1","DEPLOY_ACCOUNT":"1","TIMER_SCRIPT":"1","LOG_EXPORT":"1","NOTE":"1","DATA_BACKUPPATH":"1","DATA_FILEPATH":"1"}
+#return: {"resultCode":"","resultDesc":""}
 def software_add(request):
     log.info('software_add start')
     log.info("request: "+str(request))
@@ -59,6 +62,9 @@ def software_add(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
+#description:查询程序
+#params: request.GET {"offset":"1","limit":"5","order":"asc","ordername":"id","name":"","description":"","moduleId":"","systemId":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 def software_select(request):
     log.info('software_select start')
     log.info("request: "+str(request))
@@ -122,7 +128,9 @@ def software_select(request):
     log.info('software_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-
+#description:删除程序
+#params: request.POST   {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 def software_delete(request):
     log.info('software_delete start')
     log.info("request: "+str(request))
@@ -149,8 +157,10 @@ def software_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 更新任务 根据id  更新
-
+#description:修改程序
+#params: request.POST {"id":"","NAME":"test","DESCRIPTION":"test","RESPONSIBLE_PERSON":"1","OWNER":"onlyOne","MODULE_ID":module.id,"LISTEN_PORT":"1",
+#"DEPLOY_DIR":"1","DEPLOY_ACCOUNT":"1","TIMER_SCRIPT":"1","LOG_EXPORT":"1","NOTE":"1","DATA_BACKUPPATH":"1","DATA_FILEPATH":"1"}
+#return: {"resultCode":"","resultDesc":""}
 def software_update(request):
     log.info('software_update start')
     log.info("request: "+str(request))
@@ -234,7 +244,9 @@ def init_system_module_select(request):
     log.info('init_system_module_select end')
     return HttpResponse(json.dumps({'moduleList': eval(moduleList)}))
 
-#绑定主机
+#description:绑定主机和程序
+#params: request.POST {"id":"","hostList":"[]"}
+#return: {"resultCode":"","resultDesc":"","errorHost":[]}
 def host_add(request):
     log.info('host_add start')
     log.info("request: "+str(request))
@@ -273,6 +285,9 @@ def host_add(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
+#description:查询程序所拥有的所有主机
+#params: request.GET {"offset":"1","limit":"5","order":"asc","ordername":"","id":"software.id"}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 def host_select(request):
     log.info('host_select start')
     log.info("request: "+str(request))
@@ -314,6 +329,9 @@ def host_select(request):
     log.info('host_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
+#description:解绑程序所拥有的主机
+#params: request.POST {"id":"host.id","softwareId":"softwareId"}
+#return: {"resultCode":"","resultDesc":"",}
 def host_delete(request):
     log.info('host_delete start')
     log.info("request: "+str(request))
