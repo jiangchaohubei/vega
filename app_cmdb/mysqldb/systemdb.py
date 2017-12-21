@@ -46,7 +46,7 @@ def system_add(request):
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
         system = T_SYSTEM(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], COMPANY=request.POST['COMPANY'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
-                      )
+                          )
         system.save()
 
         response_data['resultCode']='0000'
@@ -260,7 +260,7 @@ def system_export(request):
                             else:
                                 for host in software.HOSTS.all():
                                     row_data=[system.NAME,system.DESCRIPTION,system.COMPANY,module.NAME,module.DESCRIPTION,module.RESPONSIBLE_PERSON,software.NAME,software.DESCRIPTION,software.RESPONSIBLE_PERSON,software.LISTEN_PORT
-                                              ,software.DEPLOY_DIR,software.DEPLOY_ACCOUNT,software.TIMER_SCRIPT,software.LOG_EXPORT,software.NOTE,software.DATA_BACKUPPATH,software.DATA_FILEPATH,host.NAME
+                                        ,software.DEPLOY_DIR,software.DEPLOY_ACCOUNT,software.TIMER_SCRIPT,software.LOG_EXPORT,software.NOTE,software.DATA_BACKUPPATH,software.DATA_FILEPATH,host.NAME
                                         ,host.DESCRIPTION,host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.VARIABLES,host.NOTE]
 
                                     sheet_1.append(row_data)
@@ -339,7 +339,8 @@ def system_import(request):
             for i in range(len(system_sheet)) :
                 if i!=0:
                     row_data=system_sheet[i]
-                    if row_data[0]:
+                    log.info("row_data ："+row_data)
+                    if len(row_data)>=1:
                         system,created=T_SYSTEM.objects.get_or_create(NAME=row_data[0])
                         system.DESCRIPTION=row_data[1]
                         system.COMPANY=row_data[2]
@@ -348,7 +349,7 @@ def system_import(request):
                         system.CREATE_USER_ID=request.session['userId']
                         system.CREATE_USER_NAME=request.session['username']
                         system.save()
-                        if row_data[3]:
+                        if len(row_data)>=4:
                             module,created=T_MODULE.objects.get_or_create(NAME=row_data[3],SYSTEM_ID=system)
                             module.DESCRIPTION=row_data[4]
                             module.RESPONSIBLE_PERSON=row_data[5]
@@ -357,7 +358,7 @@ def system_import(request):
                             module.CREATE_USER_ID=request.session['userId']
                             module.CREATE_USER_NAME=request.session['username']
                             module.save()
-                            if row_data[6]:
+                            if len(row_data)>=7:
                                 software,created=T_SOFTWARE.objects.get_or_create(NAME=row_data[6],MODULE_ID=module)
                                 software.DESCRIPTION =row_data[7]
                                 software.RESPONSIBLE_PERSON =row_data[8]
@@ -374,7 +375,7 @@ def system_import(request):
                                 software.CREATE_USER_ID=request.session['userId']
                                 software.CREATE_USER_NAME=request.session['username']
                                 software.save()
-                                if row_data[17]:
+                                if len(row_data)>=18:
                                     host,created=T_HOST.objects.get_or_create(Name=row_data[17])
                                     host.SYSTEM_ID =system
                                     host.DESCRIPTION =row_data[18]
