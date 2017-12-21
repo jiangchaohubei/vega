@@ -339,11 +339,11 @@ def system_import(request):
             for i in range(len(system_sheet)) :
                 if i!=0:
                     row_data=system_sheet[i]
-                    log.info("row_data ："+row_data)
+                    log.info("row_data ："+str(row_data))
                     if len(row_data)>=1:
                         system,created=T_SYSTEM.objects.get_or_create(NAME=row_data[0])
-                        system.DESCRIPTION=row_data[1]
-                        system.COMPANY=row_data[2]
+                        system.DESCRIPTION=row_data[1] if len(row_data)>=2 else None
+                        system.COMPANY=row_data[2] if len(row_data)>=3 else None
                         system.OWNER_ID=request.session['userId']
                         system.OWNER_NAME=request.session['username']
                         system.CREATE_USER_ID=request.session['userId']
@@ -351,8 +351,8 @@ def system_import(request):
                         system.save()
                         if len(row_data)>=4:
                             module,created=T_MODULE.objects.get_or_create(NAME=row_data[3],SYSTEM_ID=system)
-                            module.DESCRIPTION=row_data[4]
-                            module.RESPONSIBLE_PERSON=row_data[5]
+                            module.DESCRIPTION=row_data[4] if len(row_data)>=5 else None
+                            module.RESPONSIBLE_PERSON=row_data[5] if len(row_data)>=6 else None
                             module.OWNER_ID=request.session['userId']
                             module.OWNER_NAME=request.session['username']
                             module.CREATE_USER_ID=request.session['userId']
@@ -360,16 +360,16 @@ def system_import(request):
                             module.save()
                             if len(row_data)>=7:
                                 software,created=T_SOFTWARE.objects.get_or_create(NAME=row_data[6],MODULE_ID=module)
-                                software.DESCRIPTION =row_data[7]
-                                software.RESPONSIBLE_PERSON =row_data[8]
-                                software.LISTEN_PORT =row_data[9]
-                                software.DEPLOY_DIR =row_data[10]
-                                software.DEPLOY_ACCOUNT =row_data[11]
-                                software.TIMER_SCRIPT =row_data[12]
-                                software.LOG_EXPORT =row_data[13]
-                                software.NOTE =row_data[14]
-                                software.DATA_BACKUPPATH =row_data[15]
-                                software.DATA_FILEPATH =row_data[16]
+                                software.DESCRIPTION =row_data[7] if len(row_data)>=8 else None
+                                software.RESPONSIBLE_PERSON =row_data[8] if len(row_data)>=9 else None
+                                software.LISTEN_PORT =int(row_data[9]) if len(row_data)>=10 else 22
+                                software.DEPLOY_DIR =row_data[10] if len(row_data)>=11 else None
+                                software.DEPLOY_ACCOUNT =row_data[11] if len(row_data)>=12 else None
+                                software.TIMER_SCRIPT =row_data[12] if len(row_data)>=13 else None
+                                software.LOG_EXPORT =row_data[13] if len(row_data)>=14 else None
+                                software.NOTE =row_data[14] if len(row_data)>=15 else None
+                                software.DATA_BACKUPPATH =row_data[15] if len(row_data)>=16 else None
+                                software.DATA_FILEPATH =row_data[16] if len(row_data)>=17 else None
                                 software.OWNER_ID=request.session['userId']
                                 software.OWNER_NAME=request.session['username']
                                 software.CREATE_USER_ID=request.session['userId']
@@ -378,16 +378,16 @@ def system_import(request):
                                 if len(row_data)>=18:
                                     host,created=T_HOST.objects.get_or_create(Name=row_data[17])
                                     host.SYSTEM_ID =system
-                                    host.DESCRIPTION =row_data[18]
-                                    host.MACHINE_TYPE =row_data[19]
-                                    host.MACHINE_ROOM =row_data[20]
-                                    host.MACHINE_POSITION =row_data[21]
-                                    host.CUTTER_NUMBER =row_data[22]
-                                    host.SN_NUMBER =row_data[23]
-                                    host.OS =row_data[24]
-                                    host.PHYSICAL_MACHINE_TYPE =row_data[25]
-                                    host.VARIABLES =row_data[26]
-                                    host.NOTE =row_data[27]
+                                    host.DESCRIPTION =row_data[18] if len(row_data)>=19 else None
+                                    host.MACHINE_TYPE =row_data[19] if len(row_data)>=20 else None
+                                    host.MACHINE_ROOM =row_data[20] if len(row_data)>=21 else None
+                                    host.MACHINE_POSITION =row_data[21] if len(row_data)>=22 else None
+                                    host.CUTTER_NUMBER =row_data[22] if len(row_data)>=23 else None
+                                    host.SN_NUMBER =row_data[23] if len(row_data)>=24 else None
+                                    host.OS =row_data[24] if len(row_data)>=25 else None
+                                    host.PHYSICAL_MACHINE_TYPE =row_data[25] if len(row_data)>=26 else None
+                                    host.VARIABLES =row_data[26] if len(row_data)>=27 else None
+                                    host.NOTE =row_data[27] if len(row_data)>=28 else None
                                     host.OWNER_ID=request.session['userId']
                                     host.OWNER_NAME=request.session['username']
                                     host.CREATE_USER_ID=request.session['userId']
