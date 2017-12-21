@@ -362,7 +362,7 @@ def system_import(request):
                                 software,created=T_SOFTWARE.objects.get_or_create(NAME=row_data[6],MODULE_ID=module)
                                 software.DESCRIPTION =row_data[7] if len(row_data)>=8 else None
                                 software.RESPONSIBLE_PERSON =row_data[8] if len(row_data)>=9 else None
-                                software.LISTEN_PORT =int(row_data[9]) if len(row_data)>=10 else 22
+                                software.LISTEN_PORT =int(row_data[9]) if len(row_data)>=10 and row_data[9]!='' else 22
                                 software.DEPLOY_DIR =row_data[10] if len(row_data)>=11 else None
                                 software.DEPLOY_ACCOUNT =row_data[11] if len(row_data)>=12 else None
                                 software.TIMER_SCRIPT =row_data[12] if len(row_data)>=13 else None
