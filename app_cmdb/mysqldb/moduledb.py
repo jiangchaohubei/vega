@@ -45,7 +45,7 @@ def module_add(request):
             response_data['resultDesc']='系统中该模块已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-        module = T_MODULE(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'],SYSTEM_ID=T_SYSTEM.objects.get(id=request.POST['SYSTEM_ID']),RESPONSIBLE_PERSON=request.POST['RESPONSIBLE_PERSON'],OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
+        module = T_MODULE(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'],SYSTEM_ID=T_SYSTEM.objects.get(id=request.POST['SYSTEM_ID']),RESPONSIBLE_PERSON=request.POST['RESPONSIBLE_PERSON'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                       )
         module.save()
 

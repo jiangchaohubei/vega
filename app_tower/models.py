@@ -761,12 +761,6 @@ class T_VERSION(models.Model):
     ARGS1=models.CharField(max_length=128,null=True,blank=True)
     ARGS2=models.CharField(max_length=128,null=True,blank=True)
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
-	
-	
-
-	
-	
-
 
 
 

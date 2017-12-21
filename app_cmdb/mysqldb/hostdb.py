@@ -47,7 +47,7 @@ def host_add(request):
             response_data['resultDesc']='NAME已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-        host = T_HOST(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], VARIABLES=request.POST['VARIABLES'],OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
+        host = T_HOST(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], VARIABLES=request.POST['VARIABLES'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                       MACHINE_TYPE=request.POST['MACHINE_TYPE'],MACHINE_ROOM=request.POST['MACHINE_ROOM'],MACHINE_POSITION=request.POST['MACHINE_POSITION'],CUTTER_NUMBER=request.POST['CUTTER_NUMBER'],SN_NUMBER=request.POST['SN_NUMBER'],OS=request.POST['OS'],
                       PHYSICAL_MACHINE_TYPE=request.POST['PHYSICAL_MACHINE_TYPE'],NOTE=request.POST['NOTE'],SYSTEM_ID=T_SYSTEM.objects.get(id=request.POST['SYSTEM_ID']))
         host.save()
@@ -245,7 +245,7 @@ def host_export(request):
         # sheet表的数据
 
         row_1_data = [u"IP地址",u"描述",u"部署程序",u"程序描述",u"程序负责人",u"默认监听端口",u"默认部署目录",u"默认部署账号",u"定时脚本任务",u"日志输出",u"备注",u"数据备份路径",u"数据文件路径",u"所属组件（模块）",u"组件描述",u"组件负责人",u"所属系统", u"系统描述",u"责任公司"]  # 每一行的数据
-        row_2_data=[u"IP地址",u"描述",u"所属系统",u"机器类型",u"机房",u"机架位置",u"刀框编号",u"SN好",u"OS",u"物理机配置类型",u"备注"]
+        row_2_data=[u"IP地址",u"描述",u"所属系统",u"机器类型",u"机房",u"机架位置",u"刀框编号",u"SN好",u"OS",u"物理机配置类型",u"变量",u"备注"]
         # 遍历  逐条添加数据
         sheet_1 = []
         # 添加表头
@@ -276,10 +276,10 @@ def host_export(request):
 
             if host.SYSTEM_ID_id==None:
 
-                sheet_2.append([host.NAME,host.DESCRIPTION,"",host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.NOTE])
+                sheet_2.append([host.NAME,host.DESCRIPTION,"",host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.VARIABLES,host.NOTE])
             else:
 
-                sheet_2.append([host.NAME,host.DESCRIPTION,host.SYSTEM_ID.NAME,host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.NOTE])
+                sheet_2.append([host.NAME,host.DESCRIPTION,host.SYSTEM_ID.NAME,host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.VARIABLES,host.NOTE])
         charts[u"主机信息列表"]=sheet_2
         # 添加sheet表
         log.info(charts)

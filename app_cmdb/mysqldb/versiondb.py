@@ -66,7 +66,7 @@ def version_add(request):
             for chunk in file.chunks():
                 fo.write(chunk)
 
-        version = T_VERSION(NAME=request.POST['NAME'], DESCRIPTION=DESCRIPTION,SOFTWARE_ID=software,INSTALL_PATH=INSTALL_PATH,PACKAGE_PATH=PACKAGE_PATH,
+        version = T_VERSION(NAME=request.POST['NAME'], DESCRIPTION=DESCRIPTION,SOFTWARE_ID=software,INSTALL_PATH=INSTALL_PATH,PACKAGE_PATH=PACKAGE_PATH,OWNER_ID=software.OWNER_ID,OWNER_NAME=software.OWNER_NAME,
                              OWNER_ALL=software.OWNER_ALL,OWNER_PROJECT_ID=software.OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                               )
         version.save()

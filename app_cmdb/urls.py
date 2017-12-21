@@ -19,6 +19,7 @@ urlpatterns = patterns('app_cmdb',
                        url(r'^system/init_system_select$', systemdb.init_system_select),
                        url(r'^system/export$', systemdb.system_export),
                        url(r'^system/export/download$', systemdb.system_download),
+                       url(r'^system/import$', systemdb.system_import),
 
                        url(r'^module/add$', moduledb.module_add),
                        url(r'^module/select$', moduledb.module_select),

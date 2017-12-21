@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf8 -*-
 from app_tower.models import T_HOST,T_PROJECT
-from app_tower.models import T_SYSTEM
+from app_tower.models import T_SYSTEM,T_MODULE,T_SOFTWARE
 from django.forms.models import model_to_dict
 from django.http import HttpRequest, HttpResponse
 from django.http import JsonResponse
@@ -11,7 +11,7 @@ import os
 import traceback
 # 写excel数据 (xls)   pyexcel_xls 以 OrderedDict 结构处理数据
 from collections import OrderedDict
-from pyexcel_xls import save_data
+from pyexcel_xls import save_data,get_data
 from django.core import serializers
 from authority.permission import PermissionVerify
 import logging
@@ -45,7 +45,7 @@ def system_add(request):
             response_data['resultDesc']='系统已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-        system = T_SYSTEM(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], COMPANY=request.POST['COMPANY'],OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
+        system = T_SYSTEM(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], COMPANY=request.POST['COMPANY'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                       )
         system.save()
 
@@ -234,7 +234,8 @@ def system_export(request):
         charts={}
         # sheet表的数据
 
-        row_1_data = [u"系统名称", u"系统描述",u"责任公司",u"组件（模块）名称",u"组件描述",u"组件负责人",u"部署程序",u"程序描述",u"程序负责人",u"默认监听端口",u"默认部署目录",u"默认部署账号",u"定时脚本任务",u"日志输出",u"备注",u"数据备份路径",u"数据文件路径",u"IP地址"]  # 每一行的数据
+        row_1_data = [u"系统名称", u"系统描述",u"责任公司",u"组件（模块）名称",u"组件描述",u"组件负责人",u"部署程序",u"程序描述",u"程序负责人",u"默认监听端口",u"默认部署目录",u"默认部署账号",u"定时脚本任务",u"日志输出",u"备注",u"数据备份路径",u"数据文件路径",u"IP地址"
+            ,u"描述",u"机器类型",u"机房",u"机架位置",u"刀框编号",u"SN好",u"OS",u"物理机配置类型",u"变量",u"备注"]  # 每一行的数据
 
         # 遍历  逐条添加数据
         for system in t_system_List:
@@ -259,7 +260,8 @@ def system_export(request):
                             else:
                                 for host in software.HOSTS.all():
                                     row_data=[system.NAME,system.DESCRIPTION,system.COMPANY,module.NAME,module.DESCRIPTION,module.RESPONSIBLE_PERSON,software.NAME,software.DESCRIPTION,software.RESPONSIBLE_PERSON,software.LISTEN_PORT
-                                              ,software.DEPLOY_DIR,software.DEPLOY_ACCOUNT,software.TIMER_SCRIPT,software.LOG_EXPORT,software.NOTE,software.DATA_BACKUPPATH,software.DATA_FILEPATH,host.NAME]
+                                              ,software.DEPLOY_DIR,software.DEPLOY_ACCOUNT,software.TIMER_SCRIPT,software.LOG_EXPORT,software.NOTE,software.DATA_BACKUPPATH,software.DATA_FILEPATH,host.NAME
+                                        ,host.DESCRIPTION,host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.VARIABLES,host.NOTE]
 
                                     sheet_1.append(row_data)
 
@@ -312,3 +314,94 @@ def system_download(request):
     # 导出成功之后   删除服务器上的文件
     os.remove(form["filepath"])
     return response
+
+#导入系统，程序组件，host信息xlsx文件
+def system_import(request):
+    log.info('system_import start')
+    response_data = {}
+    importRoot=str(os.getcwd())+"/import"
+    try:
+        myFile = request.FILES.get("inputFile", None)  # 获取上传的文件，如果没有文件，则默认为None
+        if not myFile:
+            log.info("no files for upload!")
+            response_data['resultCode'] = '0001'
+            response_data['resultDesc'] = 'no files for upload!'
+        # destination = open(os.path.join(importRoot, myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
+        # for chunk in myFile.chunks():  # 分块写入文件
+        #     destination.write(chunk)
+        # destination.close()
+        # log.info("system_upload over!")
+        # excelPath=importRoot+"/"+myFile.name
+        xls_data = get_data(myFile)
+        for sheet_n in xls_data.keys():
+            #sheet_n系统名
+            system_sheet=xls_data[sheet_n]
+            for i in range(len(system_sheet)) :
+                if i!=0:
+                    row_data=system_sheet[i]
+                    if row_data[0]:
+                        system,created=T_SYSTEM.objects.get_or_create(NAME=row_data[0])
+                        system.DESCRIPTION=row_data[1]
+                        system.COMPANY=row_data[2]
+                        system.OWNER_ID=request.session['userId']
+                        system.OWNER_NAME=request.session['username']
+                        system.CREATE_USER_ID=request.session['userId']
+                        system.CREATE_USER_NAME=request.session['username']
+                        system.save()
+                        if row_data[3]:
+                            module,created=T_MODULE.objects.get_or_create(NAME=row_data[3],SYSTEM_ID=system)
+                            module.DESCRIPTION=row_data[4]
+                            module.RESPONSIBLE_PERSON=row_data[5]
+                            module.OWNER_ID=request.session['userId']
+                            module.OWNER_NAME=request.session['username']
+                            module.CREATE_USER_ID=request.session['userId']
+                            module.CREATE_USER_NAME=request.session['username']
+                            module.save()
+                            if row_data[6]:
+                                software,created=T_SOFTWARE.objects.get_or_create(NAME=row_data[6],MODULE_ID=module)
+                                software.DESCRIPTION =row_data[7]
+                                software.RESPONSIBLE_PERSON =row_data[8]
+                                software.LISTEN_PORT =row_data[9]
+                                software.DEPLOY_DIR =row_data[10]
+                                software.DEPLOY_ACCOUNT =row_data[11]
+                                software.TIMER_SCRIPT =row_data[12]
+                                software.LOG_EXPORT =row_data[13]
+                                software.NOTE =row_data[14]
+                                software.DATA_BACKUPPATH =row_data[15]
+                                software.DATA_FILEPATH =row_data[16]
+                                software.OWNER_ID=request.session['userId']
+                                software.OWNER_NAME=request.session['username']
+                                software.CREATE_USER_ID=request.session['userId']
+                                software.CREATE_USER_NAME=request.session['username']
+                                software.save()
+                                if row_data[17]:
+                                    host,created=T_HOST.objects.get_or_create(Name=row_data[17])
+                                    host.SYSTEM_ID =system
+                                    host.DESCRIPTION =row_data[18]
+                                    host.MACHINE_TYPE =row_data[19]
+                                    host.MACHINE_ROOM =row_data[20]
+                                    host.MACHINE_POSITION =row_data[21]
+                                    host.CUTTER_NUMBER =row_data[22]
+                                    host.SN_NUMBER =row_data[23]
+                                    host.OS =row_data[24]
+                                    host.PHYSICAL_MACHINE_TYPE =row_data[25]
+                                    host.VARIABLES =row_data[26]
+                                    host.NOTE =row_data[27]
+                                    host.OWNER_ID=request.session['userId']
+                                    host.OWNER_NAME=request.session['username']
+                                    host.CREATE_USER_ID=request.session['userId']
+                                    host.CREATE_USER_NAME=request.session['username']
+                                    host.save()
+
+
+
+
+        response_data['resultCode'] = '0000'
+        response_data['resultDesc'] = 'Success'
+    except Exception, ex:
+        traceback.print_exc()
+        log.error(ex.__str__())
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = ex.__str__()
+    log.info('system_import end')
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")

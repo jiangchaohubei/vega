@@ -45,7 +45,7 @@ def software_add(request):
             response_data['resultDesc']='模块中该程序已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-        software = T_SOFTWARE(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'],MODULE_ID=T_MODULE.objects.get(id=request.POST['MODULE_ID']),RESPONSIBLE_PERSON=request.POST['RESPONSIBLE_PERSON'],OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
+        software = T_SOFTWARE(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'],MODULE_ID=T_MODULE.objects.get(id=request.POST['MODULE_ID']),RESPONSIBLE_PERSON=request.POST['RESPONSIBLE_PERSON'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                     LISTEN_PORT=request.POST['LISTEN_PORT'] if request.POST['LISTEN_PORT'] else 22,DEPLOY_DIR=request.POST['DEPLOY_DIR'],DEPLOY_ACCOUNT=request.POST['DEPLOY_ACCOUNT'],TIMER_SCRIPT=request.POST['TIMER_SCRIPT'],LOG_EXPORT=request.POST['LOG_EXPORT'],
                               NOTE=request.POST['NOTE'],DATA_BACKUPPATH=request.POST['DATA_BACKUPPATH'],DATA_FILEPATH=request.POST['DATA_FILEPATH'],)
         software.save()

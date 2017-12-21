@@ -392,6 +392,46 @@ function downloadExcel(filepath){
     // window.open("/app_tower/group/export/download?filepath="+filepath+'&filename='+filename);
 }
 
+function importSystem() {
+    var formData = new FormData($( "#importForm" )[0]);
+    $.ajax({
+            url:"/app_cmdb/system/import",
+            type:"POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(data){
+                if (data.resultCode=="0087"){
+                    alert(data.resultDesc);
+                    top.location.href ='/login'
+                }
+                if(data.resultCode=="0057"){
+                    opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                    return;
+                }
+                if(data.resultCode=="0001"){
+                    opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                    return;
+                }
+                if(data.resultCode=="0000"){
+                    console.log(data.resultDesc)
+                    $("#importModal").modal("hide");
+
+                    opt_commons.dialogShow("成功信息",data.resultDesc,2000);
+                    $("#system_table").bootstrapTable('refresh');
+                    return;
+                }
+            },
+            error: function(data) {
+                opt_commons.dialogShow("错误","error",2000);
+                $("#system_table").bootstrapTable('refresh');
+
+            },
+        }
+    )
+}
 
 
 

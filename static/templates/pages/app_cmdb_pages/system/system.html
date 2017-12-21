@@ -83,6 +83,10 @@
                           <button type="button" class="btn btn-primary" style="margin-top:20px;margin-left:20px;width:160px;" data-toggle="modal" data-target="#exportModal">
                               导出当前查询出系统
                           </button>
+                          <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#importModal">
+                              <i class="fa fa-upload"></i>
+                              系统信息导入
+                          </button>
                       </div>
                 </div>
 
@@ -260,6 +264,33 @@
     </div><!-- /.modal -->
 </div>
 
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importAndDeleteModalLabel">导入系统文件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="importForm" enctype="multipart/form-data" method="post">
+
+                    <label for="input-b1">选择文件</label>
+                    <input id="inputHostFile" name="inputFile"  type="file" class="file">
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button class="btn btn-success" type="button" onclick="importSystem()" >上传</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
