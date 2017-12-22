@@ -29,8 +29,7 @@ class authoritydbTestCase(TestCase):
 
     #登录
     def test_login(self):
-        res=self.client.post('/authority/user/loginCapcha',{"userName":"jzyuan","password":"88888888"})
-        self.assertEqual(res.status_code,200)
+
         res=self.client.post('/authority/user/login',{"USERNAME":"jzyuan","PASSWORD":"88888888"})
         print res.content
         self.assertEqual(res.status_code,200)
