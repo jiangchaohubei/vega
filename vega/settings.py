@@ -122,7 +122,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-ENVIRONMENT='现网'  #&'现网'
+ENVIRONMENT='预览'  #&'现网'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

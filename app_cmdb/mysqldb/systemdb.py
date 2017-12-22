@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from json import dumps
 import json
 import os
+from django.db import  transaction
 import traceback
 # 写excel数据 (xls)   pyexcel_xls 以 OrderedDict 结构处理数据
 from collections import OrderedDict
@@ -46,7 +47,7 @@ def system_add(request):
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
         system = T_SYSTEM(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], COMPANY=request.POST['COMPANY'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
-                          )
+                      )
         system.save()
 
         response_data['resultCode']='0000'
@@ -260,7 +261,7 @@ def system_export(request):
                             else:
                                 for host in software.HOSTS.all():
                                     row_data=[system.NAME,system.DESCRIPTION,system.COMPANY,module.NAME,module.DESCRIPTION,module.RESPONSIBLE_PERSON,software.NAME,software.DESCRIPTION,software.RESPONSIBLE_PERSON,software.LISTEN_PORT
-                                        ,software.DEPLOY_DIR,software.DEPLOY_ACCOUNT,software.TIMER_SCRIPT,software.LOG_EXPORT,software.NOTE,software.DATA_BACKUPPATH,software.DATA_FILEPATH,host.NAME
+                                              ,software.DEPLOY_DIR,software.DEPLOY_ACCOUNT,software.TIMER_SCRIPT,software.LOG_EXPORT,software.NOTE,software.DATA_BACKUPPATH,software.DATA_FILEPATH,host.NAME
                                         ,host.DESCRIPTION,host.MACHINE_TYPE,host.MACHINE_ROOM,host.MACHINE_POSITION,host.CUTTER_NUMBER,host.SN_NUMBER,host.OS,host.PHYSICAL_MACHINE_TYPE,host.VARIABLES,host.NOTE]
 
                                     sheet_1.append(row_data)
@@ -326,75 +327,70 @@ def system_import(request):
             log.info("no files for upload!")
             response_data['resultCode'] = '0001'
             response_data['resultDesc'] = 'no files for upload!'
-        # destination = open(os.path.join(importRoot, myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
-        # for chunk in myFile.chunks():  # 分块写入文件
-        #     destination.write(chunk)
-        # destination.close()
-        # log.info("system_upload over!")
-        # excelPath=importRoot+"/"+myFile.name
+
         xls_data = get_data(myFile)
-        for sheet_n in xls_data.keys():
-            #sheet_n系统名
-            system_sheet=xls_data[sheet_n]
-            for i in range(len(system_sheet)) :
-                if i!=0:
-                    row_data=system_sheet[i]
-                    log.info("row_data ："+str(row_data))
-                    if len(row_data)>=1:
-                        system,created=T_SYSTEM.objects.get_or_create(NAME=row_data[0])
-                        system.DESCRIPTION=row_data[1] if len(row_data)>=2 else None
-                        system.COMPANY=row_data[2] if len(row_data)>=3 else None
-                        system.OWNER_ID=request.session['userId']
-                        system.OWNER_NAME=request.session['username']
-                        system.CREATE_USER_ID=request.session['userId']
-                        system.CREATE_USER_NAME=request.session['username']
-                        system.save()
-                        if len(row_data)>=4:
-                            module,created=T_MODULE.objects.get_or_create(NAME=row_data[3],SYSTEM_ID=system)
-                            module.DESCRIPTION=row_data[4] if len(row_data)>=5 else None
-                            module.RESPONSIBLE_PERSON=row_data[5] if len(row_data)>=6 else None
-                            module.OWNER_ID=request.session['userId']
-                            module.OWNER_NAME=request.session['username']
-                            module.CREATE_USER_ID=request.session['userId']
-                            module.CREATE_USER_NAME=request.session['username']
-                            module.save()
-                            if len(row_data)>=7:
-                                software,created=T_SOFTWARE.objects.get_or_create(NAME=row_data[6],MODULE_ID=module)
-                                software.DESCRIPTION =row_data[7] if len(row_data)>=8 else None
-                                software.RESPONSIBLE_PERSON =row_data[8] if len(row_data)>=9 else None
-                                software.LISTEN_PORT =int(row_data[9]) if len(row_data)>=10 and row_data[9]!='' else 22
-                                software.DEPLOY_DIR =row_data[10] if len(row_data)>=11 else None
-                                software.DEPLOY_ACCOUNT =row_data[11] if len(row_data)>=12 else None
-                                software.TIMER_SCRIPT =row_data[12] if len(row_data)>=13 else None
-                                software.LOG_EXPORT =row_data[13] if len(row_data)>=14 else None
-                                software.NOTE =row_data[14] if len(row_data)>=15 else None
-                                software.DATA_BACKUPPATH =row_data[15] if len(row_data)>=16 else None
-                                software.DATA_FILEPATH =row_data[16] if len(row_data)>=17 else None
-                                software.OWNER_ID=request.session['userId']
-                                software.OWNER_NAME=request.session['username']
-                                software.CREATE_USER_ID=request.session['userId']
-                                software.CREATE_USER_NAME=request.session['username']
-                                software.save()
-                                if len(row_data)>=18:
-                                    host,created=T_HOST.objects.get_or_create(Name=row_data[17])
-                                    host.SYSTEM_ID =system
-                                    host.DESCRIPTION =row_data[18] if len(row_data)>=19 else None
-                                    host.MACHINE_TYPE =row_data[19] if len(row_data)>=20 else None
-                                    host.MACHINE_ROOM =row_data[20] if len(row_data)>=21 else None
-                                    host.MACHINE_POSITION =row_data[21] if len(row_data)>=22 else None
-                                    host.CUTTER_NUMBER =row_data[22] if len(row_data)>=23 else None
-                                    host.SN_NUMBER =row_data[23] if len(row_data)>=24 else None
-                                    host.OS =row_data[24] if len(row_data)>=25 else None
-                                    host.PHYSICAL_MACHINE_TYPE =row_data[25] if len(row_data)>=26 else None
-                                    host.VARIABLES =row_data[26] if len(row_data)>=27 else None
-                                    host.NOTE =row_data[27] if len(row_data)>=28 else None
-                                    host.OWNER_ID=request.session['userId']
-                                    host.OWNER_NAME=request.session['username']
-                                    host.CREATE_USER_ID=request.session['userId']
-                                    host.CREATE_USER_NAME=request.session['username']
-                                    host.save()
-
-
+        #开启事物管理
+        with transaction.atomic():
+            for sheet_n in xls_data.keys():
+                #sheet_n系统名
+                system_sheet=xls_data[sheet_n]
+                for i in range(len(system_sheet)) :
+                    if i!=0:
+                        row_data=system_sheet[i]
+                        log.info("row_data ："+str(row_data))
+                        if len(row_data)>=1:
+                            system,created=T_SYSTEM.objects.get_or_create(NAME=row_data[0])
+                            system.DESCRIPTION=row_data[1] if len(row_data)>=2 else None
+                            system.COMPANY=row_data[2] if len(row_data)>=3 else None
+                            system.OWNER_ID=request.session['userId']
+                            system.OWNER_NAME=request.session['username']
+                            system.CREATE_USER_ID=request.session['userId']
+                            system.CREATE_USER_NAME=request.session['username']
+                            system.save()
+                            if len(row_data)>=4:
+                                module,created=T_MODULE.objects.get_or_create(NAME=row_data[3],SYSTEM_ID=system)
+                                module.DESCRIPTION=row_data[4] if len(row_data)>=5 else None
+                                module.RESPONSIBLE_PERSON=row_data[5] if len(row_data)>=6 else None
+                                module.OWNER_ID=request.session['userId']
+                                module.OWNER_NAME=request.session['username']
+                                module.CREATE_USER_ID=request.session['userId']
+                                module.CREATE_USER_NAME=request.session['username']
+                                module.save()
+                                if len(row_data)>=7:
+                                    software,created=T_SOFTWARE.objects.get_or_create(NAME=row_data[6],MODULE_ID=module)
+                                    software.DESCRIPTION =row_data[7] if len(row_data)>=8 else None
+                                    software.RESPONSIBLE_PERSON =row_data[8] if len(row_data)>=9 else None
+                                    software.LISTEN_PORT =int(row_data[9]) if len(row_data)>=10 and row_data[9]!='' else 22
+                                    software.DEPLOY_DIR =row_data[10] if len(row_data)>=11 else None
+                                    software.DEPLOY_ACCOUNT =row_data[11] if len(row_data)>=12 else None
+                                    software.TIMER_SCRIPT =row_data[12] if len(row_data)>=13 else None
+                                    software.LOG_EXPORT =row_data[13] if len(row_data)>=14 else None
+                                    software.NOTE =row_data[14] if len(row_data)>=15 else None
+                                    software.DATA_BACKUPPATH =row_data[15] if len(row_data)>=16 else None
+                                    software.DATA_FILEPATH =row_data[16] if len(row_data)>=17 else None
+                                    software.OWNER_ID=request.session['userId']
+                                    software.OWNER_NAME=request.session['username']
+                                    software.CREATE_USER_ID=request.session['userId']
+                                    software.CREATE_USER_NAME=request.session['username']
+                                    software.save()
+                                    if len(row_data)>=18:
+                                        host,created=T_HOST.objects.get_or_create(Name=row_data[17])
+                                        host.SYSTEM_ID =system
+                                        host.DESCRIPTION =row_data[18] if len(row_data)>=19 else None
+                                        host.MACHINE_TYPE =row_data[19] if len(row_data)>=20 else None
+                                        host.MACHINE_ROOM =row_data[20] if len(row_data)>=21 else None
+                                        host.MACHINE_POSITION =row_data[21] if len(row_data)>=22 else None
+                                        host.CUTTER_NUMBER =row_data[22] if len(row_data)>=23 else None
+                                        host.SN_NUMBER =row_data[23] if len(row_data)>=24 else None
+                                        host.OS =row_data[24] if len(row_data)>=25 else None
+                                        host.PHYSICAL_MACHINE_TYPE =row_data[25] if len(row_data)>=26 else None
+                                        host.VARIABLES =row_data[26] if len(row_data)>=27 else None
+                                        host.NOTE =row_data[27] if len(row_data)>=28 else None
+                                        host.OWNER_ID=request.session['userId']
+                                        host.OWNER_NAME=request.session['username']
+                                        host.CREATE_USER_ID=request.session['userId']
+                                        host.CREATE_USER_NAME=request.session['username']
+                                        host.save()
 
 
         response_data['resultCode'] = '0000'
