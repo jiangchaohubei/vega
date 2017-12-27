@@ -378,6 +378,32 @@ class jobTemplatedbTestCase(TestCase):
         self.assertEqual(eval(res.content)['resultCode'],'0000')
         print 'test_save_run_job ',eval(res.content)['resultDesc']
 
+    def test_run_job(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+        group = T_Group(NAME="test", DESCRIPTION="test", VARIABLES="",OWNER_ALL=True)
+        group.save()
+        pb = playbook(NAME="test", DESCRIPTION="test",PLAYBOOK_PATH="/opt/playbook/jzyuan/test.yaml", PLAYBOOK_CONTENT="test",OWNER_ALL=True,CREATE_USER_NAME="jzyuan",FILEDIR=None)
+        pb.save()
+        job = T_JOB_TEMPLATE(NAME="test",DESCRIPTION="test",JOB_TYPE="Run",GROUP_ID=group,EXTRA_VARIABLES="",LABELS="",
+                             PLAYBOOK_ID=pb,PLAYBOOK_FILE=pb.PLAYBOOK_PATH,CREDENTIAL_MACHINE_ID=credentials,  FORKS=4,JOB_TAGS="",SKIP_TAGS="",
+                             OWNER_ALL=True)
+        job.save()
+        res=self.client.post('/app_tower/job/run_job',{"id":job.id,"hostList":"[]","jobTags":"","skipTags":"","variable":""})
+        self.assertEqual(eval(res.content)['resultCode'],'0000')
+        print 'test_run_job ',eval(res.content)['resultDesc']
+
+    def test_run_commands_searchSN(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+        group = T_Group(NAME="test", DESCRIPTION="test", VARIABLES="",OWNER_ALL=True)
+        group.save()
+        res=self.client.post('/app_tower/job/run_commands_searchSN',{"groupid":group.id,"hostList":"[]","credentialsid":credentials.id})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_searchSN ',eval(res.content)
+
     def tearDown(self):
         print("jobTemplatedbTestCase======in tearDown")
 
