@@ -24,7 +24,7 @@ urlpatterns = patterns('inventories',
 
                         url(r'^host/select$', inventoriesdb.host_select),
                         url(r'^host/delete$', inventoriesdb.host_delete),
-                        url(r'^host/update$', inventoriesdb.host_update),
+                        #url(r'^host/update$', inventoriesdb.host_update),
                         url(r'^hosts/downloadXLSX$', inventoriesdb.downloadXLSX),
                         url(r'^host/searchHostByGrooupId$', inventoriesdb.searchHostByGrooupId),
                         url(r'^host/selectBySomething$', inventoriesdb.selectBySomething),

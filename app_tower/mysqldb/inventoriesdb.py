@@ -20,7 +20,9 @@ log = logging.getLogger("inventoriesdb")  # 为loggers中定义的名称
 from authority.permission import PermissionVerify
 
 
-# 添加组
+#description:添加主机组
+#params: request.POST {"NAME":"test","DESCRIPTION":"test","group_owner":"onlyOne","VARIABLES":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def group_add(request):
     log.info('group_add start')
@@ -134,7 +136,9 @@ def create_backGroup(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 查询组
+#description:查询主机组
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def group_select(request):
     log.info('group_select start')
@@ -185,7 +189,9 @@ def group_select(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 删除组
+#description:删除主机组
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def group_delete(request):
     log.info('group_delete start')
@@ -212,7 +218,9 @@ def group_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 组根据id更新
+#description:修改主机组
+#params: request.POST {"id":"","name":"test","description":"test","owner":"onlyOne","variables":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def group_update(request):
     log.info('group_update start')
@@ -268,6 +276,9 @@ def group_update(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 # 导出主机组的信息 先查询主机组的信息 再写入到服务器上在 导出
+#description:导出主机，程序列表
+#params: request.POST
+#return: {"resultCode":"","resultDesc":"","filepath":""}
 @PermissionVerify()
 def group_export(request):
     response_data = {}
@@ -333,7 +344,10 @@ def group_download(request):
     # 导出成功之后   删除服务器上的文件
     os.remove(form["filepath"])
     return response
-# 添加host
+
+#description:主机组添加host
+#params: request.POST {"id":"groupId","hostList":"[]",}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def host_add(request):
     log.info('host_add start')
@@ -349,17 +363,17 @@ def host_add(request):
 
             log.info("form:"+str(form))
         group = T_Group.objects.get(id=form['id'])
-
-        for h in eval(form['hostList']):
-            print h
-            host=T_HOST.objects.get(NAME=h)
-            print host
-            group_host,create = T_GROUP_HOST_ID.objects.get_or_create(GROUP_ID=group, HOST_ID=host)
-            group_host.save()
+        #开启事物管理
+        with transaction.atomic():
+            for h in eval(form['hostList']):
+                if not T_HOST.objects.filter(NAME=h).exists():
+                    response_data['errorHost']=h
+                host=T_HOST.objects.get(NAME=h)
+                group_host,create = T_GROUP_HOST_ID.objects.get_or_create(GROUP_ID=group, HOST_ID=host)
+                group_host.save()
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-        print Exception, ex
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -446,7 +460,9 @@ def hosts_import(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 查询host
+#description:查询主机组中host
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","id":"groupId"}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def host_select(request):
     log.info('host_select start')
@@ -489,7 +505,9 @@ def host_select(request):
     log.info('host_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-# 删除组
+#description:删除主机组中主机（解除绑定关系）
+#params: request.POST {"id":"hostId","groupId":"groupId"}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def host_delete(request):
     log.info('host_delete start')
@@ -520,55 +538,55 @@ def host_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 组根据id更新
-@PermissionVerify()
-def host_update(request):
-    log.info('host_update start')
-    log.info("request: "+str(request))
-    form = {}
-    response_data = {}
-    try:
-        if request.POST:
-            form['id'] = request.POST['id']
-            if not T_HOST.objects.check_id(request,form['id']):
-                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"主机没有使用权限！"}))
-            form['groupId'] = request.POST['groupId']
-            if not T_Group.objects.check_id(request,form['groupId']):
-                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"主机组没有使用权限！"}))
-            form['name'] = request.POST['name']
-            form['description'] = request.POST['description']
-            form['variables'] = request.POST['variables']
-            log.info("form:"+str(form))
-        host = T_HOST.objects.get(id=form['id'])
-        host.NAME = form['name']
-        host.DESCRIPTION = form['description']
-        host.VARIABLES = form['variables']
-        host.MODIFY_USER_ID=request.session['userId']
-        group=T_Group.objects.get(id=form['groupId'])
-        host_list=group.HOSTS.all()
-        hostList = serializers.serialize('json', host_list, ensure_ascii=False)
-        true = True
-        false=False
-        null = None
-        host_list_dic=eval(hostList)
-        for h in host_list_dic:
-            if not h['pk']==int(form['id']):
-                if form['name']==h['fields']['NAME']:
-                    response_data['resultCode']='0001'
-                    response_data['resultDesc']='主机已经存在，不能重复！'
-                    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-
-        host.save()
-        response_data['resultCode'] = '0000'
-        response_data['resultDesc'] = '成功'
-    except Exception, ex:
-        print Exception, ex
-        traceback.print_exc()
-        log.error(ex.__str__())
-        response_data['resultCode'] = '0001'
-        response_data['resultDesc'] = ex.__str__()
-    log.info('host_update end')
-    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+# # 组根据id更新
+# @PermissionVerify()
+# def host_update(request):
+#     log.info('host_update start')
+#     log.info("request: "+str(request))
+#     form = {}
+#     response_data = {}
+#     try:
+#         if request.POST:
+#             form['id'] = request.POST['id']
+#             if not T_HOST.objects.check_id(request,form['id']):
+#                 return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"主机没有使用权限！"}))
+#             form['groupId'] = request.POST['groupId']
+#             if not T_Group.objects.check_id(request,form['groupId']):
+#                 return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"主机组没有使用权限！"}))
+#             form['name'] = request.POST['name']
+#             form['description'] = request.POST['description']
+#             form['variables'] = request.POST['variables']
+#             log.info("form:"+str(form))
+#         host = T_HOST.objects.get(id=form['id'])
+#         host.NAME = form['name']
+#         host.DESCRIPTION = form['description']
+#         host.VARIABLES = form['variables']
+#         host.MODIFY_USER_ID=request.session['userId']
+#         group=T_Group.objects.get(id=form['groupId'])
+#         host_list=group.HOSTS.all()
+#         hostList = serializers.serialize('json', host_list, ensure_ascii=False)
+#         true = True
+#         false=False
+#         null = None
+#         host_list_dic=eval(hostList)
+#         for h in host_list_dic:
+#             if not h['pk']==int(form['id']):
+#                 if form['name']==h['fields']['NAME']:
+#                     response_data['resultCode']='0001'
+#                     response_data['resultDesc']='主机已经存在，不能重复！'
+#                     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+#
+#         host.save()
+#         response_data['resultCode'] = '0000'
+#         response_data['resultDesc'] = '成功'
+#     except Exception, ex:
+#         print Exception, ex
+#         traceback.print_exc()
+#         log.error(ex.__str__())
+#         response_data['resultCode'] = '0001'
+#         response_data['resultDesc'] = ex.__str__()
+#     log.info('host_update end')
+#     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
 

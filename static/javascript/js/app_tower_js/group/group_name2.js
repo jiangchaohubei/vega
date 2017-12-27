@@ -58,7 +58,7 @@ function save_host(){
             }
             if(data.resultCode=="0001"){
                 console.log(data.resultCode)
-                opt_commons.dialogShow("失败信息",data.resultDesc,2000);
+                opt_commons.dialogShow("失败信息",data.errorHost+" : "+data.resultDesc,2000);
                 return;
             }
             if(data.resultCode=="0000"){

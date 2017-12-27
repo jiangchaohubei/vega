@@ -11,7 +11,7 @@ from app_tower.models import User
 import tempfile
 import traceback
 from django.db import  transaction
-#from app_tower.tasks import run_playbook,runCommands,runCommands2
+from app_tower.tasks import run_playbook,runCommands,runCommands2
 from celery.task.control import revoke
 from celery.result import AsyncResult
 from app_tower.utils import dateutil
@@ -36,8 +36,10 @@ def to_job_add(request):
     log.info("playbooksList:"+playbooksList)
     log.info("to_job_add end")
     return render(request, 'templates/pages/app_tower_pages/jobTemplete/jobTemplate_create.html', {'groupList': eval(groupList), 'credentialsList':eval(credentialsList), 'playbooksList':eval(playbooksList)})
-# 保存模板
 
+#description:添加任务模板
+#params: request.POST {"NAME":"test","DESCRIPTION":"test","JOB_TYPE":"","GROUP_ID":"","PLAYBOOK_FILE":"","job_owner":"onlyOne","credentials":"credentialsId","FORKS":"1","JOB_TAGS":"","SKIP_TAGS":"","EXTRA_VARIABLES":"","LABELS":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def job_add(request):
 
@@ -62,6 +64,7 @@ def job_add(request):
             form['JOB_TAGS'] = request.POST['JOB_TAGS']
             form['SKIP_TAGS'] = request.POST['SKIP_TAGS']
             form['EXTRA_VARIABLES'] = request.POST['EXTRA_VARIABLES']
+            form['LABELS'] = request.POST['LABELS']
         log.info("form :"+str(form))
 
         if not T_Group.objects.check_id(request,form['GROUP_ID']):
@@ -86,7 +89,7 @@ def job_add(request):
             response_data['resultCode']='0001'
             response_data['resultDesc']='NAME已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        job = T_JOB_TEMPLATE(NAME=form['NAME'],DESCRIPTION=form['DESCRIPTION'],JOB_TYPE=form['JOB_TYPE'],GROUP_ID=T_Group.objects.get(id=form['GROUP_ID']),EXTRA_VARIABLES=form['EXTRA_VARIABLES'],
+        job = T_JOB_TEMPLATE(NAME=form['NAME'],DESCRIPTION=form['DESCRIPTION'],JOB_TYPE=form['JOB_TYPE'],GROUP_ID=T_Group.objects.get(id=form['GROUP_ID']),EXTRA_VARIABLES=form['EXTRA_VARIABLES'],LABELS=form['LABELS'],
                              PLAYBOOK_ID=playbook.objects.get(id=form['PLAYBOOK_FILE']),PLAYBOOK_FILE=playbook.objects.get(id=form['PLAYBOOK_FILE']).PLAYBOOK_PATH,CREDENTIAL_MACHINE_ID=T_LOGIN_CREDENTIALS.objects.get(id=form['credentials']),  FORKS=form['FORKS'],JOB_TAGS=form['JOB_TAGS'],SKIP_TAGS=form['SKIP_TAGS'],
                              CREATE_USER_ID=userId,CREATE_USER_NAME=userName,OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_PROJECT_ID=OWNER_PROJECT_ID,OWNER_ALL=OWNER_ALL)
         job.save()
@@ -102,7 +105,9 @@ def job_add(request):
     log.info("job_add end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-#查询全部模板
+#description:查询任务模板
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def job_select(request):
 
@@ -151,15 +156,10 @@ def job_select(request):
     log.info('response_data:'+str(response_data))
     log.info("job_select end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-#根据id查询
-def job_selectById(request):
 
-    form = {}
-    if request.POST:
-        form['id'] = request.POST['id']
-    job=T_JOB_TEMPLATE.objects.get(id=form['id'])
-    return job
-#根据删除模板
+#description:删除任务模板
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def job_delete(request):
 
@@ -187,7 +187,11 @@ def job_delete(request):
         response_data['resultDesc'] = '已被使用，禁止删除！'
     log.info("job_delete end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-# 根据id 更新
+
+
+#description:修改任务模板
+#params: request.POST {"id":"","NAME":"test","DESCRIPTION":"test","JOB_TYPE":"","GROUP_ID":"","PLAYBOOK_FILE":"","owner":"onlyOne","Login_credentials":"credentialsId","FORKS":"1","JOB_TAGS":"","SKIP_TAGS":"","EXTRA_VARIABLES":"","Labels":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def job_update(request):
     log.info("job_update start")
@@ -264,7 +268,10 @@ def job_update(request):
         response_data['resultDesc'] = ex.__str__()
     log.info("job_update end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-#保存并执行模板
+
+#description:保存并执行任务模板
+#params: request.POST {"NAME":"test","DESCRIPTION":"test","JOB_TYPE":"","GROUP_ID":"","PLAYBOOK_FILE":"","job_owner":"onlyOne","credentials":"credentialsId","FORKS":"1","JOB_TAGS":"","SKIP_TAGS":"","EXTRA_VARIABLES":"","LABELS":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def save_run_job(request):
 

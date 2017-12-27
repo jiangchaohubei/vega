@@ -15,7 +15,11 @@ import logging
 log = logging.getLogger("credentials") # 为loggers中定义的名称
 from authority.permission import PermissionVerify
 from vega.settings import SECRET_KEY
-# 添加凭证
+
+#description:添加登录凭证
+#params: request.POST {"credentials_name":"test","credentials_desc":"test","credentials_owner":"onlyOne","credentials_type":"machine","credentials_loginUser":"root","credentials_password":"1qaz!QAZ",
+#"credentials_privilege":"su","privilege_password":"1qaz!QAZ"}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def credentials_add(request):
 
@@ -75,7 +79,9 @@ def credentials_add(request):
     log.info('credentials_add end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-#查询凭证
+#description:查询登录凭证
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def credentials_select(request):
 
@@ -108,7 +114,7 @@ def credentials_select(request):
         log.info('total:'+str(total))
         list = credentialsList[int(offset):int(offset)+int(limit)]
         response_data['resultCode'] = '0000'
-        response_data['resultDesc'] = '查询成功！'
+        response_data['resultDesc'] = 'SUCCESS'
         #序列码 serializers.serialize，且ensure_ascii=False防止乱码
         response_data['rows'] = serializers.serialize('json', list,ensure_ascii=False,)
         response_data['total'] = total
@@ -122,7 +128,9 @@ def credentials_select(request):
     log.info("credentials_select end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-#删除任务  数据库删除   根据id删除
+#description:删除登录凭证
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def credentials_delete(request):
     log.info('credentials_delete start')
@@ -149,7 +157,10 @@ def credentials_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 更新任务 根据id  更新
+#description:修改登录凭证
+#params: request.POST {"id":credentials.id,"name":"test1","description":"test1","type":"machine","loginUser":"root","loginPassword":"2wsx@WSX","privilege":"su",
+#    "privilegePassword":"2wsx@WSX","owner":"onlyOne"}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def credentials_update(request):
     log.info('credentials_update start')

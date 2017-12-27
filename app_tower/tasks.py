@@ -138,7 +138,7 @@ def run_playbook(file,jobsid,hostList=None):
 
     return result
 
-#定时任务
+#定时任务测试
 @task(throws=(Terminated,))
 def timer_task_test(jobTempleteId,createUserId,createUserName,startUserId,startUserName,OWNER_ID,OWNER_NAME,OWNER_PROJECT_ID,OWNER_ALL):
     log.info('timer_task_test start')

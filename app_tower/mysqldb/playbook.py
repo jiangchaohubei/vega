@@ -20,7 +20,9 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from vega import ipConfig
 
-# 添加组
+#description:添加playbook
+#params: request.POST {"name":"test","discription":"test","owner":"onlyOne","content":"","dir":"","gitlabPath":"","gitProjectId":"","inputFile":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def playbook_add(request):
     log.info("playbook_add start")
@@ -111,11 +113,13 @@ def playbook_add(request):
         log.error(ex.__str__())
         response_data['resultCode']='0001'
         response_data['resultDesc']=ex.__str__()
-        log.info('playbook_add end')
+
     log.info("playbook_add end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-#查询任务
+#description:查询playbook
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","userName":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def playbook_select(request):
     log.info('playbook_select start')
@@ -165,7 +169,9 @@ def playbook_select(request):
     log.info('playbook_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-#删除任务  数据库删除   根据id删除
+#description:删除playbook
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def playbook_delete(request):
     log.info('jobs_delete start')
@@ -181,7 +187,8 @@ def playbook_delete(request):
     playbooks = playbook.objects.get(id=form['id'])
     try:
         playbooks.delete()
-        os.remove(playbooks.PLAYBOOK_PATH)
+        if os.path.exists(playbooks.PLAYBOOK_PATH):
+            os.remove(playbooks.PLAYBOOK_PATH)
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '删除成功！'
     except Exception,ex:
@@ -193,7 +200,9 @@ def playbook_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 更新任务 根据id  更新
+#description:修改playbook
+#params: request.POST {"id":"","name":"test","description":"test","owner":"onlyOne","content":"","dir":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def playbook_update(request):
     log.info('playbook_update start')
@@ -234,7 +243,8 @@ def playbook_update(request):
                     response_data['resultDesc']='NAME已经存在，名称不能重复！'
                     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
             pb = playbook.objects.get(id=form['id'])
-            os.remove(pb.PLAYBOOK_PATH)#删除原文件
+            if os.path.exists(pb.PLAYBOOK_PATH):
+                os.remove(pb.PLAYBOOK_PATH)#删除原文件
             PLAYBOOK_PATH=""
             if not os.path.exists('/opt/playbooks'):
                 os.makedirs('/opt/playbooks')

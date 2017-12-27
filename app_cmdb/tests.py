@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*
 from django.test import TestCase
-from mysqldb import hostdb,moduledb,softwaredb,systemdb,versiondb
+
 from app_tower.models import User,RoleList,PermissionList,T_RoleList_PermissionList_ID,T_SYSTEM,T_HOST,T_MODULE,T_SOFTWARE,T_VERSION
-from vega.rolelist_permissionlist_init import rolelist_permission
+
 from authority.mysqldb.authoritydb import md5
 # Create your tests here.
 
@@ -61,6 +61,7 @@ class hostdbTestCase(TestCase):
     #
     #     res=self.client.post('/app_cmdb/host/export',{"name":"","description":"","systemId":""})
     #     self.assertEqual(eval(res.content)['resultCode'],'0000')
+    #     self.assertEqual(res.status_code,200)
     #     print eval(res.content)['resultDesc']
     #     return eval(res.content)['filepath']
     #
@@ -68,6 +69,7 @@ class hostdbTestCase(TestCase):
     # def test_host_download(self):
     #     filepath=self.test_host_export()
     #     res=self.client.get('/app_cmdb/host/export/download',{"filepath":filepath})
+    #     self.assertEqual(res.status_code,200)
     #     print res.content
 
 
@@ -193,6 +195,8 @@ class systemdbTestCase(TestCase):
     #
     #     res=self.client.post('/app_cmdb/system/export',{"name":"","description":"","company":""})
     #     self.assertEqual(eval(res.content)['resultCode'],'0000')
+    #     self.assertEqual(res.status_code,200)
+
     #     print eval(res.content)['resultDesc']
     #     return eval(res.content)['filepath']
     #
@@ -200,6 +204,8 @@ class systemdbTestCase(TestCase):
     # def test_system_download(self):
     #     filepath=self.test_system_export()
     #     res=self.client.get('/app_cmdb/system/export/download',{"filepath":filepath})
+    #     self.assertEqual(res.status_code,200)
+
     #     print res.content
 
 

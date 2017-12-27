@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from json import dumps
 import json
 import traceback
-
+from django.db import  transaction
 from django.core import serializers
 from authority.permission import PermissionVerify
 import logging
@@ -60,7 +60,11 @@ def init_ProjectModal(request):
     # log.info('allproject_List：'+allprojectList.decode('utf-8'))
     log.info('init_ProjectModal end')
     return HttpResponse(json.dumps({'projectName': projectName,'owner_user_List':owner_user_List,'user_List':user_List,'allproject_List':allproject_List}))
-# 添加组
+
+
+#description:添加项目组
+#params: request.POST {"NAME":"test","DESCRIPTION":"test","OWNER":"onlyOne","USERS":[]}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def project_add(request):
     log.info('project_add start')
@@ -87,20 +91,23 @@ def project_add(request):
             response_data['resultCode']='0001'
             response_data['resultDesc']='NAME已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        project = T_PROJECT(NAME=form['name'], DESCRIPTION=form['description'], OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                            CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
-        project.save()
-        if form['OWNER']=='onlyProject':
-            OWNER_PROJECT_ID=project.id
+        with transaction.atomic():
+            project = T_PROJECT(NAME=form['name'], DESCRIPTION=form['description'], OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+            project.save()
+            if form['OWNER']=='onlyProject':
+                OWNER_PROJECT_ID=project.id
 
-            project.OWNER_PROJECT_ID=OWNER_PROJECT_ID
+                project.OWNER_PROJECT_ID=OWNER_PROJECT_ID
 
-        project.save()
-        log.info('add project:'+str(model_to_dict(project)))
-        for userId in form['USERS']:
-            t_user=User.objects.get(id=int(userId))
-            project_user = T_PROJECT_User_ID(PROJECT_ID=project, User_ID=t_user)
-            project_user.save()
+            project.save()
+            log.info('add project:'+str(model_to_dict(project)))
+            log.info('USERS[]： '+ str(form['USERS']))
+            for userId in form['USERS']:
+                if type(userId)==int:
+                    t_user=User.objects.get(id=int(userId))
+                    project_user = T_PROJECT_User_ID(PROJECT_ID=project, User_ID=t_user)
+                    project_user.save()
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
@@ -112,7 +119,9 @@ def project_add(request):
     log.info('project_add end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
-# 查询组
+#description:查询项目组
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def project_select(request):
     log.info('project_select start')
@@ -161,6 +170,9 @@ def project_select(request):
     log.info('project_select end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
+#description:删除项目组
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def project_delete(request):
     log.info('project_delete start')
@@ -188,7 +200,9 @@ def project_delete(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
-# 更新任务 根据id  更新
+#description:修改项目组
+#params: request.POST {"id":"projectId","NAME":"test","DESCRIPTION":"test","OWNER":"onlyOne","USERS":[]}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def project_update(request):
     log.info('project_update start')
@@ -207,35 +221,37 @@ def project_update(request):
                 response_data['resultCode']='0001'
                 response_data['resultDesc']='NAME已经存在，名称不能重复！'
                 return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        project = T_PROJECT.objects.get(id=request.POST['id'])
-        if request.POST:
-            form['name'] = request.POST['NAME']
-            form['description'] = request.POST['DESCRIPTION']
-            form['OWNER'] = request.POST['OWNER']
-            form['USERS'] = request.POST.getlist('USERS[]');
-        if form['OWNER']=='onlyOne':
-            OWNER_ID=request.session['userId']
-            OWNER_NAME=request.session['username']
-        elif form['OWNER']=='all':
-            OWNER_ALL=True
-        else:
-            OWNER_PROJECT_ID=project.id
+        with transaction.atomic():
+            project = T_PROJECT.objects.get(id=request.POST['id'])
+            if request.POST:
+                form['name'] = request.POST['NAME']
+                form['description'] = request.POST['DESCRIPTION']
+                form['OWNER'] = request.POST['OWNER']
+                form['USERS'] = request.POST.getlist('USERS[]');
+            if form['OWNER']=='onlyOne':
+                OWNER_ID=request.session['userId']
+                OWNER_NAME=request.session['username']
+            elif form['OWNER']=='all':
+                OWNER_ALL=True
+            else:
+                OWNER_PROJECT_ID=project.id
 
-        project.NAME = form['name']
-        project.DESCRIPTION = form['description']
-        project.OWNER_NAME = OWNER_NAME
-        project.OWNER_ID = OWNER_ID
-        project.OWNER_PROJECT_ID = OWNER_PROJECT_ID
-        project.OWNER_ALL = OWNER_ALL
-        project.MODIFY_USER_ID=request.session['userId']
-        project.save()
-        log.info('update project:'+str(model_to_dict(project)))
-        T_PROJECT_User_ID.objects.filter(PROJECT_ID=project.id).delete()
-        #批量删除和插入
-        project_user_list = list()
-        for x in form['USERS']:
-            project_user_list.append(T_PROJECT_User_ID(User_ID=User.objects.get(id=x),PROJECT_ID=project))
-        T_PROJECT_User_ID.objects.bulk_create(project_user_list)
+            project.NAME = form['name']
+            project.DESCRIPTION = form['description']
+            project.OWNER_NAME = OWNER_NAME
+            project.OWNER_ID = OWNER_ID
+            project.OWNER_PROJECT_ID = OWNER_PROJECT_ID
+            project.OWNER_ALL = OWNER_ALL
+            project.MODIFY_USER_ID=request.session['userId']
+            project.save()
+            log.info('update project:'+str(model_to_dict(project)))
+            T_PROJECT_User_ID.objects.filter(PROJECT_ID=project.id).delete()
+            #批量删除和插入
+            project_user_list = list()
+            for x in form['USERS']:
+                if type(x)==int:
+                    project_user_list.append(T_PROJECT_User_ID(User_ID=User.objects.get(id=x),PROJECT_ID=project))
+            T_PROJECT_User_ID.objects.bulk_create(project_user_list)
 
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '修改成功！'
