@@ -22,6 +22,7 @@ log = logging.getLogger("system")
 #description:新建系统
 #params: request.POST {"NAME":"test","DESCRIPTION":"test","OWNER":"onlyOne","COMPANY":"1"}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def system_add(request):
     log.info('system_add start')
     log.info("request: "+str(request))
@@ -65,6 +66,7 @@ def system_add(request):
 #description:查询系统
 #params: request.GET {"offset":"0","limit":"5","order":"asc","ordername":"id","name":"","description":"","company":""}
 #return: {"resultCode":"","resultDesc":"","rows":"","total":""}
+@PermissionVerify()
 def system_select(request):
     log.info('system_select start')
     log.info("request: "+str(request))
@@ -119,6 +121,7 @@ def system_select(request):
 #description:删除系统
 #params: request.POST {"id":"0"}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def system_delete(request):
     log.info('system_delete start')
     log.info("request: "+str(request))
@@ -148,6 +151,7 @@ def system_delete(request):
 #description:修改系统
 #params: request.POST {"id":"","NAME":"test","DESCRIPTION":"test","OWNER":"onlyOne","COMPANY":"1"}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def system_update(request):
     log.info('system_update start')
     log.info("request: "+str(request))
@@ -210,6 +214,7 @@ def init_system_select(request):
     return HttpResponse(json.dumps({'systemList': eval(systemList)}))
 
 #导出系统组件程序主机关系xlsx文件
+@PermissionVerify()
 def system_export(request):
     response_data = {}
     log.info('system_export start')
@@ -317,6 +322,7 @@ def system_download(request):
     return response
 
 #导入系统，程序组件，host信息xlsx文件
+@PermissionVerify()
 def system_import(request):
     log.info('system_import start')
     response_data = {}

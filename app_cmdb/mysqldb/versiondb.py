@@ -17,6 +17,7 @@ log = logging.getLogger("version")
 #description:添加版本
 #params: request.POST {"softwareId":"softwareId","NAME":"1.0","DESCRIPTION":"","INSTALL_PATH":""}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def version_add(request):
     log.info('version_add start')
     log.info("request: "+str(request))
@@ -85,6 +86,7 @@ def version_add(request):
 #description:查询版本
 #params: request.GET {"offset":"1","limit":"5","order":"asc","ordername":"id","name":"","description":"","softwareId":"softwareId"}
 #return: {"resultCode":"","resultDesc":"","rows":"","total":""}
+@PermissionVerify()
 def version_select(request):
     log.info('version_select start')
     log.info("request: "+str(request))
@@ -142,6 +144,7 @@ def version_select(request):
 #description:删除版本
 #params: request.POST   {"id":"versionId"}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def version_delete(request):
     log.info('version_delete start')
     log.info("request: "+str(request))

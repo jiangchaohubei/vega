@@ -18,6 +18,7 @@ log = logging.getLogger("module")
 #description:添加组件
 #params: request.POST {"NAME":"test","DESCRIPTION":"test","SYSTEM_ID":"","OWNER":"onlyOne","RESPONSIBLE_PERSON":"1"}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def module_add(request):
     log.info('module_add start')
     log.info("request: "+str(request))
@@ -63,6 +64,7 @@ def module_add(request):
 #description:查询组件列表
 #params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","systemId":"0"}
 #return: {"resultCode":"","resultDesc":"","rows":"","total":""}
+@PermissionVerify()
 def module_select(request):
     log.info('module_select start')
     log.info("request: "+str(request))
@@ -117,6 +119,7 @@ def module_select(request):
 #description:删除组件
 #params: request.POST   {"id":""}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def module_delete(request):
     log.info('module_delete start')
     log.info("request: "+str(request))
@@ -145,6 +148,7 @@ def module_delete(request):
 #description:解绑组件与系统
 #params: request.POST {"id":""}
 #return: {"resultCode":"","resultDesc":""}
+
 def module_unwarp(request):
     log.info('module_unwarp start')
     log.info("request: "+str(request))
@@ -175,6 +179,7 @@ def module_unwarp(request):
 #description:修改组件
 #params: request.POST {"id":"","NAME":"test","DESCRIPTION":"test","SYSTEM_ID":"","OWNER":"onlyOne","RESPONSIBLE_PERSON":"1"}
 #return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
 def module_update(request):
     log.info('module_update start')
     log.info("request: "+str(request))

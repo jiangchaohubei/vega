@@ -682,6 +682,26 @@ def parentPermission(request):
             form['title'] = request.POST['title']
             form['permission'] = permission_config.permissionList['commandsPermissionList']
             form['id']=request.POST['id']
+        elif request.POST['title']==u'主机管理操作':
+            form['title'] = request.POST['title']
+            form['permission'] = permission_config.permissionList['hostPermissionList']
+            form['id']=request.POST['id']
+        elif request.POST['title']==u'系统管理操作':
+            form['title'] = request.POST['title']
+            form['permission'] = permission_config.permissionList['systemPermissionList']
+            form['id']=request.POST['id']
+        elif request.POST['title']==u'模块管理操作':
+            form['title'] = request.POST['title']
+            form['permission'] = permission_config.permissionList['modulePermissionList']
+            form['id']=request.POST['id']
+        elif request.POST['title']==u'程序管理操作':
+            form['title'] = request.POST['title']
+            form['permission'] = permission_config.permissionList['softwarePermissionList']
+            form['id']=request.POST['id']
+        elif request.POST['title']==u'版本管理操作':
+            form['title'] = request.POST['title']
+            form['permission'] = permission_config.permissionList['versionPermissionList']
+            form['id']=request.POST['id']
         elif request.POST['title']==u'权限管理':
             form['title'] = request.POST['title']
             form['permission'] = permission_config.permissionList['userPermissionList']

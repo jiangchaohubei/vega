@@ -392,6 +392,61 @@ var TableInit_rolegrant = function () {
 
                 },
                 {
+                    title: '主机管理操作',
+                    align : 'center',
+                    sortable : true,
+                    formatter:function(value, row, index){
+                        var data=row.pk+","+row.fields.name+","+"主机管理操作";
+                        return "<a title='详情' onclick='authority_showUpdateRoleModel(\"" + data + "\")'>详情</a>";
+
+                    }
+
+                },
+                {
+                    title: '系统管理操作',
+                    align : 'center',
+                    sortable : true,
+                    formatter:function(value, row, index){
+                        var data=row.pk+","+row.fields.name+","+"系统管理操作";
+                        return "<a title='详情' onclick='authority_showUpdateRoleModel(\"" + data + "\")'>详情</a>";
+
+                    }
+
+                },
+                {
+                    title: '模块管理操作',
+                    align : 'center',
+                    sortable : true,
+                    formatter:function(value, row, index){
+                        var data=row.pk+","+row.fields.name+","+"模块管理操作";
+                        return "<a title='详情' onclick='authority_showUpdateRoleModel(\"" + data + "\")'>详情</a>";
+
+                    }
+
+                },
+                {
+                    title: '程序管理操作',
+                    align : 'center',
+                    sortable : true,
+                    formatter:function(value, row, index){
+                        var data=row.pk+","+row.fields.name+","+"程序管理操作";
+                        return "<a title='详情' onclick='authority_showUpdateRoleModel(\"" + data + "\")'>详情</a>";
+
+                    }
+
+                },
+                {
+                    title: '版本管理操作',
+                    align : 'center',
+                    sortable : true,
+                    formatter:function(value, row, index){
+                        var data=row.pk+","+row.fields.name+","+"版本管理操作";
+                        return "<a title='详情' onclick='authority_showUpdateRoleModel(\"" + data + "\")'>详情</a>";
+
+                    }
+
+                },
+                {
                     title: '数据统计',
                     align : 'center',
                     sortable : true,
