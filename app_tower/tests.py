@@ -1,7 +1,7 @@
 # /usr/bin/python2
 # -*- coding:utf-8 -*-
 from django.test import TestCase
-from app_tower.models import User,RoleList,T_LOGIN_CREDENTIALS,T_Group,T_HOST,T_GROUP_HOST_ID,T_PROJECT,playbook,T_JOB_TEMPLATE
+from app_tower.models import User,RoleList,T_LOGIN_CREDENTIALS,T_Group,T_HOST,T_GROUP_HOST_ID,T_PROJECT,playbook,T_JOB_TEMPLATE,T_JOB
 from authority.mysqldb.authoritydb import md5
 import sys
 reload(sys)
@@ -404,9 +404,157 @@ class jobTemplatedbTestCase(TestCase):
         self.assertEqual(res.status_code,200)
         print 'test_run_commands_searchSN ',eval(res.content)
 
+    def test_run_commands_searchLog(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+        group = T_Group(NAME="test", DESCRIPTION="test", VARIABLES="",OWNER_ALL=True)
+        group.save()
+        res=self.client.post('/app_tower/job/run_commands_searchLog',{"groupid":group.id,"hostList":"[]","credentialsid":credentials.id,"cmd":"grep","content":"","path":""})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_searchLog ',eval(res.content)
+
+    def test_run_commands_copyFile(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+        group = T_Group(NAME="test", DESCRIPTION="test", VARIABLES="",OWNER_ALL=True)
+        group.save()
+        res=self.client.post('/app_tower/job/run_commands_copyFile',{"groupid":group.id,"hostList":"[]","credentialsid":credentials.id,"srcPath":"","desPath":""})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_copyFile ',eval(res.content)
+
+
+    def test_run_commands_changeSudoAuth(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+
+        res=self.client.post('/app_tower/job/run_commands_changeSudoAuth',{"hostList":"[]","credentialsid":credentials.id,"userName":"version","action":"search","port":"22","requestUser":"test"})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_changeSudoAuth ',eval(res.content)
+
+    def test_run_commands_searchProcess(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+
+        res=self.client.post('/app_tower/job/run_commands_searchProcess',{"hostList":"[]","credentialsid":credentials.id,"processName":"grep"})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_searchProcess ',eval(res.content)
+
+    def test_run_commands_changeProcess(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+
+        res=self.client.post('/app_tower/job/run_commands_changeProcess',{"hostList":"[]","credentialsid":credentials.id,"processName":"grep","operation":"stopped"})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_changeProcess ',eval(res.content)
+
+    def test_run_commands_runSH(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+        group = T_Group(NAME="test", DESCRIPTION="test", VARIABLES="",OWNER_ALL=True)
+        group.save()
+        res=self.client.post('/app_tower/job/run_commands_runSH',{"groupid":group.id,"hostList":"[]","credentialsid":credentials.id,"vars":"cd /opt"})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_runSH ',eval(res.content)
+
+    def test_review_file(self):
+        pb = playbook(NAME="test", DESCRIPTION="test",PLAYBOOK_PATH="/opt/playbook/jzyuan/test.yaml", PLAYBOOK_CONTENT="test",OWNER_ALL=True,CREATE_USER_NAME="jzyuan",FILEDIR=None)
+        pb.save()
+        res=self.client.post('/app_tower/review_file',{"filePath":pb.id})
+        self.assertEqual(res.status_code,200)
+        print 'test_review_file ',eval(res.content)
+
+        #测试sudo权限查询
+    def test_sudo_select(self):
+
+        res=self.client.get('/app_tower/job/sudo_select',{"limit":5,"offset":0,"order":"asc","ordername":"id","ip":"","account":"","createUser":""})
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(eval(res.content)['total'],0)
+
+    def test_sudoRecord_add(self):
+
+        res=self.client.post('/app_tower/job/sudoRecord_add',{"addIP":"127.0.0.1","addPort":"22","addAccount":"root","addDesc":"test"})
+        self.assertEqual(eval(res.content)['resultCode'],'0000')
+        print 'test_sudoRecord_add ',eval(res.content)['resultDesc']
+
+        #测试操作记录查询
+    def test_operation_select(self):
+
+        res=self.client.get('/app_tower/job/operation_select',{"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","createUser":""})
+        self.assertEqual(res.status_code,200)
+
+    def test_run_commands_change_passwd(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+
+        res=self.client.post('/app_tower/job/run_commands_change_passwd',{"hostList":"[]","changepwd_credentials":credentials.id,"new_pwd":"Jc19931008?","user_name":"test"})
+        self.assertEqual(res.status_code,200)
+        print 'test_run_commands_change_passwd ',eval(res.content)
+
     def tearDown(self):
         print("jobTemplatedbTestCase======in tearDown")
 
 
 
+
+
+
+
+
+
+
+
+#任务测试
+class jobsdbTestCase(TestCase):
+    def setUp(self):
+        print("jobsdbTestCase======in setUp")
+
+        role,created=RoleList.objects.get_or_create(name=u"超级管理员")
+        role.save()
+        user ,created= User.objects.get_or_create(username='jzyuan',mobile='15001994524', password=md5("88888888"),email='jiangchao_hubei@163.com',nickname='jzyuan',is_superuser="1",role=RoleList.objects.get(name=u"超级管理员"))
+        user.save()
+        res=self.client.post('/authority/user/login',{"USERNAME":"jzyuan","PASSWORD":"88888888"})
+
+        self.assertEqual(res.status_code,200)
+
+        #测试任务查询
+    def test_jobs_select(self):
+        res=self.client.get('/app_tower/jobs/select',{"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":"","jobTaskid":"","jobType":"","jobStatus":""})
+        self.assertEqual(eval(res.content)['resultCode'],'0000')
+        self.assertEqual(eval(res.content)['total'],0)
+        print 'test_jobs_select ',eval(res.content)['resultDesc']
+
+        #测试删除任务记录
+    def test_jobs_delete(self):
+        credentials = T_LOGIN_CREDENTIALS(NAME="test",DESCRIPTION="test",OWNER_ALL=True,TYPE="machine",LOGIN_USER="test",LOGIN_PWD="1qaz!QAZ"
+                                          ,PRIVILEGE_NAME="su",PRIVILEGE_PWD="1qaz!QAZ")
+        credentials.save()
+        group = T_Group(NAME="test", DESCRIPTION="test", VARIABLES="",OWNER_ALL=True)
+        group.save()
+        pb = playbook(NAME="test", DESCRIPTION="test",PLAYBOOK_PATH="/opt/playbook/jzyuan/test.yaml", PLAYBOOK_CONTENT="test",OWNER_ALL=True,CREATE_USER_NAME="jzyuan",FILEDIR=None)
+        pb.save()
+        job = T_JOB_TEMPLATE(NAME="test",DESCRIPTION="test",JOB_TYPE="Run",GROUP_ID=group,EXTRA_VARIABLES="",LABELS="",
+                             PLAYBOOK_ID=pb,PLAYBOOK_FILE=pb.PLAYBOOK_PATH,CREDENTIAL_MACHINE_ID=credentials,  FORKS=4,JOB_TAGS="",SKIP_TAGS="",
+                             OWNER_ALL=True)
+        job.save()
+        jobs = T_JOB(TEMPLETE_ID=job,NAME=job.NAME, DESCRIPTION=job.DESCRIPTION, JOB_TYPE=job.JOB_TYPE, GROUP_ID=job.GROUP_ID,
+                     PROJECT_ID=job.PROJECT_ID, PLAYBOOK_ID=job.PLAYBOOK_ID,
+                     PLAYBOOK_FILE=job.PLAYBOOK_FILE, CREDENTIAL_MACHINE_ID=job.CREDENTIAL_MACHINE_ID, FORKS=job.FORKS,
+                     VERBOSITY=job.VERBOSITY, JOB_TAGS=job.JOB_TAGS,
+                     SKIP_TAGS=job.SKIP_TAGS, EXTRA_VARIABLES=job.EXTRA_VARIABLES,
+                     STATUS='STARTED',LOGFILE=file.name
+                     ,OWNER_ID=job.OWNER_ID,OWNER_NAME=job.OWNER_NAME,OWNER_PROJECT_ID=job.OWNER_PROJECT_ID,OWNER_ALL=job.OWNER_ALL)
+        jobs.save()
+        res=self.client.post('/app_tower/jobs/delete',{"id":jobs.id})
+        self.assertEqual(eval(res.content)['resultCode'],'0000')
+        print 'test_jobs_delete ',eval(res.content)['resultDesc']
+
+    def tearDown(self):
+        print("jobsdbTestCase======in tearDown")
 

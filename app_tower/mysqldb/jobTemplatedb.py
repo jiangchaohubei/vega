@@ -359,7 +359,9 @@ def save_run_job(request):
     log.info('save_run_job end')
     return HttpResponse(JsonResponse(response_data), content_type='application/json')
 
-#运行模板
+#description:执行任务模板
+#params: request.POST {"id":"jobTemplateId","hostList":"[]","jobTags":"","skipTags":"","variable":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def run_job(request):
 
@@ -524,6 +526,7 @@ def checkFile(request):
     taskid = result.task_id
     return HttpResponse(json.dumps({'start':'true','file':logfile,'taskid':taskid}))
 
+
 def run_commands2(request):
 
     groupid=int(request.POST['groupid'])
@@ -541,7 +544,11 @@ def run_commands2(request):
     result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList)
     taskid = result.task_id
     return HttpResponse(json.dumps({'start':'true','file':file.name,'taskid':taskid}))
-#查找SN号
+
+
+#description:查找SN号
+#params: request.POST {"groupid":"","hostList":"[]","credentialsid":""}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_searchSN(request):
 
@@ -561,7 +568,10 @@ def run_commands_searchSN(request):
     taskid = result.task_id
     return HttpResponse(json.dumps({'start':'true','file':file.name,'taskid':taskid}))
 
-#日志查询
+#
+#description:日志查询
+#params: request.POST {"groupid":"","hostList":"[]","credentialsid":"","cmd":"grep","content":"","path":""}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_searchLog(request):
 
@@ -584,7 +594,9 @@ def run_commands_searchLog(request):
     taskid = result.task_id
     return HttpResponse(json.dumps({'start':'true','file':file.name,'taskid':taskid}))
 
-#分发文件
+#description:分发文件
+#params: request.POST {"groupid":"","hostList":"[]","credentialsid":"","srcPath":"","desPath":""}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_copyFile(request):
 
@@ -605,7 +617,10 @@ def run_commands_copyFile(request):
     result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList)
     taskid = result.task_id
     return HttpResponse(json.dumps({'start':'true','file':file.name,'taskid':taskid}))
+
 #修改sudo权限
+#params: request.POST {"hostList":"[]","credentialsid":"","userName":"version","action":"search","port":"22","requestUser":"test"}
+#return: {'resultCode':'0000','resultDesc':'开始执行','start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_changeSudoAuth(request):
     log.info('run_commands_changeSudoAuth start')
@@ -653,6 +668,7 @@ def run_commands_changeSudoAuth(request):
     return HttpResponse(json.dumps({'resultCode':'0000','resultDesc':'开始执行','start':'true','file':file.name,'taskid':taskid}))
 
 #回收sudo权限
+
 @PermissionVerify()
 def run_commands_callbackSudoAuth(request):
     log.info('run_commands_callbackSudoAuth start')
@@ -687,6 +703,8 @@ def run_commands_callbackSudoAuth(request):
     return HttpResponse(json.dumps({'resultCode':'0000','resultDesc':'开始执行','start':'true',}))
 
 #查询进程
+#params: request.POST {"hostList":"[]","credentialsid":"","processName":"grep"}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_searchProcess(request):
     log.info('run_commands_searchProcess start')
@@ -709,6 +727,8 @@ def run_commands_searchProcess(request):
 
 
 #修改进程
+#params: request.POST {"hostList":"[]","credentialsid":"","processName":"grep","operation":"stopped"}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_changeProcess(request):
     log.info('run_commands_changeProcess start')
@@ -743,6 +763,8 @@ def run_commands_changeProcess(request):
     return HttpResponse(json.dumps({'start':'true','file':file.name,'taskid':taskid}))
 
 #执行SH脚本
+#params: request.POST {"groupid":"","hostList":"[]","credentialsid":"","vars":"cd /opt"}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_runSH(request):
     log.info('run_commands_runSH start')
@@ -824,6 +846,8 @@ def get_event(request):
     return HttpResponse(json.dumps({'eventList':eval(eventList)}))
 
 #预览文件（playbook）
+#params: request.POST {"filePath":playbookId}
+#return: {'resultCode':'','resultDesc':""}
 def review_file(request):
     log.info('review_file start')
     request.session['username'] = request.session['username']
@@ -846,6 +870,9 @@ def review_file(request):
         log.info('review_file end')
         return HttpResponse(json.dumps(response_data))
 
+#查询sudo权限列表
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","ip":"","account":"","createUser":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def sudo_select(request):
 
@@ -898,6 +925,8 @@ def sudo_select(request):
     log.info("sudo_select end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
+#params: request.POST {"addIP":"","addPort":"","addAccount":"","addDesc":""}
+#return: {'resultCode':'','resultDesc':""}
 @PermissionVerify()
 def sudoRecord_add(request):
     log.info("sudoRecord_add start")
@@ -932,6 +961,9 @@ def sudo_delete(request):
     finally:
         log.info("sudoRecord_delete end")
 
+#查询操作记录
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","createUser":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def operation_select(request):
 
@@ -1012,6 +1044,10 @@ def get_match(match_content):
         return all_z[::-1]
     elif match_content in all_z[::-1]:
         return all_z[::-1]
+
+#修改密码
+#params: request.POST {"hostList":"[]","changepwd_credentials":"","new_pwd":"","user_name":""}
+#return: {'start':'true','file':file.name,'taskid':taskid}
 @PermissionVerify()
 def run_commands_change_passwd(request):
 

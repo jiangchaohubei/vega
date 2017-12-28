@@ -59,7 +59,7 @@ urlpatterns = patterns('inventories',
                         url(r'^job/sudo_select$', jobTemplatedb.sudo_select),
                         url(r'^job/sudo_delete$', jobTemplatedb.sudo_delete),
                         url(r'^job/sudoRecord_add$', jobTemplatedb.sudoRecord_add),
-
+                        url(r'^job/operation_select$', jobTemplatedb.operation_select),
                         url(r'^job/checkFile$', jobTemplatedb.checkFile),
                         url(r'^job/read_commands_log', jobTemplatedb.read_commands_log),
                         url(r'^job/init_commands_select', jobTemplatedb.init_commands_select),
@@ -88,7 +88,7 @@ urlpatterns = patterns('inventories',
                        url(r'^project/delete', project.project_delete),
                        url(r'^project/update', project.project_update),
 
-					   url(r'^job/operation_select$', jobTemplatedb.operation_select),
+
                        url(r'^playbook/add', playbook.playbook_add),
                        url(r'^playbook/select', playbook.playbook_select),
                        url(r'^playbook/delete', playbook.playbook_delete),

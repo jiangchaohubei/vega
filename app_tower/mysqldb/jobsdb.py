@@ -9,7 +9,10 @@ import traceback
 import logging
 log = logging.getLogger("jobsdb")
 from authority.permission import PermissionVerify
+
 #查询任务
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":"","jobTaskid":"","jobType":"","jobStatus":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 @PermissionVerify()
 def jobs_select(request):
     log.info('jobs_select start')
@@ -68,6 +71,8 @@ def jobs_select(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 #删除任务  数据库删除   根据id删除
+#params: request.POST {"id":""}
+#return: {"resultCode":"","resultDesc":""}
 @PermissionVerify()
 def jobs_delete(request):
     log.info('jobs_delete start')
