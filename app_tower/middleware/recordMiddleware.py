@@ -74,12 +74,14 @@ class recordMiddleware(object):
         for ul in recordMiddleware.urlList:
             if req_path==ul['url'] :
                 if ul['name']=='updateSudo':
-                    bodyList=str(request.body).split('&')
-                    OPERATION_IP=bodyList[0].split('=')[1]
-                    OPERATION_PORT=bodyList[4].split('=')[1]
-                    OPERATION_ACCOUNT=bodyList[2].split('=')[1]
-                    OPERATION_ACTION=bodyList[3].split('=')[1]
-                    requestUser=bodyList[5].split('=')[1]
+                    print request.POST
+                    # bodyList=str(request.body).split('&')
+                    # print bodyList
+                    OPERATION_IP=request.POST['hostList']
+                    OPERATION_PORT=request.POST['port']
+                    OPERATION_ACCOUNT=request.POST['userName']
+                    OPERATION_ACTION=request.POST['action']
+                    requestUser=request.POST['requestUser']
                     OPERATION_DESCRIPTION=""
                     if OPERATION_ACTION=='add':
                         OPERATION_DESCRIPTION+="应("+requestUser+")要求增加sudo权限"
