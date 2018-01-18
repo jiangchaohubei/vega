@@ -1,0 +1,385 @@
+<html lang="zh_CN"><head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>新建工具</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 全屏插件-->
+    <link rel="stylesheet" href="/static/js/textareafullscreen/textareafullscreen.css">
+    <style>
+        .form-preview {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px dashed #bdbdbd;
+            border-radius: 6px;
+            overflow: hidden;
+            min-height: 10px;
+            height: auto;
+        }
+        .span-chooice{
+            border: solid 1px #1ab1ff;width: 80px;text-align: center;float: left;
+        }
+        .span-chooice-click{
+            border: solid 1px #1ab1ff;width: 80px;text-align: center;background-color: #1ab1ff;color: #ffffff;float: left;
+        }
+        .span-chooice:hover{
+            background-color: #94B9CE;
+        }
+        .inputItem{
+            overflow: hidden;
+        }
+        .inputItem:hover{
+            background: #7DB4D8;
+        }
+        .tx-editor-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .tx-editor-wrapper .tx-editor {
+            height: 550px;
+        }
+    </style>
+
+</head>
+<body class="change-list" >
+
+<!-- Header -->
+
+
+<div id="body-content" class="clearfix row" style="margin-top: 15px;margin-bottom: 50px">
+
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+        <ul class="breadcrumb">
+
+            <li>
+                <a href="/static/templates/pages/app_tower_pages/workingPlatform/working.html">作业平台</a>
+            </li>
+            <li>
+                新建工具
+            </li>
+        </ul>
+
+        <div class="row" style="margin-left:20px">
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">工具名称<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="height:64px;">
+                    <input type="text" class="form-control" value=""  id="tool_name">
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">工具分类<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8">
+
+                    <div class="input-group">
+                        <input type="text" id="tool_type" class="form-control ">
+                        <span class="input-group-addon " >
+                            <select style="border: hidden;background-color: #eee" id="tool_type_select" onchange="document.getElementById('tool_type').value=this.value;this.value='0';">
+                                <option value="0">请选择</option>
+
+                            </select>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+            <script>
+                function onTypeSelect() {
+
+                }
+            </script>
+
+            <div class="row">
+                <label for="auth" class="control-label col-md-2 requiredField" style="height:64px;line-height:50px;text-align:center">脚本语言<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" id="tool_language">
+                    <span class="span-chooice-click" id="yaml" onmousedown="this.className='span-chooice-click';document.getElementById('python').className='span-chooice';document.getElementById('shell').className='span-chooice'" >yaml</span>
+                    <span class="span-chooice" id="shell" onmousedown="this.className='span-chooice-click';document.getElementById('python').className='span-chooice';document.getElementById('yaml').className='span-chooice'" >shell</span>
+                    <span class="span-chooice" id="python" onmousedown="this.className='span-chooice-click';document.getElementById('shell').className='span-chooice';document.getElementById('yaml').className='span-chooice'">python</span>
+                </div>
+            </div>
+            <div class="row">
+                <label for="auth" class="control-label col-md-2 requiredField" style="height:64px;line-height:50px;text-align:center">脚本代码<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="height: 550px">
+
+                    <textarea class="form-control" wrap="off" style="border-style:solid;overflow:scroll;" rows="20" ng-model="ansible_log" ng-show="ansible_log" id="tool_scriptCode"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">工具说明<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="height:64px;">
+                    <input type="text" class="form-control" value="" placeholder="" id="tool_des">&nbsp;
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">输入定义<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="">
+                    <div class="form-preview">
+                        <button type="button" class="btn btn-hover btn-default ng-scope" data-toggle="modal"  data-target="#addInputParamModal">
+                            <i class="glyphicon glyphicon-plus"></i> 添加输入参数
+                        </button>
+                            <div id="inputList">
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">输出定义<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="">
+                    <div class="form-preview">
+                        <button type="button" class="btn btn-hover btn-default ng-scope" data-toggle="modal"  data-target="#addOutputParamModal">
+                            <i class="glyphicon glyphicon-plus"></i> 添加输出参数
+                        </button>
+                        <div id="outputList">
+                            <table class="table table-hover table-default table-check-row table-with-checkboxes margin-bottom-no">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>名称</th>
+                                        <th>说明</th>
+                                        <th>类型</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="outputTbody">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">使用权限<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8">
+
+                    <select class="form-control " name="credentials" id="tool_owner">
+                        <option value="onlyOne" selected>仅自己</option>
+                        <option value="all">所有人</option>
+                    </select>
+                </div>
+            </div>
+            <div style="text-align:center">
+                <button type="button" class="btn btn-primary " style="width: 80px;" onclick="addTool()">保存</button>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<!--增加输入参数模态框-->
+<div class="modal fade" id="addInputParamModal">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" title="添加输入参数">添加输入参数</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addInput_form">
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">参数名称：</label>
+                        <input type="text" id="add_input_name" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">辅助说明：</label>
+                        <input type="text" id="add_input_des" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">参数类型：</label>
+                        <select class="form-control" id="add_input_type">
+                            <option value="0">单行字符串</option>
+                            <option value="1">多行字符串</option>
+                            <option value="2">整型</option>
+                            <option value="3">枚举</option>
+                            <option value="4">IP列表</option>
+                            <option value="5">JobTags</option>
+                            <option value="6">SkipTags</option>
+                            <option value="7">ExtraVariable</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">默认值：</label>
+                        <input type="text" class="form-control" id="add_input_default">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">是否必填：</label><br>
+                        <input type="checkbox" style="margin-left:10px" id="add_input_isrequired">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type = "button" data-dismiss="modal" onclick="addInputParam()" class="btn btn-success" >添加</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div><!-- /.modal -->
+    <!--修改输入参数模态框-->
+    <div class="modal fade" id="updateInputParamModal">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" title="修改输入参数">修改输入参数</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="updateInput_form">
+                        <input type="hidden" id="update_input_id">
+                        <div class="form-group" style="margin: 10px">
+                            <label class="control-label">参数名称：</label>
+                            <input type="text" id="update_input_name"  class="form-control">
+                        </div>
+                        <div class="form-group" style="margin: 10px">
+                            <label class="control-label">辅助说明：</label>
+                            <input type="text" id="update_input_des" class="form-control">
+                        </div>
+                        <div class="form-group" style="margin: 10px">
+                            <label class="control-label">参数类型：</label>
+                            <select class="form-control" id="update_input_type">
+                                <option value="0">单行字符串</option>
+                                <option value="1">多行字符串</option>
+                                <option value="2">整型</option>
+                                <option value="3">枚举</option>
+                                <option value="4">IP列表</option>
+                                <option value="5">JobTags</option>
+                                <option value="6">SkipTags</option>
+                                <option value="7">ExtraVariable</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin: 10px">
+                            <label class="control-label">默认值：</label>
+                            <input type="text" class="form-control" id="update_input_default">
+                        </div>
+                        <div class="form-group" style="margin: 10px">
+                            <label class="control-label">是否必填：</label><br>
+                            <input type="checkbox" style="margin-left:10px" id="update_input_isrequired">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type = "button" data-dismiss="modal"   class="btn btn-danger"  onclick="deleteInputParam()" >删除</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type = "button" data-dismiss="modal" onclick="updateInputParam()" class="btn btn-success" >修改</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div><!-- /.modal -->
+
+
+<!--增加输出参数模态框-->
+<div class="modal fade" id="addOutputParamModal">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" title="添加输出参数">添加输出参数</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addOutput_form">
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">参数名称：</label>
+                        <input type="text" id="add_output_name" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">辅助说明：</label>
+                        <input type="text" id="add_output_des" maxlength="32" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">参数类型：</label>
+                        <select class="form-control" id="add_output_type">
+                            <option value="0">单行字符串</option>
+                            <option value="1">多行字符串</option>
+                            <option value="2">整型</option>
+                            <option value="3">枚举</option>
+                            <option value="4">IP列表</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type = "button" data-dismiss="modal" onclick="addOutputParam()" class="btn btn-success" >添加</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div><!-- /.modal -->
+<!--修改输出参数模态框-->
+<div class="modal fade" id="updateOutputParamModal">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" title="修改输出参数">修改输出参数</h4>
+            </div>
+            <div class="modal-body">
+                <form id="updateOutput_form">
+                    <input type="hidden" id="update_output_id">
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">参数名称：</label>
+                        <input type="text" id="update_output_name"  class="form-control">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">辅助说明：</label>
+                        <input type="text" id="update_output_des" maxlength="32" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin: 10px">
+                        <label class="control-label">参数类型：</label>
+                        <select class="form-control" id="update_output_type">
+                            <option value="0">单行字符串</option>
+                            <option value="1">多行字符串</option>
+                            <option value="2">整型</option>
+                            <option value="3">枚举</option>
+                            <option value="4">IP列表</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type = "button" data-dismiss="modal"   class="btn btn-danger"  onclick="deleteOutputParam()" >删除</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type = "button" data-dismiss="modal" onclick="updateOutputParam()" class="btn btn-success" >修改</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div><!-- /.modal -->
+<script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+<script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+
+<script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
+<script src="/static/js/multiple-select/multiple-select.js"></script>
+
+<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/createTool.js"></script>
+
+
+</body></html>

@@ -1,0 +1,282 @@
+<html lang="zh_CN"><head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>执行工具</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-preview {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px dashed #bdbdbd;
+            border-radius: 6px;
+            overflow: hidden;
+            min-height: 10px;
+            height: auto;
+
+        }
+        .mask {
+            position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;background: rgba(0, 0, 0, 0.5);
+            z-index: 1002; left: 0px;
+            height: 100%;
+            opacity:1; -moz-opacity:1;
+        }
+        .modal-run{
+            -webkit-animation: fadeInRight 250ms;
+            right: 0;
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background-color: #ffffff;
+            opacity:1; -moz-opacity:1;
+            padding: 10px;
+        }
+        .modal-width {
+            width: 60%;
+            height: 100%;
+        }
+        .lablestyle{
+            height:30px;line-height:20px
+        }
+        .spanstyle{
+            height:30px;line-height:30px
+        }
+    </style>
+
+</head>
+<body class="change-list" onload="onload_runTool()">
+
+<!-- Header -->
+
+
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+        <ul class="breadcrumb">
+
+            <li>
+                <a id="toolDetail" href="/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html">mytool</a>
+            </li>
+            <li>
+                执行工具：<span id="toolname">mytool</span>
+            </li>
+        </ul>
+        <input type="hidden" id="toolid">
+        <div class="row" style="margin-left:20px">
+
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">目标主机<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-6">
+
+                    <textarea placeholder="用英文逗号分隔" class="textarea-field admintextareawidget form-control" cols="40"
+                              id="choosed_hosts" name="" rows="3"></textarea>
+                    <button type="button" style="margin-top: 10px"  class="btn btn-info " onclick="showCmdbModal()"  >
+                        <span class="glyphicon orange2 bigger-115 glyphicon-plus-sign" aria-hidden="true"></span>&nbsp从CMDB选择
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="auth" class="control-label col-md-2 requiredField" style="height:64px;line-height:50px;text-align:center">登录凭证<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-6">
+
+                    <select class="form-control " name="credentials" id="runTool_credentials">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">输入参数<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-6" style="">
+                    <div class="form-preview" id="inputList">
+
+
+                    </div>
+                </div>
+            </div>
+            <div >
+            <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center"></label>
+            <div class="controls col-md-6" style="height:64px;">
+                <button type="button" class="btn btn-primary " style="width: 100px;" onclick="runTool()">执行</button>
+            </div>
+             </div>
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+</div>
+
+<!--cmdb模态框-->
+<div class="modal fade" id="cmdbModal">
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" title="从CMDB中选择">从CMDB中选择</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group clearfix">
+                    <div class="control-label pull-left" style="width: 70px;">
+                        <label>系统：</label>
+                    </div>
+                    <select class="form-control pull-left" id="cmdb_system" style="width: 150px;">
+                        <option value="all">所有系统</option>
+                    </select>
+                    <!--       <select class="form-control pull-left margin-left" style="width: 150px;">
+                               <option value="">所有集群</option>
+                               <option value="597ae75b9dec1">视频门户集群</option>
+                               <option value="597ae7d543fbc">用户认证集群</option>
+                           </select>
+                           -->
+                    <input type="text" class="form-control pull-left" id="cmdb_keyword" style="width: 150px;margin-left: 50px" placeholder="关键字">
+
+                    <button type="button" class="btn btn-info pull-right" style="margin-right: 50px" onclick="search_cmdb()">
+                        <span class=" orange2 bigger-115 fa fa-search" aria-hidden="true"></span>&nbsp;查找 </button>
+                </div>
+                <div class="select-devices-container should-ellipsis" style="width:750px; height:300px; overflow:scroll;">
+                    <table class="table table-hover table-default table-check-row table-with-checkboxes margin-bottom-no">
+                        <colgroup><col style="width: 33px;"></colgroup>
+                        <thead>
+                        <tr>
+                            <th><label class="ui-checkbox"><input type="checkbox" value="on"><span></span></label></th>
+                            <th>ID</th>
+                            <th>IP</th>
+                            <th>描述</th>
+                            <th>机器类型</th>
+                            <th>机房</th>
+                        </tr>
+                        </thead>
+                        <tbody id="cmdb_tbody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="beSureChoose()" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<br>
+<br>
+<!--执行模态-->
+<div id="mask" class="mask" style="">
+    <div class="modal-content modal-run modal-width">
+
+        <div class="modal-header">
+            <button type="button" style="float: left;font-size: xx-large;" class="close" onclick="closeRunModal()">×</button>
+            <h4 class="modal-title" title="从CMDB中选择">执行结果</h4>
+        </div>
+        <div class="modal-body" style="overflow: hidden">
+
+            <div class="col-md-5">
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name" >结果：</label>
+                    <span id="run_status" class="col-md-4 control-span spanstyle" style="color:red;word-wrap:break-word;word-break:break-all;" ></span>
+                    <input type="button" id="stopbtn" onclick="stoprun()" class="btn btn-success col-md-4" value="停止" name="_continue">
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">开始时间：</label>
+                    <span id="run_startTime" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">结束时间：</label>
+                    <span id="run_endTime" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">输入参数：</label>
+                    <a id="" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " href="javascript:void(0);" onclick="showInputparam()" >点击查看</a>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">执行人：</label>
+                    <span id="run_user" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">工具：</label>
+                    <span id="run_toolName" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">耗时（s）：</label>
+                    <span id="run_elapsed" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-preview" id="showInputList" style="display: none">
+
+                </div>
+            </div>
+            <div class="panel-body col-md-12">
+                <ul id="myTab" class="nav nav-tabs"  >
+                    <li class="active"><a href="#logTab" data-toggle="tab">日志输出</a></li>
+                    <li ><a href="#jsonTab" data-toggle="tab">json</a></li>
+                </ul>
+                <input type="hidden" id="log_taskid">
+                <input type="hidden" id="log_logfile">
+                <input type="hidden" id="log_toolEventId">
+                <div id="myTabContent" class="tab-content" >
+                    <div class="tab-pane fade in active" id="logTab">
+                        <textarea class="form-control" wrap="off" style="border-style:solid;overflow:scroll;" rows="20" ng-model="ansible_log" ng-show="ansible_log" id="run_log"></textarea>
+                    </div>
+                    <div class="tab-pane fade " id="jsonTab">
+                        json
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="" data-dismiss="modal">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;top:50%;right:-25px;width:50px;height:50px;border-radius: 50%;background-color:#e2f0ff;padding-top: 8px;padding-left: 5px;">
+    <a class="fa fa-angle-double-left" style="font-size: xx-large;color: #00abf8;text-decoration: none;top: 50%" aria-hidden="true" href="javascript:void(0);" onclick="showRunModal()"></a>
+</div>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+<script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+
+<script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
+<script src="/static/js/multiple-select/multiple-select.js"></script>
+
+<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/runTool.js"></script>
+
+
+
+</body></html>

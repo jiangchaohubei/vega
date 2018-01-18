@@ -1,0 +1,69 @@
+/**
+ * Created by PC on 2018/1/12.
+ */
+
+function onload_tooldetail() {
+    //textarea全屏
+    $('#tool_scriptcode').textareafullscreen();
+    var C1 = window.location.href.split("?")[1];
+    var C2 = C1.split("&");
+    var toolid = C2[0].split("=")[1]
+    var toolname = decodeURI(C2[1].split("=")[1])
+    $('#toolname').html(toolname)
+    $('#toolid').val(toolid)
+    $('#runtoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/runTool.html?toolid='+toolid+'&toolname='+toolname)
+    $.ajax({
+        url:"/app_tower/workingPlatform/toolDetail_init",
+        type:"POST",
+        data:{
+            toolid:toolid
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+                $('#tool_name').html(data.tool.NAME)
+                $('#tool_creater').html(data.tool.CREATE_USER_NAME)
+                $('#tool_desc').html(data.tool.DESCRIPTION)
+                $('#tool_type').html(data.tool.ARGS1)
+                $('#tool_language').html( data.tool.SCRIPT_LANGUAGE==0 ? 'shell' : 'python')
+                $('#tool_scriptcode').html(data.tool.SCRIPT_CODE)
+                $('#tool_owner').html(data.tool.ARGS2)
+                var inputs=""
+                var outputs=""
+                for (var i=0;i<data.toolinput.length;i++){
+                    inputs+=data.toolinput[i].fields.NAME+'&nbsp;&nbsp;&nbsp;&nbsp;'
+                }
+                for (var i=0;i<data.tooloutput.length;i++){
+                    outputs+=data.tooloutput[i].fields.NAME+'&nbsp;&nbsp;&nbsp;&nbsp;'
+                }
+                $('#tool_input').html(inputs)
+                $('#tool_output').html(outputs)
+                return;
+            }
+        },
+
+        error:function(data){
+            opt_commons.dialogShow("错误信息","error",2000);
+
+
+        },
+    });
+}
+
+
+
+
+
+//@ sourceURL=toolDetail.js

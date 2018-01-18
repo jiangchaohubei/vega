@@ -155,8 +155,8 @@
         var yPos = 0 | ((($(window).height() - el.height()) / 2));
         var xPos = 0 | (($(window).width() - el.width()) / 2);
         el.css({
-            'top': yPos,
-            'left': xPos
+            'top': 10,
+            'left': 10
         });
 
     }

@@ -5,8 +5,9 @@ from billiard.exceptions import Terminated#方便更好的取消任务
 import time
 from app_tower.utils.playbook_run import runplaybook
 from app_tower.utils.commands_run import commandsrun
-from app_tower.models import T_JOB,T_Group,T_LOGIN_CREDENTIALS,T_JOB_EVENT,T_COMMAND_EVENT,sudo_record,T_JOB_TEMPLATE
+from app_tower.models import T_JOB,T_Group,T_LOGIN_CREDENTIALS,T_JOB_EVENT,T_COMMAND_EVENT,sudo_record,T_JOB_TEMPLATE,T_TOOL_EVENT
 from app_tower.utils.mygroup import mygroup
+from app_tower.utils.mygroup_tool import mygroup_tool
 import commands
 import tempfile
 import logging
@@ -168,3 +169,49 @@ def timer_task(jobTempleteId,createUserId,createUserName,startUserId,startUserNa
     result = AsyncResult(taskid)
     log.info("STATUS:"+result.status)
     T_JOB.objects.filter(id=jobs.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
+
+
+
+#执行工具脚本为yaml
+@task(throws=(Terminated,))
+def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,extraVariable,hostList=None):
+    log.info('celery run_playbook start')
+    tool_event=T_TOOL_EVENT.objects.get(id=toolEventId)
+    starttime=time.time()
+    print starttime
+    print time.localtime(starttime)
+    log.info('startTime: '+str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))))
+    tool_event.START_TIME=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))
+    #实例化
+    mygroups=mygroup_tool(credentialsId,hostList)
+    group=mygroups.get_mygroup()
+    true = True
+    null = None
+    false=False
+    runbook=runplaybook(file,playbookPath,group,extraVariable,jobTags,skipTags,5)
+    #执行
+    result=runbook.run()
+
+    endtime=time.time()
+    tool_event.FINISH_TIME=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(endtime))
+    tool_event.ELAPSED=endtime-starttime
+    log.info('finishTime: '+str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(endtime))))
+    log.info('result>>>>'+str(result))
+    if result['code'] in [1001,1002,1003]:
+        tool_event.STATUS='FAILURE'
+    elif result['skipped'] or result['fail'] or result['unreachable'] or result['success']=={}:
+        tool_event.STATUS='FAILURE'
+    else:
+        tool_event.STATUS='SUCCESS'
+    log.info('status'+tool_event.STATUS)
+    #日志内容入库
+    with open(file,'r') as f:
+        f.seek(0)
+        tool_event.LOGCONTENT =f.read()
+    tool_event.save()
+
+
+    log.info('celery run_playbook end')
+
+
+    return result

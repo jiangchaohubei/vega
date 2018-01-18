@@ -778,14 +778,14 @@ def run_commands_runSH(request):
             return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"主机组没有使用权限！"}))
     if not T_LOGIN_CREDENTIALS.objects.check_id(request,credentialsid):
         return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"登录凭证没有使用权限！"}))
-    commandName="script"
+    commandName="shell"
     vars=request.POST['vars']
-    fo=open("/tmp/runSH.sh","wb")
-    fo.write(vars)
-    fo.close()
+    # fo=open("/tmp/runSH.sh","wb")
+    # fo.write(vars)
+    # fo.close()
     file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
 
-    result = runCommands2.delay(file.name,groupid,credentialsid,commandName,"/tmp/runSH.sh",request.session['userId'],request.session['username'],hostList)
+    result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList)
     taskid = result.task_id
     return HttpResponse(json.dumps({'start':'true','file':file.name,'taskid':taskid}))
 

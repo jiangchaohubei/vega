@@ -364,13 +364,18 @@ def host_add(request):
             log.info("form:"+str(form))
         group = T_Group.objects.get(id=form['id'])
         #开启事物管理
+        response_data['hostNotExists']=[] #不存在的host
+        response_data['hostNotUsable']=[] #没有权限的host
         with transaction.atomic():
             for h in eval(form['hostList']):
                 if not T_HOST.objects.filter(NAME=h).exists():
-                    response_data['errorHost']=h
-                host=T_HOST.objects.get(NAME=h)
-                group_host,create = T_GROUP_HOST_ID.objects.get_or_create(GROUP_ID=group, HOST_ID=host)
-                group_host.save()
+                    response_data['hostNotExists'].append(h)
+                elif not T_HOST.objects.check_name(request,h):
+                    response_data['hostNotUsable'].append(h)
+                else:
+                    host=T_HOST.objects.get(NAME=h)
+                    group_host,create = T_GROUP_HOST_ID.objects.get_or_create(GROUP_ID=group, HOST_ID=host)
+                    group_host.save()
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:

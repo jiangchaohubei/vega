@@ -1,0 +1,170 @@
+<html lang="zh_CN"><head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>工具详情</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 全屏插件-->
+    <link rel="stylesheet" href="/static/js/textareafullscreen/textareafullscreen.css">
+    <style>
+        .lablestyle{
+            height:30px;line-height:20px
+        }
+        .spanstyle{
+            height:30px;line-height:30px
+        }
+        .tool-detail{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .tx-editor-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .tx-editor-wrapper .tx-editor {
+            height: 550px;
+        }
+    </style>
+
+</head>
+<body class="change-list" onload="onload_tooldetail()">
+
+<!-- Header -->
+
+
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+        <ul class="breadcrumb">
+
+            <li>
+                <a href="/static/templates/pages/app_tower_pages/workingPlatform/working.html">作业平台</a>
+            </li>
+            <li>
+                工具详情:<span id="toolname"></span>
+            </li>
+        </ul>
+        <input type="hidden" id="toolid">
+        <a type="button" style=" width:150px" id="runtoolbt" class="btn btn-primary"
+                href="/static/templates/pages/app_tower_pages/workingPlatform/runTool.html">
+            <span class="glyphicon orange2 bigger-115 glyphicon-plus-sign" aria-hidden="true"></span>&nbsp执行工具
+        </a>
+        <button type="button" style=" width:120px" id="btn_show_modal" class="btn btn-primary"
+                onclick="showToolShop()">
+            <span class="glyphicon orange2 bigger-115 glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp编辑
+        </button>
+        <button type="button" style=" width:150px" id="btn_show_txt_modal" class="btn btn-primary"
+                onclick="searchHistoryWork()">
+            <span class=" orange2 ace-icon fa fa-pencil bigger-120" aria-hidden="true"></span>&nbsp删除
+        </button>
+
+        <hr>
+
+        <div class="tool-detail" style="overflow: hidden">
+            <div class="col-md-1" >
+                <a class="tool-item-inner" id="toolId" href="#" >
+                    <div class="tool-item-icon">
+                        <i class=" blue ace-icon fa fa-pencil bigger-120" style="font-size:xx-large;line-height: 100px;height: 100px" aria-hidden="true"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-5">
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name" >工具名称：</label>
+                    <span id="tool_name" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all;" >mytool</span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">作者：</label>
+                    <span id="tool_creater" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " >jzyuan</span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">使用权限：</label>
+                    <span id="tool_owner" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " >所有人</span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">说明：</label>
+                    <span id="tool_desc" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " >测试使用</span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">分类：</label>
+                    <span id="tool_type" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " >测试使用</span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">脚本语言：</label>
+                    <span id="tool_language" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " >测试使用</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="tool-script-detail">
+            <div class="row">
+                <label for="auth" class="control-label col-md-1 requiredField" style="height:64px;line-height:50px;text-align:center">脚本代码: </label>
+                <div class="controls col-md-11" style="height: 550px">
+
+                    <textarea class="form-control" disabled wrap="off" style="border-style:solid;overflow:scroll;" rows="20" ng-model="ansible_log" ng-show="ansible_log" id="tool_scriptcode"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-1  requiredField" style="height:64px;line-height:50px;text-align:center">输入： </label>
+                <div class="controls col-md-11" style="height:64px;">
+                    <span class="editable" id="tool_input" style="color:#006dcc;word-wrap:break-word;word-break:break-all;">in_ips</span>&nbsp;
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-1  requiredField" style="height:64px;line-height:50px;text-align:center">输出： </label>
+                <div class="controls col-md-11" style="height:64px;">
+                    <span class="editable" id="tool_output" style="color:#006dcc;word-wrap:break-word;word-break:break-all;">search_status, out_ips</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+
+<br>
+<br>
+
+
+<script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+<script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+
+<script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
+<script src="/static/js/multiple-select/multiple-select.js"></script>
+
+<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/toolDetail.js"></script>
+
+
+
+</body></html>

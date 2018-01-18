@@ -7,8 +7,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 80%;
-  height: 80%;
+  width: 98%;
+  height: 92%;
   z-index: 500;
 }
 .tx-editor-wrapper .tx-editor {

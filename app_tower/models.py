@@ -37,6 +37,20 @@ class checkOwnManager(models.Manager):
                 return True
             else:
                 return False
+    #是否有该数据的使用权限
+    def check_name(self,request,name):
+        if request.session['isAdministrant']:
+            return True
+        else:
+            try:
+                model=self.model.objects.get(NAME=name)
+            except Exception,e:
+                print e
+                return False
+            if model.CREATE_USER_ID==request.session['userId'] or model.CREATE_USER_ID==None or model.OWNER_ALL or model.OWNER_PROJECT_ID in request.session['projectIdlist']:
+                return True
+            else:
+                return False
     def check_project(self, request, projectid):
         print self.get_queryset()
         if request.session['isAdministrant']:
@@ -463,6 +477,7 @@ class User(AbstractBaseUser):
     sex = models.CharField(max_length=2, null=True)
     role = models.ForeignKey(RoleList, null=True, blank=True)
     projects=models.ManyToManyField(T_PROJECT,through='T_PROJECT_User_ID',through_fields=('User_ID','PROJECT_ID'))
+    tools=models.ManyToManyField('T_TOOL',through='T_TOOL_User_ID',through_fields=('User_ID','TOOL_ID'))
     def natural_key(self):
         return (self.username,self.mobile,self.createTime,self.email,self.is_active,self.is_superuser,self.nickname,self.sex,) + self.role.natural_key()
     natural_key.dependencies = ['app_tower.RoleList']
@@ -761,6 +776,173 @@ class T_VERSION(models.Model):
     ARGS1=models.CharField(max_length=128,null=True,blank=True)
     ARGS2=models.CharField(max_length=128,null=True,blank=True)
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
+
+
+
+#工具
+class T_TOOL(models.Model):
+    objects=checkOwnManager()
+    #工具名称
+    NAME=models.CharField(max_length=128,unique=True)
+    #说明
+    DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
+    #工具分类
+    TOOLTYPE_ID=models.ForeignKey('T_TOOLTYPE', null=True,blank=True,on_delete=models.PROTECT,related_name='TOOLTYPE_ID_T_TOOL')
+    #脚本语言
+    SCRIPTLANGUAGE_CHIOCES = (
+        (0, 'shell'),
+        (1, 'python'),
+        (2, 'yaml'),
+
+    )
+    SCRIPT_LANGUAGE=models.IntegerField(choices=SCRIPTLANGUAGE_CHIOCES,default=0)
+    #脚本代码
+    SCRIPT_CODE=models.TextField(null=True,blank=True)
+
+    OWNER_ID=models.IntegerField(null=True,blank=True)
+    OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)
+    OWNER_ALL=models.BooleanField(default=False)
+
+    CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
+    #创建者
+    CREATE_USER_ID=models.IntegerField(null=True,blank=True)
+    CREATE_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    #最后更新时间
+    LAST_MODIFY_TIME=models.DateTimeField('修改时间',auto_now=True,null=True,blank=True)
+    #最后更新者
+    MODIFY_USER_ID=models.IntegerField(null=True,blank=True)
+    ARGS1=models.CharField(max_length=128,null=True,blank=True)
+    ARGS2=models.CharField(max_length=128,null=True,blank=True)
+    ARGS3=models.CharField(max_length=128,null=True,blank=True)
+
+class T_TOOL_User_ID(models.Model):
+
+    TOOL_ID=models.ForeignKey(T_TOOL, related_name='TOOL_ID')
+    # User id
+    User_ID=models.ForeignKey(User, related_name='User_ID')
+#工具分类
+class T_TOOLTYPE(models.Model):
+    objects=checkOwnManager()
+    #分类名称
+    NAME=models.CharField(max_length=128,unique=True)
+
+
+#tool输入参数
+class T_TOOL_INPUT(models.Model):
+    objects=checkOwnManager()
+    #参数名称
+    NAME=models.CharField(max_length=128)
+    #辅助说明
+    DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
+    #默认值
+    DEFAULT=models.CharField(max_length=256,null=True,blank=True)
+    #是否必填
+    ISREQUIRED=models.BooleanField(default=False)
+    #参数类型
+    SCRIPTLANGUAGE_CHIOCES = (
+        (0, '单行字符串'),
+        (1, '多行字符串'),
+        (2, '整型'),
+        (3, '枚举'),
+        (4, 'IP列表'),
+        (5, 'JobTags'),
+        (6, 'SkipTags'),
+        (7, 'ExtraVariable'),
+    )
+    TYPE=models.IntegerField(choices=SCRIPTLANGUAGE_CHIOCES,default=0)
+    #工具外键
+    T_TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,on_delete=models.PROTECT,related_name='T_TOOL_ID_T_TOOL_INPUT')
+
+    OWNER_ID=models.IntegerField(null=True,blank=True)
+    OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)
+    OWNER_ALL=models.BooleanField(default=False)
+
+    CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
+    #创建者
+    CREATE_USER_ID=models.IntegerField(null=True,blank=True)
+    CREATE_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    #最后更新时间
+    LAST_MODIFY_TIME=models.DateTimeField('修改时间',auto_now=True,null=True,blank=True)
+    #最后更新者
+    MODIFY_USER_ID=models.IntegerField(null=True,blank=True)
+    ARGS1=models.CharField(max_length=128,null=True,blank=True)
+    ARGS2=models.CharField(max_length=128,null=True,blank=True)
+    ARGS3=models.CharField(max_length=128,null=True,blank=True)
+
+
+#tool输出参数
+class T_TOOL_OUTPUT(models.Model):
+    objects=checkOwnManager()
+    #参数名称
+    NAME=models.CharField(max_length=128)
+    #辅助说明
+    DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
+
+    #参数类型
+    SCRIPTLANGUAGE_CHIOCES = (
+        (0, '字符串'),
+        (1, '字典'),
+        (2, '列表'),
+        (3, '整型'),
+
+    )
+    TYPE=models.IntegerField(choices=SCRIPTLANGUAGE_CHIOCES,default=0)
+    #工具外键
+    T_TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,on_delete=models.PROTECT,related_name='T_TOOL_ID_T_TOOL_OUTPUT')
+
+    OWNER_ID=models.IntegerField(null=True,blank=True)
+    OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)
+    OWNER_ALL=models.BooleanField(default=False)
+
+    CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
+    #创建者
+    CREATE_USER_ID=models.IntegerField(null=True,blank=True)
+    CREATE_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    #最后更新时间
+    LAST_MODIFY_TIME=models.DateTimeField('修改时间',auto_now=True,null=True,blank=True)
+    #最后更新者
+    MODIFY_USER_ID=models.IntegerField(null=True,blank=True)
+    ARGS1=models.CharField(max_length=128,null=True,blank=True)
+    ARGS2=models.CharField(max_length=128,null=True,blank=True)
+    ARGS3=models.CharField(max_length=128,null=True,blank=True)
+
+
+class T_TOOL_EVENT(models.Model):
+    objects=checkOwnManager()
+    TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,related_name='TOOL_ID_T_TOOL_EVENT')
+    CREDENTIALS_ID=models.ForeignKey(T_LOGIN_CREDENTIALS, null=True,blank=True,related_name='CREDENTIALS_ID_T_TOOL_EVENT')
+
+    HOSTLIST=models.CharField(max_length=1024,null=True,blank=True)
+    INPUTPARAMS=models.CharField(max_length=256,null=True,blank=True)
+
+    #创建时间
+    CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
+    #创建者
+    CREATE_USER_ID=models.IntegerField(null=True,blank=True)
+    CREATE_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    #开始时间
+    START_TIME=models.DateTimeField(null=True,blank=True)
+    #结束时间
+    FINISH_TIME=models.DateTimeField(null=True,blank=True)
+    #耗时，单位为耗时
+    ELAPSED=models.IntegerField(null=True,blank=True)
+    #执行Celery的taskid
+    CELERY_TASK_ID=models.CharField(max_length=256)
+    STATUS=models.CharField(max_length=32)
+    #临时日志文件
+    LOGFILE=models.CharField(max_length=256,null=True,blank=True)
+    #日志内容入库
+    LOGCONTENT=models.TextField(null=True,blank=True)
+    #是否被取消了
+    CANCEL_FLAG=models.BooleanField(default=False)
+    #使用者
+    OWNER_ID=models.IntegerField(null=True,blank=True)
+    OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)
+    OWNER_ALL=models.BooleanField(default=False)
 
 
 

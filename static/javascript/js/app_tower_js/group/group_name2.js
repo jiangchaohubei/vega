@@ -58,12 +58,15 @@ function save_host(){
             }
             if(data.resultCode=="0001"){
                 console.log(data.resultCode)
-                opt_commons.dialogShow("失败信息",data.errorHost+" : "+data.resultDesc,2000);
+                opt_commons.dialogShow("失败信息",data.resultDesc,2000);
                 return;
             }
             if(data.resultCode=="0000"){
-                console.log(data.resultCode)
-                opt_commons.dialogShow("成功信息","添加成功！",2000);
+                if (data.hostNotExists.length==0 && data.hostNotUsable.length==0){
+                    opt_commons.dialogShow("成功信息","添加成功！",1000);
+                }else{
+                    opt_commons.dialogShow("提示信息","不存在的ip:</br> "+data.hostNotExists+";</br>  没有权限的ip：</br>"+data.hostNotUsable);
+                }
                 $("#host_table").bootstrapTable('refresh');
                 $('#choosed_hosts').val('');
 
