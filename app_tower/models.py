@@ -852,7 +852,7 @@ class T_TOOL_INPUT(models.Model):
     )
     TYPE=models.IntegerField(choices=SCRIPTLANGUAGE_CHIOCES,default=0)
     #工具外键
-    T_TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,on_delete=models.PROTECT,related_name='T_TOOL_ID_T_TOOL_INPUT')
+    T_TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,related_name='T_TOOL_ID_T_TOOL_INPUT')
 
     OWNER_ID=models.IntegerField(null=True,blank=True)
     OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
@@ -890,7 +890,7 @@ class T_TOOL_OUTPUT(models.Model):
     )
     TYPE=models.IntegerField(choices=SCRIPTLANGUAGE_CHIOCES,default=0)
     #工具外键
-    T_TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,on_delete=models.PROTECT,related_name='T_TOOL_ID_T_TOOL_OUTPUT')
+    T_TOOL_ID=models.ForeignKey(T_TOOL, null=True,blank=True,related_name='T_TOOL_ID_T_TOOL_OUTPUT')
 
     OWNER_ID=models.IntegerField(null=True,blank=True)
     OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
@@ -943,6 +943,9 @@ class T_TOOL_EVENT(models.Model):
     OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
     OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)
     OWNER_ALL=models.BooleanField(default=False)
+    ARGS1=models.CharField(max_length=128,null=True,blank=True)
+    ARGS2=models.CharField(max_length=128,null=True,blank=True)
+    ARGS3=models.CharField(max_length=128,null=True,blank=True)
 
 
 

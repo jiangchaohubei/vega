@@ -4,7 +4,7 @@
     <meta name="author" content="">
 
     <meta name="robots" content="NONE,NOARCHIVE">
-    <title>新建工具</title>
+    <title>修改工具</title>
     <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
@@ -57,7 +57,7 @@
     </style>
 
 </head>
-<body class="change-list" >
+<body class="change-list" onload="onload_editTool()">
 
 <!-- Header -->
 
@@ -71,13 +71,13 @@
         <ul class="breadcrumb">
 
             <li>
-                <a href="/static/templates/pages/app_tower_pages/workingPlatform/working.html">作业平台</a>
+                <a id="toolDetail" href="/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html">mytool</a>
             </li>
             <li>
-                新建工具
+                编辑工具：<span id="toolname">mytool</span>
             </li>
         </ul>
-
+        <input type="hidden" id="toolid">
         <div class="row" style="margin-left:20px">
             <div class="row">
                 <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">工具名称<span class="asteriskField">*</span> </label>
@@ -101,11 +101,7 @@
                     </div><!-- /input-group -->
                 </div>
             </div>
-            <script>
-                function onTypeSelect() {
 
-                }
-            </script>
 
             <div class="row">
                 <label for="auth" class="control-label col-md-2 requiredField" style="height:64px;line-height:50px;text-align:center">脚本语言<span class="asteriskField">*</span> </label>
@@ -178,7 +174,7 @@
                 </div>
             </div>
             <div style="text-align:center">
-                <button type="button" class="btn btn-primary " style="width: 80px;" onclick="addTool()">保存</button>
+                <button type="button" class="btn btn-primary " style="width: 80px;" onclick="updateTool()">保存</button>
 
             </div>
         </div>
@@ -380,7 +376,7 @@
 <script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
 <script src="/static/js/multiple-select/multiple-select.js"></script>
 
-<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/createTool.js"></script>
+<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/editTool.js"></script>
 
 
 </body></html>

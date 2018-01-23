@@ -124,7 +124,7 @@ function runTool() {
                         '<div class="controls col-md-10" style="height:64px;">'+
                         '<input type="text" class="form-control" param_type="'+inputParams[i].type+'" value="'+inputParams[i].value+'"  name="'+inputParams[i].name+'" >&nbsp;'+
                         '</div>'+
-                        ' </div>'
+                        '</div>'
                     )
                 }
 

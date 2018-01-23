@@ -4,7 +4,7 @@
     <meta name="author" content="">
 
     <meta name="robots" content="NONE,NOARCHIVE">
-    <title>作业平台</title>
+    <title>历史任务</title>
     <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
@@ -19,6 +19,8 @@
     <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
     <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
     <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap-table.css">
+    <link rel="stylesheet" href="/static/js/bootstrap/css/table.css">
     <style>
         .tool-panel{
             margin-top: 20px;
@@ -26,34 +28,18 @@
             padding: 20px 25px;
             background-color: #fff;
         }
-        .tool-item{
-            float: left;
+        .span-chooice{
+            border: solid 1px #1ab1ff;width: 80px;text-align: center;float: left;
+            height: 30px;
+            font-size: large;
         }
-        .tool-item:hover{
-            box-shadow:0px 0px 10px 5px #aaa ;
+        .span-chooice-click{
+            border: solid 1px #1ab1ff;width: 80px;text-align: center;background-color: #1ab1ff;color: #ffffff;float: left;
+            height: 30px;
+            font-size: large;
         }
-        .tool-item:hover span{
-            display: block;!important;
-        }
-        .close{
-            display:none;font-size: small;color:red;float:right;
-        }
-        .tool-type{
-            margin-right: -0px;
-            margin-left: -0px;
-            height: 100px;
-
-        }
-        .tool-item-inner{
-            display: block;
-            width: 100px;
-            margin: 0 auto;
-            padding: 5px;
-            border: 1px solid transparent;
-            text-align: center;
-        }
-        .tool-item-name{
-            margin-top: 5px;
+        .span-chooice:hover{
+            background-color: #94B9CE;
         }
     </style>
 
@@ -70,26 +56,29 @@
     <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
 
         <ul class="breadcrumb">
-
             <li>
-                working
-
+                <a href="/static/templates/pages/app_tower_pages/workingPlatform/working.html">作业平台</a>
+            </li>
+            <li>
+                历史任务
             </li>
         </ul>
-        <a type="button" style=" width:150px"  class="btn btn-primary"
-                href="/static/templates/pages/app_tower_pages/workingPlatform/createTool.html">
-            <span class="glyphicon orange2 bigger-115 glyphicon-plus-sign" aria-hidden="true"></span>&nbsp新建工具
-        </a>
-        <a type="button" style=" width:150px"  class="btn btn-primary"
-           href="/static/templates/pages/app_tower_pages/workingPlatform/toolshop.html">
-            <span class="glyphicon orange2 bigger-115 glyphicon-plus-sign" aria-hidden="true"></span>&nbsp工具商店
-        </a>
-        <a type="button" style=" width:150px" id="btn_show_txt_modal" class="btn btn-primary"
-           href="/static/templates/pages/app_tower_pages/workingPlatform/history.html">
-            <span class=" orange2 ace-icon fa fa-pencil bigger-120" aria-hidden="true"></span>&nbsp查看历史任务
-        </a>
-        <div class="tool-panel" id="tool-panel">
+        <div id="timeArea" class="row">
+            <span class="span-chooice" onclick="onSelectTime(this,'today')"  >今天</span>
+            <span class="span-chooice" onclick="onSelectTime(this,'week')"   >近7天</span>
+            <span class="span-chooice" onclick="onSelectTime(this,'month')" style="margin-right:20px " >近30天</span>
+            <input type="hidden" id="time_area">
+        </div>
 
+        <hr>
+        <div class="tool-panel" id="tool-panel">
+            <!--历史任务列表-->
+
+            <div class="results table-responsive">
+
+                <table id="toolHistory_table"></table>
+
+            </div>
         </div>
 
     </div>
@@ -109,6 +98,8 @@
 <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
 <script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
 <script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootstrap-table.js"></script>
+<script src="/static/javascript/bootstrap-table-zh-CN.js"></script>
 <script src="/static/javascript/bootbox.js" type="text/javascript"></script>
 
 <script src="/static/javascript/jquery.validate.js"></script>
@@ -117,7 +108,7 @@
 <script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
 <script src="/static/js/multiple-select/multiple-select.js"></script>
 
-<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/working.js"></script>
+<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/history.js"></script>
 
 
 

@@ -11,7 +11,7 @@ from app_tower.models import User
 import tempfile
 import traceback
 from django.db import  transaction
-from app_tower.tasks import run_playbook,runCommands,runCommands2
+#from app_tower.tasks import run_playbook,runCommands,runCommands2
 from celery.task.control import revoke
 from celery.result import AsyncResult
 from app_tower.utils import dateutil

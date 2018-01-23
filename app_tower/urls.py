@@ -109,12 +109,17 @@ urlpatterns = patterns('inventories',
 
 
                        url(r'^workingPlatform/tool_add$', workingPlatform.tool_add),
+                       url(r'^workingPlatform/tool_update$', workingPlatform.tool_update),
+                       url(r'^workingPlatform/tool_delete$', workingPlatform.tool_delete),
                        url(r'^workingPlatform/tool_select$', workingPlatform.tool_select),
+                       url(r'^workingPlatform/history_select$', workingPlatform.history_select),
                        url(r'^workingPlatform/working_init$', workingPlatform.working_init),
                        url(r'^workingPlatform/toolshop_init$', workingPlatform.toolshop_init),
                        url(r'^workingPlatform/toolDetail_init$', workingPlatform.toolDetail_init),
                        url(r'^workingPlatform/runTool_init$', workingPlatform.runTool_init),
                        url(r'^workingPlatform/toolcreate_init$', workingPlatform.toolcreate_init),
+                       url(r'^workingPlatform/tooledit_init$', workingPlatform.tooledit_init),
+                       url(r'^workingPlatform/toolEvent_init$', workingPlatform.toolEvent_init),
                        url(r'^workingPlatform/importTool$', workingPlatform.importTool),
                        url(r'^workingPlatform/removeTool$', workingPlatform.removeTool),
 

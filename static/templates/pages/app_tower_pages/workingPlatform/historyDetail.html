@@ -1,0 +1,150 @@
+<html lang="zh_CN"><head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>历史任务详情</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap-table.css">
+    <link rel="stylesheet" href="/static/js/bootstrap/css/table.css">
+    <style>
+        .lablestyle{
+            height:30px;line-height:20px
+        }
+        .spanstyle{
+            height:30px;line-height:30px
+        }
+    </style>
+
+</head>
+<body class="change-list" >
+
+<!-- Header -->
+
+
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/static/templates/pages/app_tower_pages/workingPlatform/history.html">历史任务</a>
+            </li>
+            <li>
+                历史任务详情
+            </li>
+        </ul>
+        <input type="hidden" id="toolEventId">
+        <input type="hidden" id="toolEventName">
+        <a type="button" style=" width:150px"  class="btn btn-primary"
+                href="#">
+            <span class="fa fa-repeat" aria-hidden="true"></span>&nbsp重新执行
+        </a>
+
+        <hr>
+        <div class="tool-detail" style="overflow: hidden">
+            <div class="col-md-5">
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name" >结果：</label>
+                    <span id="run_status" class="col-md-4 control-span spanstyle" style="color:red;word-wrap:break-word;word-break:break-all;" ></span>
+                    <input type="button" id="stopbtn" onclick="stoprun()" class="btn btn-success col-md-4" value="停止" name="_continue">
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">开始时间：</label>
+                    <span id="run_startTime" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">结束时间：</label>
+                    <span id="run_endTime" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">输入参数：</label>
+                    <a id="" class="col-md-8 control-span spanstyle" style="color:#006dcc;word-wrap:break-word;word-break:break-all; " href="javascript:void(0);" onclick="showInputparam()" >点击查看</a>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">执行人：</label>
+                    <span id="run_user" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">工具：</label>
+                    <span id="run_toolName" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+                <div style="overflow:hidden;">
+                    <label class="col-md-4 control-label lablestyle" for="name">耗时（s）：</label>
+                    <span id="run_elapsed" class="col-md-8 control-span spanstyle" style=";word-wrap:break-word;word-break:break-all; " ></span>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-preview" id="showInputList" style="display: none">
+
+                </div>
+            </div>
+            <div class="panel-body col-md-12">
+                <ul id="myTab" class="nav nav-tabs"  >
+                    <li class="active"><a href="#logTab" data-toggle="tab">日志输出</a></li>
+                    <li ><a href="#jsonTab" data-toggle="tab">json</a></li>
+                </ul>
+                <input type="hidden" id="log_taskid">
+                <input type="hidden" id="log_logfile">
+                <input type="hidden" id="log_toolEventId">
+                <div id="myTabContent" class="tab-content" >
+                    <div class="tab-pane fade in active" id="logTab">
+                        <textarea class="form-control" wrap="off" style="border-style:solid;overflow:scroll;" rows="20" ng-model="ansible_log" ng-show="ansible_log" id="run_log"></textarea>
+                    </div>
+                    <div class="tab-pane fade " id="jsonTab">
+                        json
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<br>
+<br>
+
+
+<script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+<script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootstrap-table.js"></script>
+<script src="/static/javascript/bootstrap-table-zh-CN.js"></script>
+<script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+
+<script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
+<script src="/static/js/multiple-select/multiple-select.js"></script>
+
+<script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/historyDetail.js"></script>
+
+
+
+</body></html>

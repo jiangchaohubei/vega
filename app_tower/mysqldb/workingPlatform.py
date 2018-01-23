@@ -12,9 +12,10 @@ import os
 from app_tower.utils import dateutil
 from django.db import  transaction
 from django.core import serializers
-from app_tower.tasks import run_tool_yaml
+#from app_tower.tasks import run_tool_yaml
 from celery.task.control import revoke
 from celery.result import AsyncResult
+from django.utils.timezone import now, timedelta
 from authority.permission import PermissionVerify
 import logging
 log = logging.getLogger("project")
@@ -90,6 +91,50 @@ def toolDetail_init(request):
     log.info('toolDetail_init end')
     print str(model_to_dict(tool))
     return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList)}))
+
+#初始化编辑
+def tooledit_init(request):
+    log.info('toolDetail_init start')
+    toolid=request.POST['toolid']
+    tool=T_TOOL.objects.get(id=int(toolid))
+    tool.ARGS1=tool.TOOLTYPE_ID.NAME
+    if tool.OWNER_ALL:
+        tool.ARGS2=u'所有人'
+    elif tool.OWNER_PROJECT_ID:
+        tool.ARGS2=T_PROJECT.objects.get(id=int(tool.OWNER_PROJECT_ID)).NAME+U'(项目组)'
+    else:
+        tool.ARGS2=tool.OWNER_NAME
+    print  tool.ARGS2
+    toolinput=tool.T_TOOL_ID_T_TOOL_INPUT.all()
+    tooloutput=tool.T_TOOL_ID_T_TOOL_OUTPUT.all()
+    toolinputList = serializers.serialize('json', toolinput, ensure_ascii=False)
+    tooloutputList = serializers.serialize('json', tooloutput, ensure_ascii=False)
+    tooltype=T_TOOLTYPE.objects.all()
+    tooltypeList = serializers.serialize('json', tooltype, ensure_ascii=False)
+    project=T_PROJECT.objects.check_own(request)
+    projectList = serializers.serialize('json', project, ensure_ascii=False)
+    true = True
+    false=False
+    null = None
+    #log.info('userList：'+userList)
+    log.info('toolDetail_init end')
+    print str(model_to_dict(tool))
+    return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'tooltypeList': eval(tooltypeList),'projectList': eval(projectList)}))
+
+
+#初始化历史任务
+def toolEvent_init(request):
+    log.info('toolEvent_init start')
+    toolEventId=request.POST['toolEventId']
+    toolEvent=T_TOOL_EVENT.objects.get(id=int(toolEventId))
+    toolEvent.ARGS1=toolEvent.TOOL_ID.NAME
+    true = True
+    false=False
+    null = None
+
+    log.info('toolEvent_init end')
+    print str(model_to_dict(toolEvent))
+    return HttpResponse(json.dumps({'resultCode':'0000','toolEvent':model_to_dict(toolEvent)}))
 
 #初始化执行工具页面
 def runTool_init(request):
@@ -201,6 +246,124 @@ def tool_add(request):
     log.info('project_add end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
+#description:编辑工具
+#params: request.POST {"toolid":"","name":"","type":"","language":"","scriptCode":"","des":"","inputParam":"[]","outputParam":"[]","owner":""}
+#return: {"resultCode":"","resultDesc":""}
+
+def tool_update(request):
+    log.info('tool_update start')
+    log.info("request: "+str(request))
+    form = {}
+    response_data={}
+    OWNER_ID=None
+    OWNER_NAME=None
+    OWNER_PROJECT_ID=None
+    OWNER_ALL=False
+    try:
+        if request.POST:
+            form['toolid'] = request.POST['toolid']
+            form['name'] = request.POST['name']
+            form['type'] = request.POST['type']
+            form['language'] = request.POST['language']
+            form['scriptCode'] = request.POST['scriptCode']
+            form['des'] = request.POST['des']
+            form['inputParam'] = request.POST['inputParam']
+            form['outputParam'] = request.POST['outputParam']
+            form['OWNER'] = request.POST['owner']
+            log.info("form:"+str(form))
+        if form['OWNER']=='onlyOne':
+            OWNER_ID=request.session['userId']
+            OWNER_NAME=request.session['username']
+        elif form['OWNER']=='all':
+            OWNER_ALL=True
+        else:
+            if not T_PROJECT.objects.check_id(request,form['OWNER']):
+                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"项目组没有使用权限！"}))
+            OWNER_PROJECT_ID=form['OWNER']
+        # if T_TOOL.objects.filter(NAME=form['name']):
+        #     response_data['resultCode']='0001'
+        #     response_data['resultDesc']='NAME已经存在，名称不能重复！'
+        #     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+        with transaction.atomic():
+            tooltype,create=T_TOOLTYPE.objects.get_or_create(NAME=form['type'])
+            tooltype.save()
+            if form['language']=='shell':
+                form['language']=0
+            elif form['language']=='python':
+                form['language']=1
+            else:
+                form['language']=2
+
+            T_TOOL.objects.filter(id=int(form['toolid'])).update(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],
+                                                                      OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                                                      MODIFY_USER_ID=request.session['userId'])
+
+            #批量添加输入输出参数
+            false=False
+            true=True
+            inputParam_list=list()
+            T_TOOL_INPUT.objects.filter(T_TOOL_ID_id=int(form['toolid'])).delete()
+            for item in eval(form['inputParam']):
+                if not str(item)=='0':
+
+                    inputparam=T_TOOL_INPUT(NAME=item['name'], DESCRIPTION=item['des'],DEFAULT=item['def'],ISREQUIRED=item['isrequired'],TYPE=int(item['type']),T_TOOL_ID_id=int(form['toolid']),
+                                            OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                            CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                    inputParam_list.append(inputparam)
+            T_TOOL_INPUT.objects.bulk_create(inputParam_list)
+
+            outputParam_list=list()
+            T_TOOL_OUTPUT.objects.filter(T_TOOL_ID_id=int(form['toolid'])).delete()
+            for item in eval(form['outputParam']):
+                if not str(item)=='0':
+                    outputparam=T_TOOL_OUTPUT(NAME=item['name'], DESCRIPTION=item['des'],TYPE=int(item['type']),T_TOOL_ID_id=int(form['toolid']),
+                                              OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                              CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                    outputParam_list.append(outputparam)
+            T_TOOL_OUTPUT.objects.bulk_create(outputParam_list)
+
+        response_data['resultCode']='0000'
+        response_data['resultDesc']='Success'
+    except Exception, ex:
+        print Exception, ex
+        traceback.print_exc()
+        log.error(ex.__str__())
+        response_data['resultCode']='0001'
+        response_data['resultDesc']=ex.__str__()
+    log.info('tool_update end')
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+
+#description:删除工具
+#params: request.POST {"toolid":""}
+#return: {"resultCode":"","resultDesc":""}
+
+def tool_delete(request):
+
+    log.info("tool_delete start")
+    log.info("request: "+str(request))
+    form = {}
+
+    if request.POST:
+        form['toolid'] = request.POST['toolid']
+        log.info("id:"+str(form))
+    if not T_TOOL.objects.check_id(request,form['toolid']):
+        return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有删除权限！"}))
+    # 删除id的数据
+    tool = T_TOOL.objects.get(id=form['toolid'])
+    response_data = {}
+    try:
+        tool.delete()
+        response_data['resultCode'] = '0000'
+        response_data['resultDesc'] = '删除成功！'
+    except Exception,ex:
+        print Exception,ex
+        traceback.print_exc()
+        log.error(ex)
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = '已被使用，禁止删除！'
+    log.info("tool_delete end")
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+
 
 #description:查询工具
 #params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
@@ -252,6 +415,85 @@ def tool_select(request):
         response_data['resultDesc'] = e.__str__()
     log.info('response_data:'+str(response_data))
     log.info("tool_select end")
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+
+
+#description:查询历史任务
+#params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
+#return: {"resultCode":"","resultDesc":"","rows":"","total":""}
+
+def history_select(request):
+
+    log.info("history_select start")
+    log.info("request: "+str(request))
+    response_data = {}
+    try:
+        #本页第一条数据下标
+        offset= request.GET.get('offset')
+        # 每页数量
+        limit = request.GET.get('limit')
+        # 排序asc，desc
+        order= ''
+        if request.GET.get('order')=='desc':
+            order='-'
+        ordername='id'
+        if request.GET.get('ordername'):
+            ordername= str(request.GET.get('ordername'))
+        ordername.replace('fields.','')
+        orderBy=order+ordername
+        name = ''
+        description = ''
+        timeArea=''
+        if request.GET.get("name"):
+            name=request.GET.get("name")
+        if request.GET.get("description"):
+            description=request.GET.get("description")
+        if request.GET.get("timeArea"):
+            timeArea=request.GET.get("timeArea")
+
+        # 排序字段
+        # ordername= request.GET.get('ordername')
+        # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
+        end = now().date()+timedelta(days=1)
+        start =now().date() - timedelta(days=30)
+        toolEventList=[]
+        total=0
+        if timeArea=='today':
+            end = now().date()+timedelta(days=1)
+            start =now().date()
+            toolEventList = T_TOOL_EVENT.objects.check_own(request).filter(TOOL_ID__NAME__contains=name).filter(TOOL_ID__DESCRIPTION__contains=description).filter(CREATE_TIME__range=(start, end)).order_by(orderBy)
+            total=len(toolEventList)
+        elif timeArea=='week':
+            end = now().date()+timedelta(days=1)
+            start =now().date() - timedelta(days=7)
+            toolEventList = T_TOOL_EVENT.objects.check_own(request).filter(TOOL_ID__NAME__contains=name).filter(TOOL_ID__DESCRIPTION__contains=description).filter(CREATE_TIME__range=(start, end)).order_by(orderBy)
+            total=len(toolEventList)
+        elif timeArea=='month':
+            end = now().date()+timedelta(days=1)
+            start =now().date() - timedelta(days=30)
+            toolEventList = T_TOOL_EVENT.objects.check_own(request).filter(TOOL_ID__NAME__contains=name).filter(TOOL_ID__DESCRIPTION__contains=description).filter(CREATE_TIME__range=(start, end)).order_by(orderBy)
+            total=len(toolEventList)
+        else:
+            toolEventList = T_TOOL_EVENT.objects.check_own(request).filter(TOOL_ID__NAME__contains=name).filter(TOOL_ID__DESCRIPTION__contains=description).filter(CREATE_TIME__range=(start, end)).order_by(orderBy)
+            total=len(toolEventList)
+        print end,start
+        list = toolEventList[int(offset):int(offset)+int(limit)]
+        #[5:10]这是查找从下标5到下标10之间的数据，不包括10。
+        for l in list:
+            l.ARGS1=l.TOOL_ID.NAME
+            l.ARGS2=l.TOOL_ID.DESCRIPTION
+        response_data['resultCode'] = '0000'
+        response_data['resultDesc'] = '查询成功！'
+        #序列码 serializers.serialize，且ensure_ascii=False防止乱码
+        response_data['rows'] = serializers.serialize('json', list,ensure_ascii=False,use_natural_keys=True)
+        response_data['total'] = total
+    except Exception,e:
+        traceback.print_exc()
+        log.error(e.__str__())
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = e.__str__()
+    log.info('response_data:'+str(response_data))
+    log.info("history_select end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 

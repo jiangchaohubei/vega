@@ -12,6 +12,8 @@ function onload_tooldetail() {
     $('#toolname').html(toolname)
     $('#toolid').val(toolid)
     $('#runtoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/runTool.html?toolid='+toolid+'&toolname='+toolname)
+    $('#edittoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/editTool.html?toolid='+toolid+'&toolname='+toolname)
+
     $.ajax({
         url:"/app_tower/workingPlatform/toolDetail_init",
         type:"POST",
@@ -37,7 +39,14 @@ function onload_tooldetail() {
                 $('#tool_creater').html(data.tool.CREATE_USER_NAME)
                 $('#tool_desc').html(data.tool.DESCRIPTION)
                 $('#tool_type').html(data.tool.ARGS1)
-                $('#tool_language').html( data.tool.SCRIPT_LANGUAGE==0 ? 'shell' : 'python')
+                if ( data.tool.SCRIPT_LANGUAGE==0){
+                    $('#tool_language').html('shell')
+                }else if (data.tool.SCRIPT_LANGUAGE==1){
+                    $('#tool_language').html('python')
+                }else{
+                    $('#tool_language').html('yaml')
+                }
+
                 $('#tool_scriptcode').html(data.tool.SCRIPT_CODE)
                 $('#tool_owner').html(data.tool.ARGS2)
                 var inputs=""
@@ -62,7 +71,45 @@ function onload_tooldetail() {
     });
 }
 
+function deleteTool() {
+    var toolid=$('#toolid').val()
+    if(confirm("你确信要删除工具："+$('#toolname').html()+"？")){
+        $.ajax({
+            url:"/app_tower/workingPlatform/tool_delete",
+            type:"POST",
+            data:{
+                toolid:toolid
+            },
+            dataType:"json",
+            success:function(data){
+                if (data.resultCode=="0087"){
+                    alert(data.resultDesc);
+                    top.location.href ='/login'
+                }
+                if(data.resultCode=="0057"){
+                    opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                    return;
+                }
+                if(data.resultCode=="0001"){
+                    opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                    return;
+                }
+                if(data.resultCode=="0000"){
+                    opt_commons.dialogShow("成功信息","删除成功！",2000);
+                    window.location.href='/static/templates/pages/app_tower_pages/workingPlatform/working.html'
+                    return;
+                }
+            },
 
+            error:function(data){
+                opt_commons.dialogShow("错误信息","error",2000);
+
+
+            },
+        });
+    }
+
+}
 
 
 
