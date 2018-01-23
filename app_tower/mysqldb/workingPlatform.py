@@ -12,7 +12,7 @@ import os
 from app_tower.utils import dateutil
 from django.db import  transaction
 from django.core import serializers
-#from app_tower.tasks import run_tool_yaml
+from app_tower.tasks import run_tool_yaml
 from celery.task.control import revoke
 from celery.result import AsyncResult
 from django.utils.timezone import now, timedelta
