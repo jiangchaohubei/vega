@@ -128,6 +128,8 @@ def toolEvent_init(request):
     toolEventId=request.POST['toolEventId']
     toolEvent=T_TOOL_EVENT.objects.get(id=int(toolEventId))
     toolEvent.ARGS1=toolEvent.TOOL_ID.NAME
+    toolEvent.START_TIME=json.dumps(toolEvent.START_TIME, cls=dateutil.CJsonEncoder)
+    toolEvent.FINISH_TIME=json.dumps(toolEvent.FINISH_TIME, cls=dateutil.CJsonEncoder)
     true = True
     false=False
     null = None
