@@ -561,6 +561,7 @@ def tool_run(request):
         tool_event=T_TOOL_EVENT(TOOL_ID=tool,CREDENTIALS_ID_id=int(form['credentialsId']),HOSTLIST=form['hostList'],INPUTPARAMS=form['inputParams'],CREATE_USER_ID=request.session['userId'],
                      CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
         tool_event.save()
+
         if tool.SCRIPT_LANGUAGE==2:
             jobTags=[]
             skipTags=[]
