@@ -13,22 +13,22 @@ def ws_connect(message):
 
     Group('User').send({
         'text': json.dumps({
-            'message': u'用户[s%]登录' % message.http_session['username']
+            'message': u'用户[%s]登录' % message.http_session['username']
 
         })
     })
 
 
-@http_session
+
 def ws_disconnect(message):
 
     Group('User').discard(message.reply_channel)
-    if message.http_session['isAdministrant']:
-         Group('Administrant').discard(message.reply_channel)
+
+    Group('Administrant').discard(message.reply_channel)
 
     Group('User').send({
         'text': json.dumps({
-            'message': u'用户[s%]注销' % message.http_session['username']
+            'message': u'用户[%s]注销' % message.http_session['username']
 
         })
     })
