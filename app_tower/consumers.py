@@ -2,25 +2,33 @@
 # -*- coding:utf8 -*-
 import json
 from channels import Group
+from channels.auth import http_session
 
 
-
-
+@http_session
 def ws_connect(message):
-    Group('users').add(message.reply_channel)
-    Group('users').send({
+    Group('User').add(message.reply_channel)
+    if message.http_session['isAdministrant']:
+        Group('Administrant').add(message.reply_channel)
+
+    Group('User').send({
         'text': json.dumps({
-            'message': u'有用户连接',
+            'message': u'用户[s%]登录' % message.http_session['username']
 
         })
     })
 
 
-
+@http_session
 def ws_disconnect(message):
-    Group('users').send({
+
+    Group('User').discard(message.reply_channel)
+    if message.http_session['isAdministrant']:
+         Group('Administrant').discard(message.reply_channel)
+
+    Group('User').send({
         'text': json.dumps({
-            'message': u'有用户断开连接',
+            'message': u'用户[s%]注销' % message.http_session['username']
+
         })
     })
-    Group('users').discard(message.reply_channel)
