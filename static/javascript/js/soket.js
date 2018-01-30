@@ -2,7 +2,8 @@
  * Created by PC on 2018/1/30.
  */
 $(function () {
-    var socket = new WebSocket('ws://' + window.location.host);
+    //var socket = new WebSocket('ws://' + window.location.host);
+    var socket = new WebSocket('ws://106.14.157.183:8080');
     socket.onopen = function open() {
         console.log('WebSockets connection created.');
     };
