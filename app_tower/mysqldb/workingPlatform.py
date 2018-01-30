@@ -18,6 +18,7 @@ from celery.task.control import revoke
 from celery.result import AsyncResult
 from django.utils.timezone import now, timedelta
 from authority.permission import PermissionVerify
+from app_tower.signals import tool_passaudit
 import logging
 log = logging.getLogger("project")
 
@@ -565,8 +566,8 @@ def tool_audit(request):
         tool.save()
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '审核成功！'
-        from app_tower.signals import tool_passaudit
-        tool_passaudit.send(sender='tool_audit',passaudit=True if auditStaus==1  else False, toolname=tool.NAME)
+
+        tool_passaudit.send(sender='tool_audit',passaudit=True if int(auditStaus)==1 else False, toolname=tool.NAME)
     except Exception,e:
         traceback.print_exc()
         log.error(e.__str__())
