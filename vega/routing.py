@@ -2,7 +2,7 @@
 # -*- coding:utf8 -*-
 
 from channels.routing import route
-from example.consumers import ws_connect, ws_disconnect
+from app_tower.consumers import ws_connect, ws_disconnect
 
 
 channel_routing = [
