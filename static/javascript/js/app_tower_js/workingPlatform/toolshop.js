@@ -24,24 +24,67 @@ function onload_toolshop() {
                 return;
             }
             if(data.resultCode=="0000"){
-                var htmlstr=""
-                for (var j=0;j<data.tools.length;j++){
+                var htmlstr_audited=""
+                for (var j=0;j<data.tools_audited.length;j++){
 
-                        var toolid="toolid"+data.tools[j].pk
-                        htmlstr+='<div class="tool-item" id="'+toolid+'">'+
-                            '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+data.tools[j].pk+'&toolname='+data.tools[j].fields.NAME+'" >'+
+                        var toolid="toolid"+data.tools_audited[j].pk
+                    htmlstr_audited+='<div class="tool-item" id="'+toolid+'">'+
+                            '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
                             '<div class="tool-item-icon">'+
                             '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
                             '</div>'+
-                            '<div class="tool-item-name">'+data.tools[j].fields.NAME+'</div>'+
+                            '<div class="tool-item-name">'+data.tools_audited[j].fields.NAME+'</div>'+
                             '</a>'+
-                             '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
-                            '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools[j].fields.DESCRIPTION+'</div>'+
-                            '<button type="button" style="width: 100px" onclick="importTool('+data.tools[j].pk+')" class="btn btn-hover btn-default ng-scope">导入</button>'+
+                             '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_audited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_audited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_audited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
+                            '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_audited[j].fields.DESCRIPTION+'</div>'+
+                            '<button type="button" style="width: 100px" onclick="importTool('+data.tools_audited[j].pk+')" class="btn btn-hover btn-success ng-scope">导入</button>'+
                             '</div>'
 
                 }
-                $('#tool-panel').append(htmlstr)
+                $('#tool-panel').append(htmlstr_audited)
+                $('#tool-span').html(data.tools_audited.length)
+
+
+                var htmlstr_notaudited=""
+                for (var j=0;j<data.tools_notaudited.length;j++){
+
+                    var toolid="toolid"+data.tools_notaudited[j].pk
+                    htmlstr_notaudited+='<div class="tool-item" id="'+toolid+'">'+
+                        '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_notaudited[j].pk+'&toolname='+data.tools_notaudited[j].fields.NAME+'" >'+
+                        '<div class="tool-item-icon">'+
+                        '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
+                        '</div>'+
+                        '<div class="tool-item-name">'+data.tools_notaudited[j].fields.NAME+'</div>'+
+                        '</a>'+
+                        '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_notaudited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_notaudited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_notaudited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
+                        '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_notaudited[j].fields.DESCRIPTION+'</div>'+
+                        '<button type="button" style="width: 100px"  class="btn btn-hover btn-info ng-scope">未审核</button>'+
+                        '</div>'
+
+                }
+                $('#tool-notaudited-panel').append(htmlstr_notaudited)
+                $('#tool-notaudited-span').html(data.tools_notaudited.length)
+
+
+                var htmlstr_failaudited=""
+                for (var j=0;j<data.tools_failaudited.length;j++){
+
+                    var toolid="toolid"+data.tools_failaudited[j].pk
+                    htmlstr_failaudited+='<div class="tool-item" id="'+toolid+'">'+
+                        '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_failaudited[j].pk+'&toolname='+data.tools_failaudited[j].fields.NAME+'" >'+
+                        '<div class="tool-item-icon">'+
+                        '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
+                        '</div>'+
+                        '<div class="tool-item-name">'+data.tools_failaudited[j].fields.NAME+'</div>'+
+                        '</a>'+
+                        '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_failaudited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_failaudited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_failaudited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
+                        '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_failaudited[j].fields.DESCRIPTION+'</div>'+
+                        '<button type="button" style="width: 100px"  class="btn btn-hover btn-danger ng-scope">审核不通过</button>'+
+                        '</div>'
+
+                }
+                $('#tool-failaudited-panel').append(htmlstr_failaudited)
+                $('#tool-failaudited-span').html(data.tools_failaudited.length)
                 return;
             }
         },

@@ -47,7 +47,8 @@ INSTALLED_APPS = (
     'app_cmdb',
     'djcelery',
     'loginmiddleware',
-    'authority'
+    'authority',
+    'channels'
 
 )
 
@@ -158,3 +159,14 @@ DEBUG = True
 import loggerconfig
 import datetime
 LOGGING=loggerconfig.LOGGING
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'vega.routing.channel_routing',
+    }
+}

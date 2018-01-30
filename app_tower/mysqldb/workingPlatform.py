@@ -9,10 +9,11 @@ import json
 import tempfile
 import traceback
 import os
+import time
 from app_tower.utils import dateutil
 from django.db import  transaction
 from django.core import serializers
-from app_tower.tasks import run_tool_yaml
+#from app_tower.tasks import run_tool_yaml
 from celery.task.control import revoke
 from celery.result import AsyncResult
 from django.utils.timezone import now, timedelta
@@ -25,7 +26,7 @@ def working_init(request):
     log.info('working_init start')
     toolType=T_TOOLTYPE.objects.all()
     toolTypeList = serializers.serialize('json', toolType, ensure_ascii=False)
-    tool=User.objects.get(id=request.session['userId']).tools.all()
+    tool=User.objects.get(id=request.session['userId']).tools.all().filter(AUDIT_STATUS=1)
     toolList = serializers.serialize('json', tool, ensure_ascii=False)
     true = True
     false=False
@@ -38,18 +39,26 @@ def working_init(request):
 def toolshop_init(request):
     log.info('toolshop_init start')
 
-    tool=T_TOOL.objects.all()
-    for t in tool:
-        t.ARGS1=t.TOOLTYPE_ID.NAME
-    toolList = serializers.serialize('json', tool, ensure_ascii=False)
+    tool_0 = T_TOOL.objects.all().filter(AUDIT_STATUS=0)
+    tool_1 = T_TOOL.objects.all().filter(AUDIT_STATUS=1)
+    tool_2 = T_TOOL.objects.all().filter(AUDIT_STATUS=2)
 
+    for t in tool_0:
+            t.ARGS1=t.TOOLTYPE_ID.NAME
+    for t in tool_1:
+        t.ARGS1=t.TOOLTYPE_ID.NAME
+    for t in tool_2:
+        t.ARGS1=t.TOOLTYPE_ID.NAME
+    toolList0 = serializers.serialize('json', tool_0, ensure_ascii=False)
+    toolList1 = serializers.serialize('json', tool_1, ensure_ascii=False)
+    toolList2 = serializers.serialize('json', tool_2, ensure_ascii=False)
 
     true = True
     false=False
     null = None
     #log.info('userList：'+userList)
     log.info('toolshop_init end')
-    return HttpResponse(json.dumps({'resultCode':'0000','tools': eval(toolList)}))
+    return HttpResponse(json.dumps({'resultCode':'0000','tools_audited': eval(toolList1),'tools_notaudited': eval(toolList0),'tools_failaudited': eval(toolList2)}))
 
 #初始化工具创建页面
 def toolcreate_init(request):
@@ -72,6 +81,7 @@ def toolDetail_init(request):
     log.info('toolDetail_init start')
     toolid=request.POST['toolid']
     tool=T_TOOL.objects.get(id=int(toolid))
+    tool.AUDIT_TIME=json.dumps(tool.AUDIT_TIME, cls=dateutil.CJsonEncoder)
     tool.ARGS1=tool.TOOLTYPE_ID.NAME
     if tool.OWNER_ALL:
         tool.ARGS2=u'所有人'
@@ -97,6 +107,7 @@ def tooledit_init(request):
     log.info('toolDetail_init start')
     toolid=request.POST['toolid']
     tool=T_TOOL.objects.get(id=int(toolid))
+    tool.AUDIT_TIME=json.dumps(tool.AUDIT_TIME, cls=dateutil.CJsonEncoder)
     tool.ARGS1=tool.TOOLTYPE_ID.NAME
     if tool.OWNER_ALL:
         tool.ARGS2=u'所有人'
@@ -143,6 +154,7 @@ def runTool_init(request):
     log.info('toolDetail_init start')
     toolid=request.POST['toolid']
     tool=T_TOOL.objects.get(id=int(toolid))
+    tool.AUDIT_TIME=json.dumps(tool.AUDIT_TIME, cls=dateutil.CJsonEncoder)
     tool.ARGS1=tool.TOOLTYPE_ID.NAME
     if tool.OWNER_ALL:
         tool.ARGS2=u'所有人'
@@ -213,7 +225,8 @@ def tool_add(request):
                 form['language']=2
             tool = T_TOOL(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],
                              OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                                CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                                CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'],
+            )
             tool.save()
             #批量添加输入输出参数
             false=False
@@ -264,6 +277,8 @@ def tool_update(request):
     try:
         if request.POST:
             form['toolid'] = request.POST['toolid']
+            if not T_TOOL.objects.check_id(request,int(form['toolid'])):
+                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有使用权限！"}))
             form['name'] = request.POST['name']
             form['type'] = request.POST['type']
             form['language'] = request.POST['language']
@@ -298,7 +313,8 @@ def tool_update(request):
 
             T_TOOL.objects.filter(id=int(form['toolid'])).update(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],
                                                                       OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                                                                      MODIFY_USER_ID=request.session['userId'])
+                                                                      MODIFY_USER_ID=request.session['userId'],AUDIT_STATUS=0,AUDIT_USER_ID=request.session['userId'],
+                                                                 AUDIT_USER_NAME=request.session['username'],AUDIT_REASON=None,AUDIT_TIME=None)
 
             #批量添加输入输出参数
             false=False
@@ -392,15 +408,18 @@ def tool_select(request):
         orderBy=order+ordername
         name = ''
         description = ''
+        auditStatus=1
         if request.GET.get("name"):
             name=request.GET.get("name")
         if request.GET.get("description"):
             description=request.GET.get("description")
+        if request.GET.get("auditStatus"):
+            auditStatus=int(request.GET.get("auditStatus"))
 
         # 排序字段
         # ordername= request.GET.get('ordername')
         # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
-        toolList = T_TOOL.objects.check_own(request).filter(NAME__contains=name).filter(DESCRIPTION__contains=description).order_by(orderBy)
+        toolList = T_TOOL.objects.check_own(request).filter(NAME__contains=name).filter(DESCRIPTION__contains=description).filter(AUDIT_STATUS=auditStatus).order_by(orderBy)
         total=len(toolList)
         list = toolList[int(offset):int(offset)+int(limit)]
         #[5:10]这是查找从下标5到下标10之间的数据，不包括10。
@@ -509,12 +528,43 @@ def importTool(request):
         toolId=request.POST['toolId']
         if not T_TOOL.objects.check_id(request,int(toolId)):
             return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有使用权限！"}))
-        user=User.objects.get(id=int(request.session['userId']))
         tool=T_TOOL.objects.get(id=int(toolId))
+        if not tool.AUDIT_STATUS == 1:
+            return HttpResponse(json.dumps({"resultCode":"0001","resultDesc":"工具没有通过审核！"}))
+        user=User.objects.get(id=int(request.session['userId']))
         tool_user,create=T_TOOL_User_ID.objects.get_or_create(TOOL_ID=tool,User_ID=user)
         tool_user.save()
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '导入成功！'
+    except Exception,e:
+        traceback.print_exc()
+        log.error(e.__str__())
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = e.__str__()
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+
+
+#description:工具通过审核
+#params: request.POST {"toolId":""}
+#return: {"resultCode":"","resultDesc":""}
+
+def tool_audit(request):
+    response_data={}
+    try:
+        toolid=request.POST['toolid']
+        if not T_TOOL.objects.check_id(request,int(toolid)):
+            return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有使用权限！"}))
+        auditStaus=request.POST['auditStaus']
+        auditReason=request.POST['auditReason']
+        tool=T_TOOL.objects.get(id=int(toolid))
+        tool.AUDIT_STATUS=int(auditStaus)
+        tool.AUDIT_USER_ID=request.session['userId']
+        tool.AUDIT_USER_NAME=request.session['username']
+        tool.AUDIT_REASON=auditReason
+        tool.AUDIT_TIME=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
+        tool.save()
+        response_data['resultCode'] = '0000'
+        response_data['resultDesc'] = '审核成功！'
     except Exception,e:
         traceback.print_exc()
         log.error(e.__str__())
@@ -531,7 +581,8 @@ def removeTool(request):
     response_data={}
     try:
         toolId=request.POST['toolId']
-
+        if not T_TOOL.objects.check_id(request,int(toolId)):
+            return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有使用权限！"}))
         user=User.objects.get(id=int(request.session['userId']))
         tool=T_TOOL.objects.get(id=int(toolId))
         T_TOOL_User_ID.objects.filter(TOOL_ID=tool,User_ID=user).delete()
@@ -554,16 +605,19 @@ def tool_run(request):
     try:
         if request.POST:
             form['toolid']=request.POST['toolid']
+            if not T_TOOL.objects.check_id(request,int(form['toolid'])):
+                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有使用权限！"}))
             form['credentialsId']=request.POST['credentials']
             form['hostList']=request.POST['hostList']
             form['inputParams']=request.POST['inputParams']
         print str(form)
         tool=T_TOOL.objects.get(id=int(form['toolid']))
+        if not tool.AUDIT_STATUS == 1:
+            return HttpResponse(json.dumps({"resultCode":"0001","resultDesc":"工具没有通过审核！"}))
         file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
         tool_event=T_TOOL_EVENT(TOOL_ID=tool,CREDENTIALS_ID_id=int(form['credentialsId']),HOSTLIST=form['hostList'],INPUTPARAMS=form['inputParams'],CREATE_USER_ID=request.session['userId'],
                      CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
         tool_event.save()
-
         if tool.SCRIPT_LANGUAGE==2:
             jobTags=[]
             skipTags=[]
@@ -667,3 +721,5 @@ def stop_tool(request):
     T_TOOL_EVENT.objects.filter(id=int(toolEventId)).update(STATUS='REVOKED',CANCEL_FLAG=True)
     log.info('stop_tool end status'+result.status)
     return HttpResponse(json.dumps({'success':'true','status':result.status}))
+
+

@@ -77,10 +77,29 @@
                 工具商店
             </li>
         </ul>
+        <div class="panel-body col-md-12">
+            <ul id="myTab" class="nav nav-tabs"  >
+                <li class="active"><a href="#tool-panel" data-toggle="tab">已审核<span id="tool-span" class="badge" style="color: green;background-color: #bbbaba">50</span></a></li>
+                <li ><a href="#tool-notaudited-panel" data-toggle="tab">未审核<span id="tool-notaudited-span" class="badge" style="color: yellow;background-color: #bbbaba">50</span></a></li>
+                <li ><a href="#tool-failaudited-panel" data-toggle="tab">审核不通过<span id="tool-failaudited-span" class="badge" style="color: red;background-color: #bbbaba">50</span></a></li>
+            </ul>
+            <input type="hidden" id="log_taskid">
+            <input type="hidden" id="log_logfile">
+            <input type="hidden" id="log_toolEventId">
+            <div id="myTabContent" class="tab-content" >
+                <div class="tab-pane fade in active tool-panel" id="tool-panel">
 
-        <div class="tool-panel" id="tool-panel">
+                </div>
+                <div class="tab-pane fade tool-panel" id="tool-notaudited-panel">
 
+                </div>
+                <div class="tab-pane fade tool-panel" id="tool-failaudited-panel">
+
+                </div>
+
+            </div>
         </div>
+
 
     </div>
 

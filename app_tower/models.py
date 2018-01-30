@@ -799,6 +799,21 @@ class T_TOOL(models.Model):
     #脚本代码
     SCRIPT_CODE=models.TextField(null=True,blank=True)
 
+    #审核状态
+    AUDIT_CHIOCES = (
+        (0, '未审核'),
+        (1, '审核通过'),
+        (2, '审核不通过'),
+
+    )
+    AUDIT_STATUS=models.IntegerField(choices=AUDIT_CHIOCES,default=0)
+    #审核人
+    AUDIT_USER_ID=models.IntegerField(null=True,blank=True)
+    AUDIT_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
+    #审核原因
+    AUDIT_REASON=models.CharField(max_length=512,null=True,blank=True)
+    AUDIT_TIME=models.DateTimeField('审核时间',null=True,blank=True)
+
     OWNER_ID=models.IntegerField(null=True,blank=True)
     OWNER_NAME=models.CharField(max_length=128,null=True,blank=True)
     OWNER_PROJECT_ID=models.IntegerField(null=True,blank=True)

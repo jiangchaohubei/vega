@@ -13,6 +13,7 @@ ansible==2.3.1.0
 MySQL-python   x86_64   1.2.5-1.el7
 pip install  pyexcel_xls   0.5.0
 
+channels (1.1.8)
 
 
 
