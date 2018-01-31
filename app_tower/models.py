@@ -989,4 +989,4 @@ class T_MESSAGE_User_ID(models.Model):
 
     MESSAGE_ID=models.ForeignKey(T_MESSAGE, related_name='MESSAGE_ID')
     # User id
-    User_ID=models.ForeignKey(User, related_name='User_ID')
+    User_ID=models.ForeignKey(User, related_name='T_MESSAGE_User_User_ID')
