@@ -6,17 +6,26 @@ from django.http import JsonResponse
 from json import dumps
 import json
 from django.core import serializers
+import traceback
+import logging
+log = logging.getLogger("project")
 
 #查询消息
 def message_select(request):
-    user=User.objects.get(id=int(request.session['userId']))
-    messages=user.messages.all()
-    messageList = serializers.serialize('json', messages, ensure_ascii=False)
-    total=len(messageList)
-    list = messageList[0:5]
-    true = True
-    false=False
-    null = None
+    try:
+        user=User.objects.get(id=int(request.session['userId']))
+        messages=user.messages.all()
+        messageList = serializers.serialize('json', messages, ensure_ascii=False)
+        total=len(messageList)
+        list = messageList[0:5]
+        true = True
+        false=False
+        null = None
+    except Exception,ex:
+        print Exception, ex
+        traceback.print_exc()
+        log.error(ex.__str__())
+
 
     return HttpResponse(json.dumps({'resultCode':'0000','messageNum':total,'messageList': eval(list)}))
 
