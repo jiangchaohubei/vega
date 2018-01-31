@@ -23,7 +23,7 @@ var TableInit_message = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#message_table').bootstrapTable({
-            url: '/app_tower/message/message_select',
+            url: '/app_tower/message/select',
 
             method:"GET",
             striped: true, //是否显示行间隔色
