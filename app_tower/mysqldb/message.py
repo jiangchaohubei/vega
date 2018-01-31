@@ -44,7 +44,7 @@ def message_clear(request):
 #params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
 #return: {"resultCode":"","resultDesc":"","rows":"","total":""}
 
-def history_select(request):
+def message_select(request):
 
     log.info("message_select start")
     log.info("request: "+str(request))
