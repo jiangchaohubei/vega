@@ -3,7 +3,8 @@ from django.conf.urls import patterns, include, url
 from app_tower.mysqldb import inventoriesdb
 from app_tower.mysqldb import jobTemplatedb
 from app_tower.mysqldb import jobsdb
-from app_tower.mysqldb import credentials,project,playbook,timerTask,workingPlatform
+from app_tower.mysqldb import credentials,project,playbook,timerTask,workingPlatform,message
+
 
 urlpatterns = patterns('inventories',
                         url(r'^group/select$', inventoriesdb.group_select),
@@ -127,6 +128,11 @@ urlpatterns = patterns('inventories',
                        url(r'^workingPlatform/read_log$', workingPlatform.read_log),
                        url(r'^workingPlatform/stop_tool$', workingPlatform.stop_tool),
                        url(r'^workingPlatform/tool_audit$', workingPlatform.tool_audit),
+
+
+
+                       url(r'^message/select$', message.message_select),
+                       url(r'^message/clear$', message.message_clear),
 
 )
 

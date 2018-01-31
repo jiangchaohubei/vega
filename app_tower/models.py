@@ -91,18 +91,18 @@ class T_HOST(models.Model):
     DESCRIPTION=models.CharField(max_length=256)
     #变量
     VARIABLES=models.CharField(max_length=512)
-     #1,0    =0不可用
+    #1,0    =0不可用
     ENABLED=models.IntegerField(null=True,blank=True)
     #创建时间
     CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
-     #创建者
+    #创建者
     CREATE_USER_ID=models.IntegerField(null=True,blank=True)
     CREATE_USER_NAME=models.CharField(max_length=128,null=True,blank=True)
     #最后更新时间
     LAST_MODIFY_TIME=models.DateTimeField('修改时间',auto_now=True,null=True,blank=True)
     #最后更新者
     MODIFY_USER_ID=models.IntegerField(null=True,blank=True)
-     #T_INVENTROY先用0
+    #T_INVENTROY先用0
     INVENTORY_ID=models.IntegerField(default=0)
     #最后一个Jobid
     LAST_JOB_ID=models.IntegerField(null=True,blank=True)
@@ -478,6 +478,7 @@ class User(AbstractBaseUser):
     role = models.ForeignKey(RoleList, null=True, blank=True)
     projects=models.ManyToManyField(T_PROJECT,through='T_PROJECT_User_ID',through_fields=('User_ID','PROJECT_ID'))
     tools=models.ManyToManyField('T_TOOL',through='T_TOOL_User_ID',through_fields=('User_ID','TOOL_ID'))
+    messages=models.ManyToManyField('T_MESSAGE',through='T_MESSAGE_User_ID',through_fields=('User_ID','MESSAGE_ID'))
     def natural_key(self):
         return (self.username,self.mobile,self.createTime,self.email,self.is_active,self.is_superuser,self.nickname,self.sex,) + self.role.natural_key()
     natural_key.dependencies = ['app_tower.RoleList']
@@ -495,7 +496,7 @@ class T_PROJECT_User_ID(models.Model):
     PROJECT_ID=models.ForeignKey(T_PROJECT, related_name='relations')
     # User id
     User_ID=models.ForeignKey(User, related_name='relations')
-	
+
 class JobStatusControl(models.Model):
     objects = checkOwnManager()
     # 时间
@@ -963,8 +964,29 @@ class T_TOOL_EVENT(models.Model):
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
 
 
+#消息
+class T_MESSAGE(models.Model):
+    objects=checkOwnManager()
+    CONTENT=models.TextField('消息内容',null=True,blank=True)
+    #消息类型
+    MESSAGE_CHIOCES = (
+        ('default', '普通消息'),
+        ('login', '登录'),
+        ('tool', '工具'),
+        ('feedback', '意见反馈'),
+        ('job', '任务'),
+
+    )
+    TYPE=models.CharField('消息类型',choices=MESSAGE_CHIOCES,default='default')
+    #创建时间
+    CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
+    ARGS1=models.CharField(max_length=128,null=True,blank=True)
+    ARGS2=models.CharField(max_length=128,null=True,blank=True)
+    ARGS3=models.CharField(max_length=128,null=True,blank=True)
 
 
+class T_MESSAGE_User_ID(models.Model):
 
-
-
+    MESSAGE_ID=models.ForeignKey(T_MESSAGE, related_name='MESSAGE_ID')
+    # User id
+    User_ID=models.ForeignKey(User, related_name='User_ID')

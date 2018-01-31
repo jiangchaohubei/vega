@@ -3,7 +3,8 @@
 import json
 from channels import Group
 from channels.auth import http_session
-
+import logging
+log = logging.getLogger("test1")
 
 @http_session
 def ws_connect(message):
@@ -13,22 +14,25 @@ def ws_connect(message):
 
     Group('User').send({
         'text': json.dumps({
-            'message': u'用户[%s]登录' % message.http_session['username']
+            'message': u'用户[%s]登录' % message.http_session['username'],
+            'type':'login'
 
         })
     })
 
 
-@http_session
+
 def ws_disconnect(message):
+    log.info("ws_disconnect start")
 
     Group('User').discard(message.reply_channel)
-    if message.http_session['isAdministrant']:
-        Group('Administrant').discard(message.reply_channel)
+
+    Group('Administrant').discard(message.reply_channel)
 
     Group('User').send({
         'text': json.dumps({
-            'message': u'用户[%s]注销' % message.http_session['username']
+            'message': u'用户注销',
+            'type':'login'
 
         })
     })
