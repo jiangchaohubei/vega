@@ -15,9 +15,10 @@ def message_select(request):
     try:
         user=User.objects.get(id=int(request.session['userId']))
         messages=user.messages.all()
-        messageList = serializers.serialize('json', messages, ensure_ascii=False)
-        total=len(messageList)
-        list = messageList[0:5]
+        total=len(messages)
+        list = messages[0:5]
+        messageList = serializers.serialize('json', list, ensure_ascii=False)
+
         true = True
         false=False
         null = None
@@ -27,7 +28,7 @@ def message_select(request):
         log.error(ex.__str__())
 
 
-    return HttpResponse(json.dumps({'resultCode':'0000','messageNum':total,'messageList': eval(list)}))
+    return HttpResponse(json.dumps({'resultCode':'0000','messageNum':total,'messageList': eval(messageList)}))
 
 #清空消息
 def message_clear(request):
