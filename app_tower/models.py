@@ -977,7 +977,7 @@ class T_MESSAGE(models.Model):
         ('job', '任务'),
 
     )
-    TYPE=models.CharField('消息类型',choices=MESSAGE_CHIOCES,default='default')
+    TYPE=models.CharField('消息类型',max_length=128,choices=MESSAGE_CHIOCES,default='default')
     #创建时间
     CREATE_TIME=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
     ARGS1=models.CharField(max_length=128,null=True,blank=True)
