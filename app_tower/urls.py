@@ -131,8 +131,9 @@ urlpatterns = patterns('inventories',
 
 
 
-                       url(r'^message/select$', message.message_select),
+                       url(r'^message/message_init$', message.message_init),
                        url(r'^message/clear$', message.message_clear),
+                       url(r'^message/select$', message.message_select),
 
 )
 

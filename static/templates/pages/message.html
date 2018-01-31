@@ -1,0 +1,113 @@
+<html lang="zh_CN"><head>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+    <title>消息列表</title>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css">
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.main.frame.css" rel="stylesheet">
+
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap-table.css">
+    <link rel="stylesheet" href="/static/js/bootstrap/css/table.css">
+    <style>
+        .tool-panel{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 20px 25px;
+            background-color: #fff;
+        }
+        .span-chooice{
+            border: solid 1px #1ab1ff;width: 80px;text-align: center;float: left;
+            height: 30px;
+            font-size: large;
+        }
+        .span-chooice-click{
+            border: solid 1px #1ab1ff;width: 80px;text-align: center;background-color: #1ab1ff;color: #ffffff;float: left;
+            height: 30px;
+            font-size: large;
+        }
+        .span-chooice:hover{
+            background-color: #94B9CE;
+        }
+    </style>
+
+</head>
+<body class="change-list" >
+
+<!-- Header -->
+
+
+<div id="body-content" class="clearfix row" style="margin-top: 15px;">
+
+
+
+    <div id="content-block" class="col-sm-12 col-md-12 main-content" style="padding-left: 15px">
+
+        <ul class="breadcrumb">
+
+            <li>
+                历史消息
+            </li>
+        </ul>
+        <div id="timeArea" class="row">
+            <span class="span-chooice" onclick="onSelectTime(this,'today')"  >今天</span>
+            <span class="span-chooice" onclick="onSelectTime(this,'week')"   >近7天</span>
+            <span class="span-chooice" onclick="onSelectTime(this,'month')" style="margin-right:20px " >近30天</span>
+            <input type="hidden" id="time_area">
+        </div>
+
+        <hr>
+        <div class="tool-panel" id="tool-panel">
+            <!--历史消息列表-->
+
+            <div class="results table-responsive">
+
+                <table id="message_table"></table>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+</div>
+
+
+<br>
+<br>
+
+
+<script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+<script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/javascript/bootstrap-table.js"></script>
+<script src="/static/javascript/bootstrap-table-zh-CN.js"></script>
+<script src="/static/javascript/bootbox.js" type="text/javascript"></script>
+
+<script src="/static/javascript/jquery.validate.js"></script>
+<script src="/static/javascript/common.js"></script>
+
+<script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
+<script src="/static/js/multiple-select/multiple-select.js"></script>
+
+<script type="text/javascript" src="/static/javascript/js/message.js"></script>
+
+
+
+</body></html>

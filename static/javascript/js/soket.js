@@ -3,7 +3,7 @@
  */
 $(function () {
     $.ajax({
-        url:"/app_tower/message/select",
+        url:"/app_tower/message/message_init",
         type:"POST",
         data:{
 
@@ -26,8 +26,8 @@ $(function () {
                 $('#messageNum').html(data.messageNum)
                 for (var i=0;i<data.messageList.length;i++){
                     $('#messagelist').prepend(
-                        '<li>'+
-                        '<div class="text-center link-block">'+
+                        '<li style="border-bottom: solid">'+
+                        '<div class=" link-block">'+
                         '<a href="#">'+
                         '<i class="glyphicon glyphicon-envelope"></i>'+
                         '<span style="word-wrap:break-word;word-break:break-all; ">'+data.messageList[i].fields.CONTENT+'</span>'+
@@ -60,19 +60,21 @@ $(function () {
         // NOTE: We escape JavaScript to prevent XSS attacks.
         var message = data['message'];
         var type=data['type']
+        if (type=='tool'){
+            var messageNum=parseInt($('#messageNum').html())+1
+            $('#messageNum').html(messageNum)
+            $('#messagelist').prepend(
+                '<li style="border-bottom: solid">'+
+                '<div class=" link-block">'+
+                '<a href="#">'+
+                '<i class="glyphicon glyphicon-envelope"></i>'+
+                '<span style="word-wrap:break-word;word-break:break-all; ">'+message+'</span>'+
+                '</a>'+
+                '</div>'+
+                '</li>'
+            )
+        }
 
-        var messageNum=parseInt($('#messageNum').html())+1
-        $('#messageNum').html(messageNum)
-        $('#messagelist').prepend(
-            '<li>'+
-            '<div class="text-center link-block">'+
-            '<a href="#">'+
-            '<i class="glyphicon glyphicon-envelope"></i>'+
-            '<span style="word-wrap:break-word;word-break:break-all; ">'+message+'</span>'+
-            '</a>'+
-            '</div>'+
-            '</li>'
-        )
         console.log(message)
     };
     socket.onerror = function(e) {
@@ -86,42 +88,7 @@ $(function () {
     }
 })
 
-function socket_connet() {
-    var socket = new WebSocket('ws://' + window.location.host);
-    socket.onopen = function open() {
-        console.log('WebSockets connection created.');
-    };
-    socket.onmessage = function message(event) {
-        console.log(event)
-        var data = JSON.parse(event.data);
-        // NOTE: We escape JavaScript to prevent XSS attacks.
-        var message = data['message'];
-        var type=data['type']
 
-        var messageNum=parseInt($('#messageNum').html())+1
-        $('#messageNum').html(messageNum)
-        $('#messagelist').prepend(
-            '<li>'+
-            '<div class="text-center link-block">'+
-            '<a href="#">'+
-            '<i class="glyphicon glyphicon-envelope"></i>'+
-            '<span style="word-wrap:break-word;word-break:break-all; ">'+message+'</span>'+
-            '</a>'+
-            '</div>'+
-            '</li>'
-        )
-        console.log(message)
-    };
-    socket.onerror = function(e) {
-        console.log(e);
-    };
-    socket.onclose = function(e) {
-        console.log("connection closed");
-    };
-    if (socket.readyState == WebSocket.OPEN) {
-        socket.onopen();
-    }
-}
 
 
 
