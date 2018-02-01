@@ -160,10 +160,7 @@ import loggerconfig
 import datetime
 LOGGING=loggerconfig.LOGGING
 
-#权限配置
-from rolelist_permissionlist_init import rolelist_permission
-initRoleClass=rolelist_permission()
-initRoleClass.init_role_user()
+
 
 
 CHANNEL_LAYERS = {
