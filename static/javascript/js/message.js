@@ -127,6 +127,7 @@ var TableInit_message = function () {
                 },{
                     field: 'fields.CREATE_TIME',
                     title: 'Ê±¼ä',
+
                     align : 'center',
                     sortable : true
 
