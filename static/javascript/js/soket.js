@@ -73,6 +73,14 @@ $(function () {
                 '</div>'+
                 '</li>'
             )
+
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            };
+            toastr.success("您有新的消息请及时查看");
         }
 
         console.log(message)
