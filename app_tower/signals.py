@@ -8,7 +8,7 @@ from channels import Group
 import django.dispatch
 from django.db.models import Q
 
-#工具通过/不通过审核
+#工具通过/不通过审核,自定义signal
 tool_passaudit = django.dispatch.Signal(providing_args=["passaudit","toolname"])
 def on_tool_passaudit(sender, **kwargs):
     if "passaudit" in kwargs:

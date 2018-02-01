@@ -9,7 +9,7 @@ from django.core import serializers
 import traceback
 from django.utils.timezone import now, timedelta
 import logging
-log = logging.getLogger("project")
+log = logging.getLogger("message")
 
 #查询消息
 def message_init(request):

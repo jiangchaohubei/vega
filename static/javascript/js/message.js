@@ -2,7 +2,7 @@
  * Created by PC on 2018/1/19.
  */
 
-var selectionIds = [];  //ä¿å­˜é€‰ä¸­ids
+var selectionIds = [];  //±£´æÑ¡ÖĞids
 Array.prototype.removeByValue = function(val) {
     for(var i=0; i<this.length; i++) {
         if(this[i] == val) {
@@ -20,66 +20,66 @@ $(function(){
 
 var TableInit_message = function () {
     var oTableInit = new Object();
-    //åˆå§‹åŒ–Table
+    //³õÊ¼»¯Table
     oTableInit.Init = function () {
         $('#message_table').bootstrapTable({
             url: '/app_tower/message/select',
 
             method:"GET",
-            striped: true, //æ˜¯å¦æ˜¾ç¤ºè¡Œé—´éš”è‰²
-            cache: false, //æ˜¯å¦ä½¿ç”¨ç¼“å­˜ï¼Œé»˜è®¤ä¸ºtrueï¼Œæ‰€ä»¥ä¸€èˆ¬æƒ…å†µä¸‹éœ€è¦è®¾ç½®ä¸€ä¸‹è¿™ä¸ªå±æ€§ï¼ˆ*ï¼‰
-            pagination: true, //æ˜¯å¦æ˜¾ç¤ºåˆ†é¡µï¼ˆ*ï¼‰
-            sortable: true, //æ˜¯å¦å¯ç”¨æ’åº
+            striped: true, //ÊÇ·ñÏÔÊ¾ĞĞ¼ä¸ôÉ«
+            cache: false, //ÊÇ·ñÊ¹ÓÃ»º´æ£¬Ä¬ÈÏÎªtrue£¬ËùÒÔÒ»°ãÇé¿öÏÂĞèÒªÉèÖÃÒ»ÏÂÕâ¸öÊôĞÔ£¨*£©
+            pagination: true, //ÊÇ·ñÏÔÊ¾·ÖÒ³£¨*£©
+            sortable: true, //ÊÇ·ñÆôÓÃÅÅĞò
             sortOrder: "asc",
-            queryParams: oTableInit.queryParams,//ä¼ é€’å‚æ•°ï¼ˆ*ï¼‰
-            sidePagination: "server", //åˆ†é¡µæ–¹å¼ï¼šclientå®¢æˆ·ç«¯åˆ†é¡µï¼ŒserveræœåŠ¡ç«¯åˆ†é¡µï¼ˆ*ï¼‰
-            pageNumber:1, //åˆå§‹åŒ–åŠ è½½ç¬¬ä¸€é¡µï¼Œé»˜è®¤ç¬¬ä¸€é¡µ
-            pageSize: 5, //æ¯é¡µçš„è®°å½•è¡Œæ•°ï¼ˆ*ï¼‰
-            pageList: [5, 20, 50, 100], //å¯ä¾›é€‰æ‹©çš„æ¯é¡µçš„è¡Œæ•°ï¼ˆ*ï¼‰
+            queryParams: oTableInit.queryParams,//´«µİ²ÎÊı£¨*£©
+            sidePagination: "server", //·ÖÒ³·½Ê½£ºclient¿Í»§¶Ë·ÖÒ³£¬server·şÎñ¶Ë·ÖÒ³£¨*£©
+            pageNumber:1, //³õÊ¼»¯¼ÓÔØµÚÒ»Ò³£¬Ä¬ÈÏµÚÒ»Ò³
+            pageSize: 5, //Ã¿Ò³µÄ¼ÇÂ¼ĞĞÊı£¨*£©
+            pageList: [5, 20, 50, 100], //¿É¹©Ñ¡ÔñµÄÃ¿Ò³µÄĞĞÊı£¨*£©
             strictSearch: true,
-            showColumns: true, //æ˜¯å¦æ˜¾ç¤ºæ‰€æœ‰çš„åˆ—
-            showRefresh: true, //æ˜¯å¦æ˜¾ç¤ºåˆ·æ–°æŒ‰é’®
-            minimumCountColumns: 2, //æœ€å°‘å…è®¸çš„åˆ—æ•°
-            clickToSelect: false, //æ˜¯å¦å¯ç”¨ç‚¹å‡»é€‰ä¸­è¡Œ
-            height: 345, //è¡Œé«˜ï¼Œå¦‚æœæ²¡æœ‰è®¾ç½®heightå±æ€§ï¼Œè¡¨æ ¼è‡ªåŠ¨æ ¹æ®è®°å½•æ¡æ•°è§‰å¾—è¡¨æ ¼é«˜åº¦
-            showToggle:true, //æ˜¯å¦æ˜¾ç¤ºè¯¦ç»†è§†å›¾å’Œåˆ—è¡¨è§†å›¾çš„åˆ‡æ¢æŒ‰é’®
-            cardView: false, //æ˜¯å¦æ˜¾ç¤ºè¯¦ç»†è§†å›¾
-            detailView: false, //æ˜¯å¦æ˜¾ç¤ºçˆ¶å­è¡¨
+            showColumns: true, //ÊÇ·ñÏÔÊ¾ËùÓĞµÄÁĞ
+            showRefresh: true, //ÊÇ·ñÏÔÊ¾Ë¢ĞÂ°´Å¥
+            minimumCountColumns: 2, //×îÉÙÔÊĞíµÄÁĞÊı
+            clickToSelect: false, //ÊÇ·ñÆôÓÃµã»÷Ñ¡ÖĞĞĞ
+            height: 345, //ĞĞ¸ß£¬Èç¹ûÃ»ÓĞÉèÖÃheightÊôĞÔ£¬±í¸ñ×Ô¶¯¸ù¾İ¼ÇÂ¼ÌõÊı¾õµÃ±í¸ñ¸ß¶È
+            showToggle:true, //ÊÇ·ñÏÔÊ¾ÏêÏ¸ÊÓÍ¼ºÍÁĞ±íÊÓÍ¼µÄÇĞ»»°´Å¥
+            cardView: false, //ÊÇ·ñÏÔÊ¾ÏêÏ¸ÊÓÍ¼
+            detailView: false, //ÊÇ·ñÏÔÊ¾¸¸×Ó±í
             onCheck: function (row) {
-                //å•è¡Œæœ€å‰é¢çš„checkboxè¢«é€‰ä¸­
+                //µ¥ĞĞ×îÇ°ÃæµÄcheckbox±»Ñ¡ÖĞ
                 console.log(row)
-                if ($.inArray(row.pk, selectionIds)== -1){//ä¸å­˜åœ¨
+                if ($.inArray(row.pk, selectionIds)== -1){//²»´æÔÚ
                     selectionIds.push(row.pk);
                 }
             },
             onUncheck: function (row) {
-                //å•è¡Œæœ€å‰é¢çš„checkboxè¢«å–æ¶ˆ
+                //µ¥ĞĞ×îÇ°ÃæµÄcheckbox±»È¡Ïû
                 console.log(row)
-                if ($.inArray(row.pk, selectionIds)!= -1){//å­˜åœ¨
+                if ($.inArray(row.pk, selectionIds)!= -1){//´æÔÚ
                     selectionIds.removeByValue(row.pk)
                 }
 
 
             },
             onCheckAll: function (rows) {
-                //æœ€é¡¶ä¸Šçš„checkboxè¢«é€‰ä¸­
+                //×î¶¥ÉÏµÄcheckbox±»Ñ¡ÖĞ
                 console.log(rows)
                 for (var i=0;i<rows.length;i++){
-                    if ($.inArray(rows[i].pk, selectionIds)== -1){//ä¸å­˜åœ¨
+                    if ($.inArray(rows[i].pk, selectionIds)== -1){//²»´æÔÚ
                         selectionIds.push(rows[i].pk)
                     }
                 }
             },
             onUncheckAll: function (rows) {
-                //æœ€é¡¶ä¸Šçš„checkboxè¢«å–æ¶ˆ
+                //×î¶¥ÉÏµÄcheckbox±»È¡Ïû
                 console.log(rows)
                 for (var i=0;i<rows.length;i++){
-                    if ($.inArray(rows[i].pk, selectionIds)!= -1){//å­˜åœ¨
+                    if ($.inArray(rows[i].pk, selectionIds)!= -1){//´æÔÚ
                         selectionIds.removeByValue(rows[i].pk)
                     }
                 }
             },
-            responseHandler: function(res) { //è¿”å›æ•°æ®å¤„ç†
+            responseHandler: function(res) { //·µ»ØÊı¾İ´¦Àí
                 if (res.resultCode=="0087"){
                     alert(res.resultDesc);
                     top.location.href ='/login'
@@ -89,16 +89,16 @@ var TableInit_message = function () {
                     return;
                 }
                 if(res.resultCode=="0001"){
-                    opt_commons.dialogShow("æç¤ºä¿¡æ¯",res.resultDesc,2000);
+                    opt_commons.dialogShow("ÌáÊ¾ĞÅÏ¢",res.resultDesc,2000);
                     return;
                 }
                 var data=JSON.parse(res.rows);
                 $.each(data, function (i, row) {
-                    row.checkStatus = $.inArray(row.pk, selectionIds) != -1;  //åˆ¤æ–­å½“å‰è¡Œçš„æ•°æ®idæ˜¯å¦å­˜åœ¨ä¸é€‰ä¸­çš„æ•°ç»„ï¼Œå­˜åœ¨åˆ™å°†å¤šé€‰æ¡†çŠ¶æ€å˜ä¸ºtrue
+                    row.checkStatus = $.inArray(row.pk, selectionIds) != -1;  //ÅĞ¶Ïµ±Ç°ĞĞµÄÊı¾İidÊÇ·ñ´æÔÚÓëÑ¡ÖĞµÄÊı×é£¬´æÔÚÔò½«¶àÑ¡¿ò×´Ì¬±äÎªtrue
                 });
                 return {
-                    "total": res.total,//æ€»é¡µæ•°
-                    "rows": data  //æ•°æ®
+                    "total": res.total,//×ÜÒ³Êı
+                    "rows": data  //Êı¾İ
                 };
             },
             columns: [
@@ -112,21 +112,21 @@ var TableInit_message = function () {
                 },
                 {
                     field: 'fields.CONTENT',
-                    title: 'æ¶ˆæ¯å†…å®¹',
+                    title: 'ÏûÏ¢ÄÚÈİ',
                     align : 'center',
                     sortable : true,
 
 
                 },{
                     field: 'fields.TYPE',
-                    title: 'æ¶ˆæ¯ç±»å‹',
+                    title: 'ÏûÏ¢ÀàĞÍ',
                     align : 'center',
                     sortable : true,
 
 
                 },{
                     field: 'fields.CREATE_TIME',
-                    title: 'æ—¶é—´',
+                    title: 'Ê±¼ä',
                     align : 'center',
                     sortable : true
 
@@ -134,11 +134,11 @@ var TableInit_message = function () {
         });
     };
 
-    //å¾—åˆ°æŸ¥è¯¢çš„å‚æ•°
+    //µÃµ½²éÑ¯µÄ²ÎÊı
     oTableInit.queryParams = function (params) {
-        var temp = { //è¿™é‡Œçš„é”®çš„åå­—å’Œæ§åˆ¶å™¨çš„å˜é‡åå¿…é¡»ä¸€ç›´ï¼Œè¿™è¾¹æ”¹åŠ¨ï¼Œæ§åˆ¶å™¨ä¹Ÿéœ€è¦æ”¹æˆä¸€æ ·çš„
-            limit: params.limit, //é¡µé¢å¤§å°
-            offset: params.offset, //é¡µç 
+        var temp = { //ÕâÀïµÄ¼üµÄÃû×ÖºÍ¿ØÖÆÆ÷µÄ±äÁ¿Ãû±ØĞëÒ»Ö±£¬Õâ±ß¸Ä¶¯£¬¿ØÖÆÆ÷Ò²ĞèÒª¸Ä³ÉÒ»ÑùµÄ
+            limit: params.limit, //Ò³Ãæ´óĞ¡
+            offset: params.offset, //Ò³Âë
             order: params.order,
             ordername: params.sort,
             timeArea:$('#time_area').val()

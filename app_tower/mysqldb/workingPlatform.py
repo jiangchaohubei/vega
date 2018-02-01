@@ -20,7 +20,7 @@ from django.utils.timezone import now, timedelta
 from authority.permission import PermissionVerify
 from app_tower.signals import tool_passaudit
 import logging
-log = logging.getLogger("project")
+log = logging.getLogger("working")
 
 #初始化作业平台
 def working_init(request):
@@ -181,7 +181,7 @@ def runTool_init(request):
 #description:添加工具
 #params: request.POST {"name":"","type":"","language":"","scriptCode":"","des":"","inputParam":"[]","outputParam":"[]","owner":""}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def tool_add(request):
     log.info('tool_add start')
     log.info("request: "+str(request))
@@ -265,7 +265,7 @@ def tool_add(request):
 #description:编辑工具
 #params: request.POST {"toolid":"","name":"","type":"","language":"","scriptCode":"","des":"","inputParam":"[]","outputParam":"[]","owner":""}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def tool_update(request):
     log.info('tool_update start')
     log.info("request: "+str(request))
@@ -355,7 +355,7 @@ def tool_update(request):
 #description:删除工具
 #params: request.POST {"toolid":""}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def tool_delete(request):
 
     log.info("tool_delete start")
@@ -387,7 +387,7 @@ def tool_delete(request):
 #description:查询工具
 #params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
 #return: {"resultCode":"","resultDesc":"","rows":"","total":""}
-
+@PermissionVerify()
 def tool_select(request):
 
     log.info("tool_select start")
@@ -443,7 +443,7 @@ def tool_select(request):
 #description:查询历史任务
 #params: request.GET {"limit":5,"offset":0,"order":"asc","ordername":"id","name":"","description":""}
 #return: {"resultCode":"","resultDesc":"","rows":"","total":""}
-
+@PermissionVerify()
 def history_select(request):
 
     log.info("history_select start")
@@ -522,7 +522,7 @@ def history_select(request):
 #description:导入工具
 #params: request.POST {"toolId":""}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def importTool(request):
     response_data={}
     try:
@@ -548,7 +548,7 @@ def importTool(request):
 #description:工具通过审核
 #params: request.POST {"toolId":""}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def tool_audit(request):
     response_data={}
     try:
@@ -579,7 +579,7 @@ def tool_audit(request):
 #description:移除工具
 #params: request.POST {"toolId":""}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def removeTool(request):
     response_data={}
     try:
@@ -601,7 +601,7 @@ def removeTool(request):
 #description:执行工具
 #params: request.POST {"toolid":"","hostList":"[]","credentials":"","inputParams":"{}",}
 #return: {"resultCode":"","resultDesc":""}
-
+@PermissionVerify()
 def tool_run(request):
     response_data={}
     form={}

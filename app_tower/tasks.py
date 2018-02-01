@@ -175,7 +175,7 @@ def timer_task(jobTempleteId,createUserId,createUserName,startUserId,startUserNa
 #执行工具脚本为yaml
 @task(throws=(Terminated,))
 def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,extraVariable,hostList=None):
-    log.info('celery run_playbook start')
+    log.info('celery run_tool_yaml start')
     tool_event=T_TOOL_EVENT.objects.get(id=toolEventId)
     starttime=time.time()
     print starttime
@@ -211,7 +211,7 @@ def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,e
     tool_event.save()
 
 
-    log.info('celery run_playbook end')
+    log.info('celery run_tool_yaml end')
 
 
     return result

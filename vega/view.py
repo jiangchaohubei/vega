@@ -2,7 +2,7 @@
 # -*- coding:utf8 -*-
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
-from vega.rolelist_permissionlist_init import rolelist_permission
+#from vega.rolelist_permissionlist_init import rolelist_permission
 from settings import ENVIRONMENT
 #from vega.deleteLogsRegular import runTask
 @csrf_protect
@@ -10,8 +10,8 @@ def index(request):
     context = {}
     context['index'] = 'this is index!'
     context['environment']=ENVIRONMENT
-    initClass=rolelist_permission()
-    initClass.init_role_user()
+    # initClass=rolelist_permission()
+    # initClass.init_role_user()
 
     return render(request, 'templates/pages/index3.html', context)
 

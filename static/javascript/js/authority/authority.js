@@ -447,6 +447,17 @@ var TableInit_rolegrant = function () {
 
                 },
                 {
+                    title: '作业平台管理操作',
+                    align : 'center',
+                    sortable : true,
+                    formatter:function(value, row, index){
+                        var data=row.pk+","+row.fields.name+","+"作业平台管理操作";
+                        return "<a title='详情' onclick='authority_showUpdateRoleModel(\"" + data + "\")'>详情</a>";
+
+                    }
+
+                },
+                {
                     title: '数据统计',
                     align : 'center',
                     sortable : true,

@@ -702,6 +702,10 @@ def parentPermission(request):
             form['title'] = request.POST['title']
             form['permission'] = permission_config.permissionList['versionPermissionList']
             form['id']=request.POST['id']
+        elif request.POST['title']==u'作业平台管理操作':
+            form['title'] = request.POST['title']
+            form['permission'] = permission_config.permissionList['workingPermissionList']
+            form['id']=request.POST['id']
         elif request.POST['title']==u'权限管理':
             form['title'] = request.POST['title']
             form['permission'] = permission_config.permissionList['userPermissionList']

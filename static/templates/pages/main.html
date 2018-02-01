@@ -45,25 +45,25 @@
                         DjX
                     </div>
                 </li>
-               <!-- <li>
-                    <a class="J_menuItem" menu-url="/static/templates/pages/example.html"
-                       href="/static/templates/pages/app_tower_pages/login/login_credentials.html" data-index="0"><i class="fa fa-home"></i>
-                        <span class="nav-label">example</span></a>
-                </li>-->
+                <!-- <li>
+                     <a class="J_menuItem" menu-url="/static/templates/pages/example.html"
+                        href="/static/templates/pages/app_tower_pages/login/login_credentials.html" data-index="0"><i class="fa fa-home"></i>
+                         <span class="nav-label">example</span></a>
+                 </li>-->
                 <li class="active">
                     <a><i class="fa fa-fw  fa-home"></i>
-                         <span class="nav-label">自动化部署</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse in">
-                            <li {% if 'credentials_select' not in PERMISSIONNAMELIST and 'credentials_add' not in PERMISSIONNAMELIST and 'credentials_delete' not in PERMISSIONNAMELIST and 'credentials_update'  not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/login/login_credentials.html" data-index="1"><i class="fa-fw fa fa-user"></i>登录凭据</a></li>
-                            <li {% if 'group_select' not in PERMISSIONNAMELIST and 'group_add' not in PERMISSIONNAMELIST and 'group_delete' not in PERMISSIONNAMELIST and 'group_update'  not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/group/group.html" data-index="3"><i class="fa-fw fa fa-desktop"></i>主机组</a></li>
-                            <li {% if 'playbook_select' not in PERMISSIONNAMELIST and 'playbook_add' not in PERMISSIONNAMELIST and 'playbook_delete' not in PERMISSIONNAMELIST and 'playbook_update' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/playbook/playbook.html" data-index="3"><i class="fa fa-fw fa-file-text"></i>playbook</a></li>
-                            <li {% if 'jobTemplete_select' not in PERMISSIONNAMELIST and 'jobTemplete_add' not in PERMISSIONNAMELIST and 'jobTemplete_delete' not in PERMISSIONNAMELIST and 'jobTemplete_update' not in PERMISSIONNAMELIST and 'jobTemplete_run' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobTemplete/jobTemplate.html" data-index="3"><i class="fa-fw fa fa-book"></i>任务模板</a></li>
-                            <li {% if 'jobs_select' not in PERMISSIONNAMELIST and 'jobs_delete' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobs/jobs.html" data-index="3"><i class="fa-fw fa fa-tasks"></i>任务</a></li>
-                            <li {% if 'runSH' not in PERMISSIONNAMELIST and 'searchProcess' not in PERMISSIONNAMELIST and 'changeProcess' not in PERMISSIONNAMELIST and 'updateSudo' not in PERMISSIONNAMELIST and 'searchLog' not in PERMISSIONNAMELIST and 'copyFile' not in PERMISSIONNAMELIST and 'searchSN' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/commands/commands.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>commands</a></li>
-                            <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/timerTask/timerTask.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>定时任务</a></li>
-                            <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/workingPlatform/working.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>作业平台</a></li>
+                        <span class="nav-label">自动化部署</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in">
+                        <li {% if 'credentials_select' not in PERMISSIONNAMELIST and 'credentials_add' not in PERMISSIONNAMELIST and 'credentials_delete' not in PERMISSIONNAMELIST and 'credentials_update'  not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/login/login_credentials.html" data-index="1"><i class="fa-fw fa fa-user"></i>登录凭据</a></li>
+                        <li {% if 'group_select' not in PERMISSIONNAMELIST and 'group_add' not in PERMISSIONNAMELIST and 'group_delete' not in PERMISSIONNAMELIST and 'group_update'  not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/group/group.html" data-index="3"><i class="fa-fw fa fa-desktop"></i>主机组</a></li>
+                        <li {% if 'playbook_select' not in PERMISSIONNAMELIST and 'playbook_add' not in PERMISSIONNAMELIST and 'playbook_delete' not in PERMISSIONNAMELIST and 'playbook_update' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/playbook/playbook.html" data-index="3"><i class="fa fa-fw fa-file-text"></i>playbook</a></li>
+                        <li {% if 'jobTemplete_select' not in PERMISSIONNAMELIST and 'jobTemplete_add' not in PERMISSIONNAMELIST and 'jobTemplete_delete' not in PERMISSIONNAMELIST and 'jobTemplete_update' not in PERMISSIONNAMELIST and 'jobTemplete_run' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobTemplete/jobTemplate.html" data-index="3"><i class="fa-fw fa fa-book"></i>任务模板</a></li>
+                        <li {% if 'jobs_select' not in PERMISSIONNAMELIST and 'jobs_delete' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobs/jobs.html" data-index="3"><i class="fa-fw fa fa-tasks"></i>任务</a></li>
+                        <li {% if 'runSH' not in PERMISSIONNAMELIST and 'searchProcess' not in PERMISSIONNAMELIST and 'changeProcess' not in PERMISSIONNAMELIST and 'updateSudo' not in PERMISSIONNAMELIST and 'searchLog' not in PERMISSIONNAMELIST and 'copyFile' not in PERMISSIONNAMELIST and 'searchSN' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/commands/commands.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>commands</a></li>
+                        <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/timerTask/timerTask.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>定时任务</a></li>
+                        <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/workingPlatform/working.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>作业平台</a></li>
 
-                        </ul>
+                    </ul>
                 </li>
                 <li class="">
                     <a><i class="fa fa fa-comment-o"></i>
@@ -121,40 +121,40 @@
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
 
 
-              <!--  <div class="navbar-header">
+                <!--  <div class="navbar-header">
 
 
-                    <ul class="nav navbar-top-links">
+                      <ul class="nav navbar-top-links">
 
 
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
-                                class="fa fa-bars"></i> </a>
+                          <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
+                                  class="fa fa-bars"></i> </a>
 
 
-                        <form method="get" class="top-search-form navbar-form navbar-left" id="g-search">
-                            <div class="input-group">
-                                <input name="_q_" class="form-control" type="text">
-                                <span class="input-group-btn">
-      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-search"></i> 搜索 <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
+                          <form method="get" class="top-search-form navbar-form navbar-left" id="g-search">
+                              <div class="input-group">
+                                  <input name="_q_" class="form-control" type="text">
+                                  <span class="input-group-btn">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-search"></i> 搜索 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
 
-          <li><a data-action="/xadmin/app/host/"><i class="fa fa-search"></i> 搜索Host</a></li>
+            <li><a data-action="/xadmin/app/host/"><i class="fa fa-search"></i> 搜索Host</a></li>
 
-          <li><a data-action="/xadmin/app/idc/"><i class="fa fa-search"></i> 搜索IDC</a></li>
+            <li><a data-action="/xadmin/app/idc/"><i class="fa fa-search"></i> 搜索IDC</a></li>
 
-      </ul>
-    </span>
-                            </div>
-                        </form>
+        </ul>
+      </span>
+                              </div>
+                          </form>
 
 
-                    </ul>
+                      </ul>
 
-                </div>
+                  </div>
 
-                -->
+                  -->
 
 
                 <ul class="nav navbar-top-links navbar-right">
@@ -166,7 +166,7 @@
                         <ul class="dropdown-menu dropdown-alerts" id="messagelist">
                             <li>
                                 <div class="text-center link-block">
-                                <a class="J_menuItem" href="/static/templates/pages/message.html" data-index="3">
+                                    <a class="J_menuItem" href="/static/templates/pages/message.html" data-index="3">
                                         <strong>查看更多通知</strong>
                                         <i class="fa fa-angle-right"></i>
                                     </a>
@@ -267,7 +267,7 @@
                         <label class="col-sm-4 control-label no-padding-right" for="old_password"> 原密码</label>
                         <div class="col-sm-6">
                             <input type="password" id="old_password" placeholder="原密码" class="col-xs-10 col-sm-10"
-                                    required/>
+                                   required/>
                         </div>
                     </div>
                     <div class="hr hr-dotted"></div>
@@ -311,8 +311,8 @@
 <script type="text/javascript">
     if ('ontouchstart' in document.documentElement)
         document
-                .write("<script src='/static/ace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.js'>"
-                        + "<" + "/script>");
+            .write("<script src='/static/ace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.js'>"
+                + "<" + "/script>");
     jQuery(function($) {
         $(document).on('click', '.toolbar a[data-target]', function(e) {
             e.preventDefault();

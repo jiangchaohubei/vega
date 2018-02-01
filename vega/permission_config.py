@@ -18,6 +18,19 @@ permissionList={
         {'name':'system_select','url':'/app_cmdb/system/select','cname':'查询系统'},
         {'name':'version_select','url':'/app_cmdb/version/select','cname':'查询版本'},
         {'name':'cmdb_host_select','url':'/app_cmdb/host/select','cname':'查询主机'},
+        {'name':'history_select','url':'/app_tower/workingPlatform/history_select','cname':'查询作业执行历史'},
+        {'name':'tool_select','url':'/app_tower/workingPlatform/tool_select','cname':'查询工具'},
+    ],
+    'workingPermissionList':[
+        {'name':'tool_add','url':'/app_tower/workingPlatform/tool_add','cname':'新建工具'},
+        {'name':'tool_update','url':'/app_tower/workingPlatform/tool_update','cname':'编辑工具'},
+        {'name':'tool_delete','url':'/app_tower/workingPlatform/tool_delete','cname':'删除工具'},
+        {'name':'tool_import','url':'/app_tower/workingPlatform/importTool','cname':'导入工具'},
+        {'name':'tool_remove','url':'/app_tower/workingPlatform/removeTool','cname':'移除工具'},
+        {'name':'tool_run','url':'/app_tower/workingPlatform/tool_run','cname':'执行工具'},
+        {'name':'tool_audit','url':'/app_tower/workingPlatform/tool_audit','cname':'审核工具'},
+
+
     ],
     'hostPermissionList':[
         {'name':'cmdb_host_add','url':'/app_cmdb/host/add','cname':'添加主机'},
@@ -138,7 +151,7 @@ roleList=[
     {
         'name':'超级管理员',
         'permissionList':[
-            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','user_select','role_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select',
+            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','user_select','role_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select','history_select','tool_select',
             'credentials_add','credentials_delete','credentials_update',
             'playbook_add','playbook_delete','playbook_update',
             'project_add','project_delete','project_update',
@@ -156,13 +169,15 @@ roleList=[
             'software_add','software_delete','software_update','software_host_add','software_host_delete','software_host_select',
             'module_add','module_delete','module_update',
             'system_add','system_delete','system_update','system_export','system_import',
+
+            'tool_add','tool_update','tool_delete','tool_import','tool_remove','tool_run','tool_audit',
 
         ]
     },
     {
         'name':'管理员',
         'permissionList': [
-            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','user_select','role_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select',
+            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','user_select','role_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select','history_select','tool_select',
             'credentials_add','credentials_delete','credentials_update',
             'playbook_add','playbook_delete','playbook_update',
             'project_add','project_delete','project_update',
@@ -180,12 +195,14 @@ roleList=[
             'software_add','software_delete','software_update','software_host_add','software_host_delete','software_host_select',
             'module_add','module_delete','module_update',
             'system_add','system_delete','system_update','system_export','system_import',
+
+            'tool_add','tool_update','tool_delete','tool_import','tool_remove','tool_run','tool_audit',
         ]
     },
     {
         'name':'运维人员',
         'permissionList': [
-            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select',
+            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select','history_select','tool_select',
             'credentials_add','credentials_delete','credentials_update',
             'playbook_add','playbook_delete','playbook_update',
             'project_add','project_delete','project_update',
@@ -203,12 +220,14 @@ roleList=[
             'module_add','module_delete','module_update',
             'system_add','system_delete','system_update','system_export','system_import',
 
+            'tool_add','tool_update','tool_delete','tool_import','tool_remove','tool_run',
+
         ]
     },
     {
         'name':'游客',
         'permissionList': [
-            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','user_select','role_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select',
+            'credentials_select','group_select','host_select','jobTemplete_select','jobs_select','user_select','role_select','project_select','playbook_select','timerTask_select','module_select','software_select','system_select','version_select','cmdb_host_select','history_select','tool_select',
         ]
     },
 

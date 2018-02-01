@@ -214,6 +214,24 @@ LOGGING = {
             'interval':1,   #间隔when时间
             'backupCount':40,
         },# 用于文件输出
+        'working_handler': {
+            'level':'DEBUG',
+            'class':'logging.handlers.TimedRotatingFileHandler',
+            'filename':'./logs/working/working-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'formatter':'standard',
+            'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
+            'interval':1,   #间隔when时间
+            'backupCount':40,
+        },# 用于文件输出
+        'message_handler': {
+            'level':'DEBUG',
+            'class':'logging.handlers.TimedRotatingFileHandler',
+            'filename':'./logs/message/message-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'formatter':'standard',
+            'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
+            'interval':1,   #间隔when时间
+            'backupCount':40,
+        },# 用于文件输出
     },
     'loggers': {
         'django.request': {
@@ -329,6 +347,16 @@ LOGGING = {
         },
         'version':{
             'handlers': ['version_handler','console'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'working':{
+            'handlers': ['working_handler','console'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'message':{
+            'handlers': ['message_handler','console'],
             'level': 'INFO',
             'propagate': False
         },
