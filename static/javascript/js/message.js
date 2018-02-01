@@ -1,8 +1,8 @@
-/**
+Ôªø/**
  * Created by PC on 2018/1/19.
  */
 
-var selectionIds = [];  //±£¥Ê—°÷–ids
+var selectionIds = [];  //‰øùÂ≠òÈÄâ‰∏≠ids
 Array.prototype.removeByValue = function(val) {
     for(var i=0; i<this.length; i++) {
         if(this[i] == val) {
@@ -20,66 +20,66 @@ $(function(){
 
 var TableInit_message = function () {
     var oTableInit = new Object();
-    //≥ı ºªØTable
+    //ÂàùÂßãÂåñTable
     oTableInit.Init = function () {
         $('#message_table').bootstrapTable({
             url: '/app_tower/message/select',
 
             method:"GET",
-            striped: true, // «∑Òœ‘ æ––º‰∏Ù…´
-            cache: false, // «∑Ò π”√ª∫¥Ê£¨ƒ¨»œŒ™true£¨À˘“‘“ª∞„«Èøˆœ¬–Ë“™…Ë÷√“ªœ¬’‚∏ˆ Ù–‘£®*£©
-            pagination: true, // «∑Òœ‘ æ∑÷“≥£®*£©
-            sortable: true, // «∑Ò∆Ù”√≈≈–Ú
+            striped: true, //ÊòØÂê¶ÊòæÁ§∫Ë°åÈó¥ÈöîËâ≤
+            cache: false, //ÊòØÂê¶‰ΩøÁî®ÁºìÂ≠òÔºåÈªòËÆ§‰∏∫trueÔºåÊâÄ‰ª•‰∏ÄËà¨ÊÉÖÂÜµ‰∏ãÈúÄË¶ÅËÆæÁΩÆ‰∏Ä‰∏ãËøô‰∏™Â±ûÊÄßÔºà*Ôºâ
+            pagination: true, //ÊòØÂê¶ÊòæÁ§∫ÂàÜÈ°µÔºà*Ôºâ
+            sortable: true, //ÊòØÂê¶ÂêØÁî®ÊéíÂ∫è
             sortOrder: "asc",
-            queryParams: oTableInit.queryParams,//¥´µ›≤Œ ˝£®*£©
-            sidePagination: "server", //∑÷“≥∑Ω Ω£∫clientøÕªß∂À∑÷“≥£¨server∑˛ŒÒ∂À∑÷“≥£®*£©
-            pageNumber:1, //≥ı ºªØº”‘ÿµ⁄“ª“≥£¨ƒ¨»œµ⁄“ª“≥
-            pageSize: 5, //√ø“≥µƒº«¬º–– ˝£®*£©
-            pageList: [5, 20, 50, 100], //ø…π©—°‘Òµƒ√ø“≥µƒ–– ˝£®*£©
+            queryParams: oTableInit.queryParams,//‰º†ÈÄíÂèÇÊï∞Ôºà*Ôºâ
+            sidePagination: "server", //ÂàÜÈ°µÊñπÂºèÔºöclientÂÆ¢Êà∑Á´ØÂàÜÈ°µÔºåserverÊúçÂä°Á´ØÂàÜÈ°µÔºà*Ôºâ
+            pageNumber:1, //ÂàùÂßãÂåñÂä†ËΩΩÁ¨¨‰∏ÄÈ°µÔºåÈªòËÆ§Á¨¨‰∏ÄÈ°µ
+            pageSize: 5, //ÊØèÈ°µÁöÑËÆ∞ÂΩïË°åÊï∞Ôºà*Ôºâ
+            pageList: [5, 20, 50, 100], //ÂèØ‰æõÈÄâÊã©ÁöÑÊØèÈ°µÁöÑË°åÊï∞Ôºà*Ôºâ
             strictSearch: true,
-            showColumns: true, // «∑Òœ‘ æÀ˘”–µƒ¡–
-            showRefresh: true, // «∑Òœ‘ æÀ¢–¬∞¥≈•
-            minimumCountColumns: 2, //◊Ó…Ÿ‘ –Ìµƒ¡– ˝
-            clickToSelect: false, // «∑Ò∆Ù”√µ„ª˜—°÷–––
-            height: 345, //––∏ﬂ£¨»Áπ˚√ª”–…Ë÷√height Ù–‘£¨±Ì∏Ò◊‘∂Ø∏˘æ›º«¬ºÃı ˝æıµ√±Ì∏Ò∏ﬂ∂»
-            showToggle:true, // «∑Òœ‘ æœÍœ∏ ”Õº∫Õ¡–±Ì ”Õºµƒ«–ªª∞¥≈•
-            cardView: false, // «∑Òœ‘ æœÍœ∏ ”Õº
-            detailView: false, // «∑Òœ‘ æ∏∏◊”±Ì
+            showColumns: true, //ÊòØÂê¶ÊòæÁ§∫ÊâÄÊúâÁöÑÂàó
+            showRefresh: true, //ÊòØÂê¶ÊòæÁ§∫Âà∑Êñ∞ÊåâÈíÆ
+            minimumCountColumns: 2, //ÊúÄÂ∞ëÂÖÅËÆ∏ÁöÑÂàóÊï∞
+            clickToSelect: false, //ÊòØÂê¶ÂêØÁî®ÁÇπÂáªÈÄâ‰∏≠Ë°å
+            height: 345, //Ë°åÈ´òÔºåÂ¶ÇÊûúÊ≤°ÊúâËÆæÁΩÆheightÂ±ûÊÄßÔºåË°®Ê†ºËá™Âä®Ê†πÊçÆËÆ∞ÂΩïÊù°Êï∞ËßâÂæóË°®Ê†ºÈ´òÂ∫¶
+            showToggle:true, //ÊòØÂê¶ÊòæÁ§∫ËØ¶ÁªÜËßÜÂõæÂíåÂàóË°®ËßÜÂõæÁöÑÂàáÊç¢ÊåâÈíÆ
+            cardView: false, //ÊòØÂê¶ÊòæÁ§∫ËØ¶ÁªÜËßÜÂõæ
+            detailView: false, //ÊòØÂê¶ÊòæÁ§∫Áà∂Â≠êË°®
             onCheck: function (row) {
-                //µ•––◊Ó«∞√Êµƒcheckbox±ª—°÷–
+                //ÂçïË°åÊúÄÂâçÈù¢ÁöÑcheckboxË¢´ÈÄâ‰∏≠
                 console.log(row)
-                if ($.inArray(row.pk, selectionIds)== -1){//≤ª¥Ê‘⁄
+                if ($.inArray(row.pk, selectionIds)== -1){//‰∏çÂ≠òÂú®
                     selectionIds.push(row.pk);
                 }
             },
             onUncheck: function (row) {
-                //µ•––◊Ó«∞√Êµƒcheckbox±ª»°œ˚
+                //ÂçïË°åÊúÄÂâçÈù¢ÁöÑcheckboxË¢´ÂèñÊ∂à
                 console.log(row)
-                if ($.inArray(row.pk, selectionIds)!= -1){//¥Ê‘⁄
+                if ($.inArray(row.pk, selectionIds)!= -1){//Â≠òÂú®
                     selectionIds.removeByValue(row.pk)
                 }
 
 
             },
             onCheckAll: function (rows) {
-                //◊Ó∂•…œµƒcheckbox±ª—°÷–
+                //ÊúÄÈ°∂‰∏äÁöÑcheckboxË¢´ÈÄâ‰∏≠
                 console.log(rows)
                 for (var i=0;i<rows.length;i++){
-                    if ($.inArray(rows[i].pk, selectionIds)== -1){//≤ª¥Ê‘⁄
+                    if ($.inArray(rows[i].pk, selectionIds)== -1){//‰∏çÂ≠òÂú®
                         selectionIds.push(rows[i].pk)
                     }
                 }
             },
             onUncheckAll: function (rows) {
-                //◊Ó∂•…œµƒcheckbox±ª»°œ˚
+                //ÊúÄÈ°∂‰∏äÁöÑcheckboxË¢´ÂèñÊ∂à
                 console.log(rows)
                 for (var i=0;i<rows.length;i++){
-                    if ($.inArray(rows[i].pk, selectionIds)!= -1){//¥Ê‘⁄
+                    if ($.inArray(rows[i].pk, selectionIds)!= -1){//Â≠òÂú®
                         selectionIds.removeByValue(rows[i].pk)
                     }
                 }
             },
-            responseHandler: function(res) { //∑µªÿ ˝æ›¥¶¿Ì
+            responseHandler: function(res) { //ËøîÂõûÊï∞ÊçÆÂ§ÑÁêÜ
                 if (res.resultCode=="0087"){
                     alert(res.resultDesc);
                     top.location.href ='/login'
@@ -89,16 +89,16 @@ var TableInit_message = function () {
                     return;
                 }
                 if(res.resultCode=="0001"){
-                    opt_commons.dialogShow("Ã· æ–≈œ¢",res.resultDesc,2000);
+                    opt_commons.dialogShow("ÊèêÁ§∫‰ø°ÊÅØ",res.resultDesc,2000);
                     return;
                 }
                 var data=JSON.parse(res.rows);
                 $.each(data, function (i, row) {
-                    row.checkStatus = $.inArray(row.pk, selectionIds) != -1;  //≈–∂œµ±«∞––µƒ ˝æ›id «∑Ò¥Ê‘⁄”Î—°÷–µƒ ˝◊È£¨¥Ê‘⁄‘ÚΩ´∂‡—°øÚ◊¥Ã¨±‰Œ™true
+                    row.checkStatus = $.inArray(row.pk, selectionIds) != -1;  //Âà§Êñ≠ÂΩìÂâçË°åÁöÑÊï∞ÊçÆidÊòØÂê¶Â≠òÂú®‰∏éÈÄâ‰∏≠ÁöÑÊï∞ÁªÑÔºåÂ≠òÂú®ÂàôÂ∞ÜÂ§öÈÄâÊ°ÜÁä∂ÊÄÅÂèò‰∏∫true
                 });
                 return {
-                    "total": res.total,//◊‹“≥ ˝
-                    "rows": data  // ˝æ›
+                    "total": res.total,//ÊÄªÈ°µÊï∞
+                    "rows": data  //Êï∞ÊçÆ
                 };
             },
             columns: [
@@ -112,20 +112,20 @@ var TableInit_message = function () {
                 },
                 {
                     field: 'fields.CONTENT',
-                    title: 'œ˚œ¢ƒ⁄»›',
+                    title: 'Ê∂àÊÅØÂÜÖÂÆπ',
                     align : 'center',
                     sortable : true,
 
                 },{
                     field: 'fields.TYPE',
-                    title: 'œ˚œ¢¿‡–Õ',
+                    title: 'Ê∂àÊÅØÁ±ªÂûã',
                     align : 'center',
                     sortable : true,
 
 
                 },{
                     field: 'fields.CREATE_TIME',
-                    title: ' ±º‰',
+                    title: 'Êó∂Èó¥',
                     align : 'center',
                     sortable : true
 
@@ -133,11 +133,11 @@ var TableInit_message = function () {
         });
     };
 
-    //µ√µΩ≤È—Øµƒ≤Œ ˝
+    //ÂæóÂà∞Êü•ËØ¢ÁöÑÂèÇÊï∞
     oTableInit.queryParams = function (params) {
-        var temp = { //’‚¿Ôµƒº¸µƒ√˚◊÷∫Õøÿ÷∆∆˜µƒ±‰¡ø√˚±ÿ–Î“ª÷±£¨’‚±ﬂ∏ƒ∂Ø£¨øÿ÷∆∆˜“≤–Ë“™∏ƒ≥…“ª—˘µƒ
-            limit: params.limit, //“≥√Ê¥Û–°
-            offset: params.offset, //“≥¬Î
+        var temp = { //ËøôÈáåÁöÑÈîÆÁöÑÂêçÂ≠óÂíåÊéßÂà∂Âô®ÁöÑÂèòÈáèÂêçÂøÖÈ°ª‰∏ÄÁõ¥ÔºåËøôËæπÊîπÂä®ÔºåÊéßÂà∂Âô®‰πüÈúÄË¶ÅÊîπÊàê‰∏ÄÊ†∑ÁöÑ
+            limit: params.limit, //È°µÈù¢Â§ßÂ∞è
+            offset: params.offset, //È°µÁ†Å
             order: params.order,
             ordername: params.sort,
             timeArea:$('#time_area').val()
