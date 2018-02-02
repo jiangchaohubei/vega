@@ -35,7 +35,22 @@ function onload_toolAudit() {
             }
             if(data.resultCode=="0000"){
                 $('#tool_name').html(data.tool.NAME)
-                $('#toolIcon').html('<i class="'+data.tool.ICON+'" style="font-size:xx-large;line-height: 100px;height: 100px;color:'+data.tool.DANGER_LEVEL+'" aria-hidden="true"></i>')
+                var iconColor='green'
+                switch(data.tool.DANGER_LEVEL)
+                {
+                    case 'safe':
+                        iconColor='#4bd126';
+                        break;
+                    case 'middling':
+                        iconColor='#31719f';
+                        break;
+                    case 'danger':
+                        iconColor='#ff0016';
+                        break;
+                    default:
+                        iconColor='green';
+                }
+                $('#toolIcon').html('<i class="'+data.tool.ICON+'" style="font-size:xx-large;line-height: 100px;height: 100px;color:'+iconColor+'" aria-hidden="true"></i>')
                 $('#tool_creater').html(data.tool.CREATE_USER_NAME)
                 $('#tool_desc').html(data.tool.DESCRIPTION)
                 $('#tool_type').html(data.tool.ARGS1)

@@ -161,6 +161,41 @@ function onSelectTime(obj,area) {
     $("#message_table").bootstrapTable('refresh');
 }
 
+function clearMessage() {
+    if(confirm("你确信要清空历史消息？")){
+    $.ajax({
+        url:"/app_tower/message/clear",
+        type:"POST",
+        data:{
 
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+
+                $("#message_table").bootstrapTable('refresh');
+                return;
+            }
+        },
+
+        error:function(data){
+            opt_commons.dialogShow("错误信息","error",2000);
+
+
+        },
+    });
+}}
 
 //@ sourceURL=message.js
