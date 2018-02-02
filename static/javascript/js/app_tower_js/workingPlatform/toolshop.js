@@ -97,7 +97,7 @@ function onload_toolshop() {
                 var htmlstr_failaudited=""
                 for (var j=0;j<data.tools_failaudited.length;j++){
                     var iconColor='green'
-                    switch(data.tools_notaudited[j].fields.DANGER_LEVEL)
+                    switch(data.tools_failaudited[j].fields.DANGER_LEVEL)
                     {
                         case 'safe':
                             iconColor='#4bd126';
