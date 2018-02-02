@@ -26,12 +26,26 @@ function onload_toolshop() {
             if(data.resultCode=="0000"){
                 var htmlstr_audited=""
                 for (var j=0;j<data.tools_audited.length;j++){
-
+                    var iconColor='green'
+                    switch(data.tools_audited[j].fields.DANGER_LEVEL)
+                    {
+                        case 'safe':
+                            iconColor='#4bd126';
+                            break;
+                        case 'middling':
+                            iconColor='#31719f';
+                            break;
+                        case 'danger':
+                            iconColor='#ff0016';
+                            break;
+                        default:
+                            iconColor='green';
+                    }
                         var toolid="toolid"+data.tools_audited[j].pk
                     htmlstr_audited+='<div class="tool-item" id="'+toolid+'">'+
                             '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
                             '<div class="tool-item-icon">'+
-                            '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
+                            '<i class="'+data.tools_audited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
                             '</div>'+
                             '<div class="tool-item-name">'+data.tools_audited[j].fields.NAME+'</div>'+
                             '</a>'+
@@ -47,12 +61,26 @@ function onload_toolshop() {
 
                 var htmlstr_notaudited=""
                 for (var j=0;j<data.tools_notaudited.length;j++){
-
+                    var iconColor='green'
+                    switch(data.tools_notaudited[j].fields.DANGER_LEVEL)
+                    {
+                        case 'safe':
+                            iconColor='#4bd126';
+                            break;
+                        case 'middling':
+                            iconColor='#31719f';
+                            break;
+                        case 'danger':
+                            iconColor='#ff0016';
+                            break;
+                        default:
+                            iconColor='green';
+                    }
                     var toolid="toolid"+data.tools_notaudited[j].pk
                     htmlstr_notaudited+='<div class="tool-item" id="'+toolid+'">'+
                         '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_notaudited[j].pk+'&toolname='+data.tools_notaudited[j].fields.NAME+'" >'+
                         '<div class="tool-item-icon">'+
-                        '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
+                        '<i class="'+data.tools_notaudited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
                         '</div>'+
                         '<div class="tool-item-name">'+data.tools_notaudited[j].fields.NAME+'</div>'+
                         '</a>'+
@@ -68,12 +96,26 @@ function onload_toolshop() {
 
                 var htmlstr_failaudited=""
                 for (var j=0;j<data.tools_failaudited.length;j++){
-
+                    var iconColor='green'
+                    switch(data.tools_notaudited[j].fields.DANGER_LEVEL)
+                    {
+                        case 'safe':
+                            iconColor='#4bd126';
+                            break;
+                        case 'middling':
+                            iconColor='#31719f';
+                            break;
+                        case 'danger':
+                            iconColor='#ff0016';
+                            break;
+                        default:
+                            iconColor='green';
+                    }
                     var toolid="toolid"+data.tools_failaudited[j].pk
                     htmlstr_failaudited+='<div class="tool-item" id="'+toolid+'">'+
                         '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_failaudited[j].pk+'&toolname='+data.tools_failaudited[j].fields.NAME+'" >'+
                         '<div class="tool-item-icon">'+
-                        '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
+                        '<i class="'+data.tools_failaudited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
                         '</div>'+
                         '<div class="tool-item-name">'+data.tools_failaudited[j].fields.NAME+'</div>'+
                         '</a>'+

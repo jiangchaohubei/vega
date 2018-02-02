@@ -65,17 +65,21 @@
         </ul>
         <input type="hidden" id="toolid">
 
-        <button type="button" style=" width:150px" id="btn_show_txt_modal" class="btn btn-primary"
+        <button type="button" style=" width:150px" id="" class="btn btn-primary"
                 data-toggle="modal" data-target="#passAuditModal">
             <span class=" orange2 ace-icon fa fa-pencil bigger-120" aria-hidden="true"></span>&nbsp通过审核
         </button>
-        <button type="button" style=" width:150px" id="btn_show_txt_modal" class="btn btn-primary"
+        <button type="button" style=" width:150px" id="" class="btn btn-primary"
                 data-toggle="modal" data-target="#failAuditModal">
             <span class=" orange2 ace-icon fa fa-pencil bigger-120" aria-hidden="true"></span>&nbsp不通过审核
         </button>
-        <button type="button" style=" width:150px" id="btn_show_txt_modal" class="btn btn-primary"
-                >
+        <button type="button" style=" width:150px" id="" class="btn btn-primary"
+        >
             <span class=" orange2 ace-icon fa fa-pencil bigger-120" aria-hidden="true"></span>&nbsp调试
+        </button>
+        <button type="button" style=" width:150px" id="" class="btn btn-primary"
+                onclick="deleteTool()">
+            <span class=" orange2 ace-icon fa fa-pencil bigger-120" aria-hidden="true"></span>&nbsp删除
         </button>
 
         <hr>
@@ -83,7 +87,7 @@
         <div class="tool-detail" style="overflow: hidden">
             <div class="col-md-1" >
                 <a class="tool-item-inner" id="toolId" href="#" >
-                    <div class="tool-item-icon">
+                    <div class="tool-item-icon" id="toolIcon">
                         <i class=" blue ace-icon fa fa-pencil bigger-120" style="font-size:xx-large;line-height: 100px;height: 100px" aria-hidden="true"></i>
                     </div>
                 </a>

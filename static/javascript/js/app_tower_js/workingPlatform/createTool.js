@@ -3,8 +3,9 @@
  */
 
 $(function () {
-    //textarea全屏
+    //textarea全屏,图标插件
     $('#tool_scriptCode').textareafullscreen();
+    $('#tool_icon').iconPicker();
     $.ajax({
         url:"/app_tower/workingPlatform/toolcreate_init",
         type:"POST",
@@ -179,6 +180,8 @@ function deleteOutputParam() {
 function addTool() {
     var name=$('#tool_name').val();
     var type=$('#tool_type').val();
+    var icon=$('#tool_icon').val();
+    var dangerlevel=$("#tool_dangerlevel input[name='tool-radio']:checked").val();
     var language=$('#tool_language').find('.span-chooice-click').html()
     var scriptCode=$('#tool_scriptCode').val();
     var des=$('#tool_des').val();
@@ -191,6 +194,8 @@ function addTool() {
         data:{
             name:name,
             type:type,
+            icon:icon,
+            dangerlevel:dangerlevel,
             language:language,
             scriptCode:scriptCode,
             des:des,

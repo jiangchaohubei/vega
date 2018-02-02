@@ -45,10 +45,14 @@ def on_tool_passaudit(sender, **kwargs):
 
 tool_passaudit.connect(on_tool_passaudit)
 
-@receiver(post_save, sender=T_TOOL)
+#工具添加,自定义signal
+tool_create = django.dispatch.Signal(providing_args=["toolname"])
 def on_tool_add(sender, **kwargs):
+    toolname=''
+    if "toolname" in kwargs:
+        toolname = kwargs.get("toolname")
     log.info("on_tool_add start")
-    msg=u"有新的工具[%s]需要审核" % kwargs['instance'].__dict__['NAME']
+    msg=u"有新的工具[%s]需要审核" % toolname
     Group('Administrant').send({
         'text': json.dumps({
             'message':msg,
@@ -66,6 +70,10 @@ def on_tool_add(sender, **kwargs):
         message_user_list.append(T_MESSAGE_User_ID(MESSAGE_ID=message,User_ID=u))
     T_MESSAGE_User_ID.objects.bulk_create(message_user_list)
     log.info("on_tool_add end")
+
+#注册
+tool_create.connect(on_tool_add)
+
 
 @receiver(post_delete, sender=T_TOOL)
 def on_tool_delete(sender, **kwargs):
@@ -86,6 +94,6 @@ def on_tool_delete(sender, **kwargs):
         message_user_list.append(T_MESSAGE_User_ID(MESSAGE_ID=message,User_ID=u))
     T_MESSAGE_User_ID.objects.bulk_create(message_user_list)
 
-# @receiver(pre_save, sender=T_TOOL)
-# def on_tool_logout(sender, **kwargs):
-#     T_TOOL.objects.filter(user=kwargs.get('user')).delete()
+    # @receiver(pre_save, sender=T_TOOL)
+    # def on_tool_logout(sender, **kwargs):
+    #     T_TOOL.objects.filter(user=kwargs.get('user')).delete()

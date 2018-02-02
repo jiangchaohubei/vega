@@ -35,6 +35,7 @@ function onload_toolAudit() {
             }
             if(data.resultCode=="0000"){
                 $('#tool_name').html(data.tool.NAME)
+                $('#toolIcon').html('<i class="'+data.tool.ICON+'" style="font-size:xx-large;line-height: 100px;height: 100px;color:'+data.tool.DANGER_LEVEL+'" aria-hidden="true"></i>')
                 $('#tool_creater').html(data.tool.CREATE_USER_NAME)
                 $('#tool_desc').html(data.tool.DESCRIPTION)
                 $('#tool_type').html(data.tool.ARGS1)
@@ -114,6 +115,46 @@ function audit(status) {
 
         },
     });
+
+}
+
+function deleteTool() {
+    var toolid=$('#toolid').val()
+    if(confirm("你确信要删除工具："+$('#toolname').html()+"？")){
+        $.ajax({
+            url:"/app_tower/workingPlatform/tool_delete",
+            type:"POST",
+            data:{
+                toolid:toolid
+            },
+            dataType:"json",
+            success:function(data){
+                if (data.resultCode=="0087"){
+                    alert(data.resultDesc);
+                    top.location.href ='/login'
+                }
+                if(data.resultCode=="0057"){
+                    opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                    return;
+                }
+                if(data.resultCode=="0001"){
+                    opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                    return;
+                }
+                if(data.resultCode=="0000"){
+                    opt_commons.dialogShow("成功信息","删除成功！",2000);
+                    window.location.href='/static/templates/pages/app_tower_pages/workingPlatform/working.html'
+                    return;
+                }
+            },
+
+            error:function(data){
+                opt_commons.dialogShow("错误信息","error",2000);
+
+
+            },
+        });
+    }
 
 }
 

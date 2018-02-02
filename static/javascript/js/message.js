@@ -116,6 +116,7 @@ var TableInit_message = function () {
                     align : 'center',
                     sortable : true,
 
+
                 },{
                     field: 'fields.TYPE',
                     title: '消息类型',

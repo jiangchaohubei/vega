@@ -21,6 +21,8 @@
     <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- 全屏插件-->
     <link rel="stylesheet" href="/static/js/textareafullscreen/textareafullscreen.css">
+    <!-- 图标插件-->
+    <link rel="stylesheet" href="/static/js/bootstrap-icon-picker-master/css/icon-picker.css">
     <style>
         .form-preview {
             margin-bottom: 15px;
@@ -101,11 +103,29 @@
                     </div><!-- /input-group -->
                 </div>
             </div>
-            <script>
-                function onTypeSelect() {
-
-                }
-            </script>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">工具图标<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="height:64px;">
+                    <input type="text" class="form-control" id="tool_icon">
+                </div>
+            </div>
+            <div class="row">
+                <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">危险程度<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8" style="height:64px;" id="tool_dangerlevel">
+                    <label>
+                        <input name="tool-radio" type="radio" class="ace" checked value="safe">
+                        <span class="lbl"> 安全</span>
+                    </label>
+                    <label>
+                        <input name="tool-radio" type="radio" class="ace" value="middling">
+                        <span class="lbl"> 一般</span>
+                    </label>
+                    <label>
+                        <input name="tool-radio" type="radio" class="ace" value="danger">
+                        <span class="lbl"> 危险</span>
+                    </label>
+                </div>
+            </div>
 
             <div class="row">
                 <label for="auth" class="control-label col-md-2 requiredField" style="height:64px;line-height:50px;text-align:center">脚本语言<span class="asteriskField">*</span> </label>
@@ -379,7 +399,7 @@
 
 <script src="/static/js/textareafullscreen/jquery.textareafullscreen.js"></script>
 <script src="/static/js/multiple-select/multiple-select.js"></script>
-
+<script src="/static/js/bootstrap-icon-picker-master/js/iconPicker.js"></script>
 <script type="text/javascript" src="/static/javascript/js/app_tower_js/workingPlatform/createTool.js"></script>
 
 

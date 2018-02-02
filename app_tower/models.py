@@ -787,6 +787,10 @@ class T_TOOL(models.Model):
     NAME=models.CharField(max_length=128,unique=True)
     #说明
     DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
+    #图标
+    ICON=models.CharField(max_length=256,null=True,blank=True)
+    #危险程度
+    DANGER_LEVEL=models.CharField(max_length=256,null=True,blank=True)
     #工具分类
     TOOLTYPE_ID=models.ForeignKey('T_TOOLTYPE', null=True,blank=True,on_delete=models.PROTECT,related_name='TOOLTYPE_ID_T_TOOL')
     #脚本语言

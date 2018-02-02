@@ -36,11 +36,26 @@ $(function () {
                             if (data.tools[j].fields.TOOLTYPE_ID==data.toolType[i].pk){
                                 nothastoolitem=false;
                                 var toolid="toolid"+data.tools[j].pk
+                                var iconColor='green'
+                                switch(data.tools[j].fields.DANGER_LEVEL)
+                                {
+                                    case 'safe':
+                                        iconColor='#4bd126';
+                                        break;
+                                    case 'middling':
+                                        iconColor='#31719f';
+                                        break;
+                                    case 'danger':
+                                        iconColor='#ff0016';
+                                        break;
+                                    default:
+                                        iconColor='green';
+                                }
                                 tooltypehtml+='<div class="tool-item" id="'+toolid+'">'+
                                         '<span class="close red ace-icon fa fa-times bigger-120" title="移除工具" onclick="removeTool('+data.tools[j].pk+')" style="" aria-hidden="true"></span>'+
                                         '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+data.tools[j].pk+'&toolname='+data.tools[j].fields.NAME+'" >'+
                                         '<div class="tool-item-icon">'+
-                                        '<i class=" orange2 ace-icon fa fa-pencil bigger-120" style="font-size:xx-large" aria-hidden="true"></i>'+
+                                        '<i class="'+data.tools[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
                                         '</div>'+
                                         '<div class="tool-item-name">'+data.tools[j].fields.NAME+'</div>'+
                                         '</a>'+

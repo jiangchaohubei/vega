@@ -4,6 +4,7 @@
 var INPUTPARAM=[]
 var OUTPUTPARAM=[]
 function  onload_editTool() {
+    $('#tool_icon').iconPicker();
     var C1 = window.location.href.split("?")[1];
     var C2 = C1.split("&");
     var toolid = C2[0].split("=")[1]
@@ -36,6 +37,9 @@ function  onload_editTool() {
             }
             if(data.resultCode=="0000"){
                 $('#tool_name').val(data.tool.NAME)
+                $('#tool_icon').val(data.tool.ICON);
+                $("tool_dangerlevel input[name='tool-radio'][value='"+data.tool.DANGER_LEVEL+"']").attr("checked",true);
+
                 if (data.tool.SCRIPT_LANGUAGE==0){
                     $('#yaml').removeClass('span-chooice-click')
                     $('#yaml').addClass('span-chooice')
@@ -264,6 +268,8 @@ function deleteOutputParam() {
 function updateTool() {
     var name=$('#tool_name').val();
     var type=$('#tool_type').val();
+    var icon=$('#tool_icon').val();
+    var dangerlevel=$("#tool_dangerlevel input[name='tool-radio']:checked").val();
     var language=$('#tool_language').find('.span-chooice-click').html()
     var scriptCode=$('#tool_scriptCode').val();
     var des=$('#tool_des').val();
@@ -276,6 +282,8 @@ function updateTool() {
         data:{
             toolid:$('#toolid').val(),
             name:name,
+            icon:icon,
+            dangerlevel:dangerlevel,
             type:type,
             language:language,
             scriptCode:scriptCode,

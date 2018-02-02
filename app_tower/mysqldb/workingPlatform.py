@@ -18,7 +18,7 @@ from celery.task.control import revoke
 from celery.result import AsyncResult
 from django.utils.timezone import now, timedelta
 from authority.permission import PermissionVerify
-from app_tower.signals import tool_passaudit
+from app_tower.signals import tool_passaudit,tool_create
 import logging
 log = logging.getLogger("working")
 
@@ -45,7 +45,7 @@ def toolshop_init(request):
     tool_2 = T_TOOL.objects.all().filter(AUDIT_STATUS=2)
 
     for t in tool_0:
-            t.ARGS1=t.TOOLTYPE_ID.NAME
+        t.ARGS1=t.TOOLTYPE_ID.NAME
     for t in tool_1:
         t.ARGS1=t.TOOLTYPE_ID.NAME
     for t in tool_2:
@@ -195,6 +195,8 @@ def tool_add(request):
         if request.POST:
             form['name'] = request.POST['name']
             form['type'] = request.POST['type']
+            form['icon'] = request.POST['icon']
+            form['dangerlevel'] = request.POST['dangerlevel']
             form['language'] = request.POST['language']
             form['scriptCode'] = request.POST['scriptCode']
             form['des'] = request.POST['des']
@@ -224,10 +226,10 @@ def tool_add(request):
                 form['language']=1
             else:
                 form['language']=2
-            tool = T_TOOL(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],
-                             OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                                CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'],
-            )
+            tool = T_TOOL(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],ICON=form['icon'],DANGER_LEVEL=form['dangerlevel'],
+                          OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                          CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'],
+                          )
             tool.save()
             #批量添加输入输出参数
             false=False
@@ -237,8 +239,8 @@ def tool_add(request):
                 if not str(item)=='0':
 
                     inputparam=T_TOOL_INPUT(NAME=item['name'], DESCRIPTION=item['des'],DEFAULT=item['def'],ISREQUIRED=item['isrequired'],TYPE=int(item['type']),T_TOOL_ID=tool,
-                                 OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                                 CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                                            OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                            CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
                     inputParam_list.append(inputparam)
             T_TOOL_INPUT.objects.bulk_create(inputParam_list)
 
@@ -246,10 +248,12 @@ def tool_add(request):
             for item in eval(form['outputParam']):
                 if not str(item)=='0':
                     outputparam=T_TOOL_OUTPUT(NAME=item['name'], DESCRIPTION=item['des'],TYPE=int(item['type']),T_TOOL_ID=tool,
-                                            OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                                            CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                                              OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                              CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
                     outputParam_list.append(outputparam)
             T_TOOL_OUTPUT.objects.bulk_create(outputParam_list)
+            #触发信号
+            tool_create.send(sender='tool_add',toolname=tool.NAME)
 
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
@@ -282,6 +286,8 @@ def tool_update(request):
                 return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"工具没有使用权限！"}))
             form['name'] = request.POST['name']
             form['type'] = request.POST['type']
+            form['icon'] = request.POST['icon']
+            form['dangerlevel'] = request.POST['dangerlevel']
             form['language'] = request.POST['language']
             form['scriptCode'] = request.POST['scriptCode']
             form['des'] = request.POST['des']
@@ -312,9 +318,9 @@ def tool_update(request):
             else:
                 form['language']=2
 
-            T_TOOL.objects.filter(id=int(form['toolid'])).update(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],
-                                                                      OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
-                                                                      MODIFY_USER_ID=request.session['userId'],AUDIT_STATUS=0,AUDIT_USER_ID=request.session['userId'],
+            T_TOOL.objects.filter(id=int(form['toolid'])).update(NAME=form['name'], DESCRIPTION=form['des'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=form['language'],SCRIPT_CODE=form['scriptCode'],ICON=form['icon'],DANGER_LEVEL=form['dangerlevel'],
+                                                                 OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                                                 MODIFY_USER_ID=request.session['userId'],AUDIT_STATUS=0,AUDIT_USER_ID=request.session['userId'],
                                                                  AUDIT_USER_NAME=request.session['username'],AUDIT_REASON=None,AUDIT_TIME=None)
 
             #批量添加输入输出参数
@@ -340,6 +346,9 @@ def tool_update(request):
                                               CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
                     outputParam_list.append(outputparam)
             T_TOOL_OUTPUT.objects.bulk_create(outputParam_list)
+
+            #触发信号
+            tool_create.send(sender='tool_update',toolname=form['name'])
 
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
@@ -619,7 +628,7 @@ def tool_run(request):
             return HttpResponse(json.dumps({"resultCode":"0001","resultDesc":"工具没有通过审核！"}))
         file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
         tool_event=T_TOOL_EVENT(TOOL_ID=tool,CREDENTIALS_ID_id=int(form['credentialsId']),HOSTLIST=form['hostList'],INPUTPARAMS=form['inputParams'],CREATE_USER_ID=request.session['userId'],
-                     CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
+                                CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
         tool_event.save()
         if tool.SCRIPT_LANGUAGE==2:
             jobTags=[]
@@ -693,7 +702,7 @@ def read_log(request):
 
 
         response_data['toolEvent']={'startTime':json.dumps(tool_event.START_TIME, cls=dateutil.CJsonEncoder),
-                               'endTime':json.dumps(tool_event.FINISH_TIME, cls=dateutil.CJsonEncoder),'elapsed':tool_event.ELAPSED,}
+                                    'endTime':json.dumps(tool_event.FINISH_TIME, cls=dateutil.CJsonEncoder),'elapsed':tool_event.ELAPSED,}
 
         if response_data['state'] in ['SUCCESS','FAILURE','REVOKED']:
             response_data['read_flag']='False'
