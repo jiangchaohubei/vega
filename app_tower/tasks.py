@@ -254,7 +254,7 @@ def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=
         tool_event.STATUS='SUCCESS'
     log.info('status'+tool_event.STATUS)
     #日志内容入库
-    with open(file,'r') as f:
+    with open(logfile,'r') as f:
         f.seek(0)
         tool_event.LOGCONTENT =f.read()
     tool_event.save()
