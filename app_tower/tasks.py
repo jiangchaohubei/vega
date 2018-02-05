@@ -238,7 +238,7 @@ def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=
     PRIVILEGE_PWD=d.decode(str(credentials.PRIVILEGE_PWD))
 
     #执行
-    com=commandsrun(logfile,hostList,login_user,login_pwd,'raw',shellContent,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD)
+    com=commandsrun(logfile,hostList,login_user,login_pwd,'script',shellContent,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD)
     result=com.run()
 
     endtime=time.time()

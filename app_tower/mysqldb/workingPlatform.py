@@ -630,7 +630,7 @@ def tool_run(request):
         tool_event=T_TOOL_EVENT(TOOL_ID=tool,CREDENTIALS_ID_id=int(form['credentialsId']),HOSTLIST=form['hostList'],INPUTPARAMS=form['inputParams'],CREATE_USER_ID=request.session['userId'],
                                 CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
         tool_event.save()
-        if tool.SCRIPT_LANGUAGE==2:
+        if tool.SCRIPT_LANGUAGE==2:   #yaml脚本
             jobTags=[]
             skipTags=[]
             extraVariable={}
@@ -654,13 +654,17 @@ def tool_run(request):
             T_TOOL_EVENT.objects.filter(id=tool_event.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
             response_data['toolEventId'] = tool_event.id
             response_data['taskid'] = taskid
-        elif tool.SCRIPT_LANGUAGE==0:
-
+        elif tool.SCRIPT_LANGUAGE==0:   #shell脚本
+            vars=""
             for param in eval(form['inputParams']):
                 if param['type']=='0':
                     pass
-
-            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),tool.SCRIPT_CODE,hostList=eval(request.POST['hostList']))
+            #临时script
+            scriptPath=tempfile.NamedTemporaryFile(delete=False)
+            fo = open(scriptPath.name, "r+")
+            fo.write(tool.SCRIPT_CODE)
+            fo.flush()
+            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']))
             taskid = runtool.task_id
             print taskid
             result = AsyncResult(taskid)
