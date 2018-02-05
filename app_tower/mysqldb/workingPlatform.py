@@ -643,9 +643,10 @@ def tool_run(request):
                     extraVariable[param['name']]=param['value']
             #临时playbook
             playbook=tempfile.NamedTemporaryFile(delete=False)
-            fo = open(playbook.name, "r+")
+            fo = open(playbook.name, "w+")
             fo.write(tool.SCRIPT_CODE)
             fo.flush()
+            fo.close()
             runtool = run_tool_yaml.delay(tool_event.id,int(form['credentialsId']),file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(request.POST['hostList']))
             taskid = runtool.task_id
             print taskid
@@ -661,9 +662,10 @@ def tool_run(request):
                     pass
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
-            fo = open(scriptPath.name, "r+")
+            fo = open(scriptPath.name, "w+")
             fo.write(tool.SCRIPT_CODE)
             fo.flush()
+            fo.close()
             runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']))
             taskid = runtool.task_id
             print taskid
