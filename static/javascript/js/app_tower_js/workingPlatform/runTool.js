@@ -118,6 +118,7 @@ function runTool() {
                 $("#log_toolEventId").val(data.toolEventId)
                 var inputParams=JSON.parse(data.inputParams)
                 for (var i=0;i<inputParams.length;i++){
+                    $('#showInputList').html('');
                     $('#showInputList').append(
                         '<div >'+
                         '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+inputParams[i].name+'</label>'+
