@@ -659,11 +659,12 @@ def tool_run(request):
             vars=""
             for param in eval(form['inputParams']):
                 if param['type']=='0':
-                    pass
+                    vars+=param['name']+"="+param['value']+"\\n"
+            vars+=vars+tool.SCRIPT_CODE
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
             fo = open(scriptPath.name, "w+")
-            fo.write(tool.SCRIPT_CODE)
+            fo.write(vars)
             fo.flush()
             fo.close()
             runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']))
