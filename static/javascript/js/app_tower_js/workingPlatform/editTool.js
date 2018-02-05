@@ -38,7 +38,7 @@ function  onload_editTool() {
             if(data.resultCode=="0000"){
                 $('#tool_name').val(data.tool.NAME)
                 $('#tool_icon').val(data.tool.ICON);
-                $("tool_dangerlevel input[name='tool-radio'][value='"+data.tool.DANGER_LEVEL+"']").prop("checked",true);
+                $("#tool_dangerlevel input[name='tool-radio'][value='"+data.tool.DANGER_LEVEL+"']").prop("checked",true);
 
                 if (data.tool.SCRIPT_LANGUAGE==0){
                     $('#yaml').removeClass('span-chooice-click')
