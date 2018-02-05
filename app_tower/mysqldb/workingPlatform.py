@@ -13,7 +13,7 @@ import time
 from app_tower.utils import dateutil
 from django.db import  transaction
 from django.core import serializers
-from app_tower.tasks import run_tool_yaml
+from app_tower.tasks import run_tool_yaml,run_tool_shell
 from celery.task.control import revoke
 from celery.result import AsyncResult
 from django.utils.timezone import now, timedelta
@@ -654,6 +654,21 @@ def tool_run(request):
             T_TOOL_EVENT.objects.filter(id=tool_event.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
             response_data['toolEventId'] = tool_event.id
             response_data['taskid'] = taskid
+        elif tool.SCRIPT_LANGUAGE==0:
+
+            for param in eval(form['inputParams']):
+                if param['type']=='0':
+                    pass
+
+            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),tool.SCRIPT_CODE,hostList=eval(request.POST['hostList']))
+            taskid = runtool.task_id
+            print taskid
+            result = AsyncResult(taskid)
+            log.info("STATUS:"+result.status)
+            T_TOOL_EVENT.objects.filter(id=tool_event.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
+            response_data['toolEventId'] = tool_event.id
+            response_data['taskid'] = taskid
+
 
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '成功！'
