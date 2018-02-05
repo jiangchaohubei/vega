@@ -15,7 +15,7 @@ log = logging.getLogger("message")
 def message_init(request):
     try:
         user=User.objects.get(id=int(request.session['userId']))
-        messages=user.messages.all("-id")
+        messages=user.messages.all().order_by('-id')
         total=len(messages)
         list = messages[0:5]
         messageList = serializers.serialize('json', list, ensure_ascii=False)
