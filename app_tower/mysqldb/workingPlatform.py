@@ -659,7 +659,7 @@ def tool_run(request):
             vars=""
             for param in eval(form['inputParams']):
                 if param['type']=='0':
-                    vars+=param['name']+"="+param['value']+"\\n"
+                    vars+=param['name']+"="+param['value']+"\n"
             vars+=vars+tool.SCRIPT_CODE
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
