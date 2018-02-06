@@ -29,7 +29,9 @@ $(function () {
                     var tooltypehtml=""
                     var typeid="toolType"+data.toolType[i].pk
                     tooltypehtml+='<div class="tool-type " id="'+typeid+'">'+
+                        '<h3><strong>'+
                         '<div class="tool-type-name">'+data.toolType[i].fields.NAME+'</div>'+
+                        '</strong></h3>'+
                        ' <div class="tool-list" style="float: left">'
                     var nothastoolitem=true
                     for (var j=0;j<data.tools.length;j++){

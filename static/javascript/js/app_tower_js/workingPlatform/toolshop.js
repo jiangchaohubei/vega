@@ -41,18 +41,18 @@ function onload_toolshop() {
                         default:
                             iconColor='green';
                     }
-                        var toolid="toolid"+data.tools_audited[j].pk
+                    var toolid="toolid"+data.tools_audited[j].pk
                     htmlstr_audited+='<div class="tool-item" id="'+toolid+'">'+
-                            '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
-                            '<div class="tool-item-icon">'+
-                            '<i class="'+data.tools_audited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
-                            '</div>'+
-                            '<div class="tool-item-name">'+data.tools_audited[j].fields.NAME+'</div>'+
-                            '</a>'+
-                             '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_audited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_audited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_audited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
-                            '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_audited[j].fields.DESCRIPTION+'</div>'+
-                            '<button type="button" style="width: 100px" onclick="importTool('+data.tools_audited[j].pk+')" class="btn btn-hover btn-success ng-scope">导入</button>'+
-                            '</div>'
+                        '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
+                        '<div class="tool-item-icon">'+
+                        '<i class="'+data.tools_audited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
+                        '</div>'+
+                        '<div class="tool-item-name">'+data.tools_audited[j].fields.NAME+'</div>'+
+                        '</a>'+
+                        '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_audited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_audited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_audited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
+                        '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_audited[j].fields.DESCRIPTION+'</div>'+
+                        '<button type="button" style="width: 100px" onclick="importTool('+data.tools_audited[j].pk+')" class="btn btn-hover btn-success ng-scope">导入</button>'+
+                        '</div>'
 
                 }
                 $('#tool-panel').append(htmlstr_audited)
@@ -86,7 +86,7 @@ function onload_toolshop() {
                         '</a>'+
                         '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_notaudited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_notaudited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_notaudited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
                         '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_notaudited[j].fields.DESCRIPTION+'</div>'+
-                        '<button type="button" style="width: 100px"  class="btn btn-hover btn-info ng-scope">未审核</button>'+
+                        '<span  style="width: 100px"  class="label label-info">未审核</span>'+
                         '</div>'
 
                 }
@@ -121,7 +121,7 @@ function onload_toolshop() {
                         '</a>'+
                         '<div class="row" style="height: 20px;overflow:hidden;margin-top: 10px"><span class="col-md-4" >'+data.tools_failaudited[j].fields.CREATE_USER_NAME+'</span><span style="border-left:1px solid #cdcdcd;border-right: 1px solid #cdcdcd" class="col-md-4">'+data.tools_failaudited[j].fields.ARGS1+'</span><span class="col-md-4">'+data.tools_failaudited[j].fields.CREATE_TIME.slice(0,10)+'</span></div>'+
                         '<div class="row" style="height: 80px;overflow:hidden;margin: 5px">'+data.tools_failaudited[j].fields.DESCRIPTION+'</div>'+
-                        '<button type="button" style="width: 100px"  class="btn btn-hover btn-danger ng-scope">审核不通过</button>'+
+                        '<span  style="width: 100px"  class="label label-default">审核不通过</span>'+
                         '</div>'
 
                 }
