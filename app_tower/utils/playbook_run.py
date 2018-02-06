@@ -132,7 +132,7 @@ class mycallback(CallbackBase):
         self.fo.writelines('ok['+host+']*****************************************************************************************************************'+'\n')
 
         print 'okokok',result._result
-        self.fo.writelines( 'ok'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
+        self.fo.writelines( 'ok'+host+'=>'+json.dumps(result._result['stdout_lines'] if result._result.has_key('stdout_lines') else  result._result,sort_keys=True,indent=8)+'\n')
         self.fo.flush()
         log.info('v2_runner_on_ok :'+str(result._result))
         # for i in result._result.keys():
@@ -146,7 +146,7 @@ class mycallback(CallbackBase):
         # self.status_fail=json.dumps({host:result._result},indent=4)
         self.host_failed[host] = result
         self.fo.writelines('failed['+host+']*****************************************************************************************************************'+'\n')
-        self.fo.writelines('failed:'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
+        self.fo.writelines('failed:'+host+'=>'+json.dumps(result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result,sort_keys=True,indent=8)+'\n')
         self.fo.flush()
         log.info('v2_runner_on_failed: host'+host+' msg :'+str(result._result))
 
@@ -157,7 +157,7 @@ class mycallback(CallbackBase):
         # self.status_unreachable=json.dumps({host:result._result},indent=4)
         self.host_unreachable[host] = result
         self.fo.writelines('unreachable['+host+']*****************************************************************************************************************'+'\n')
-        self.fo.writelines('unreachable:'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
+        self.fo.writelines('unreachable:'+host+'=>'+json.dumps(result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result,sort_keys=True,indent=8)+'\n')
         self.fo.flush()
         log.info('v2_runner_on_unreachable:host'+host+' msg :'+str(result._result))
 
