@@ -28,7 +28,7 @@ $(function () {
                 for(var i=0;i<data.toolType.length;i++){
                     var tooltypehtml=""
                     var typeid="toolType"+data.toolType[i].pk
-                    tooltypehtml+='<div class="tool-type " id="'+typeid+'">'+
+                    tooltypehtml+='<div class="tool-type row" id="'+typeid+'">'+
                         '<h3><strong>'+
                         '<div class="tool-type-name">'+data.toolType[i].fields.NAME+'</div>'+
                         '</strong></h3>'+
