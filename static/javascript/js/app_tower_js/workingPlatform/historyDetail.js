@@ -175,7 +175,7 @@ function getlog(taskid,logfile) {
             $("#run_log").scrollTop($("#run_log")[0].scrollHeight);
             setTimeout(function () {
                     if (result.read_flag == 'True') {
-                        getlog(0)
+                        getlog($("#log_taskid").val(), $("#log_logfile").val())
                     }}
 
                 , 1000)
