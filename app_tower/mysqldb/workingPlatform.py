@@ -703,7 +703,7 @@ def tool_reRun(request):
     try:
         if request.POST:
             form['toolEventId']=request.POST['toolEventId']
-            if not T_TOOL_EVENT.objects.check_id(request,int(form['toolid'])):
+            if not T_TOOL_EVENT.objects.check_id(request,int(form['toolEventId'])):
                 return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"没有使用权限！"}))
 
         print str(form)
