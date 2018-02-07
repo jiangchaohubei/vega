@@ -783,6 +783,7 @@ def read_log(request):
 
     log.info('read_job_log start')
     log.info("request: "+str(request))
+    response_data = {}
     try:
         seek=0
         if request.POST['seek']:
@@ -792,7 +793,7 @@ def read_log(request):
 
         toolEventId=request.POST['toolEventId']
 
-        response_data = {}
+
         tool_event=T_TOOL_EVENT.objects.get(id=int(toolEventId))
         state=tool_event.STATUS
         response_data['state']=state
