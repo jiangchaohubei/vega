@@ -25,34 +25,34 @@ log = logging.getLogger("tasks") # 为loggers中定义的名称
 @task(throws=(Terminated,))
 def runCommands(file,comman):
 
-    (status, output) = commands.getstatusoutput("bash -c set -o pipefail;"+comman+"|tee -a "+file)
+        (status, output) = commands.getstatusoutput("bash -c set -o pipefail;"+comman+"|tee -a "+file)
 
 #ansible的api模块执行命令
 @task(throws=(Terminated,))
 def runCommands2(file,groupid,credentialsid,commandName,vars,userid,username,hostList,port=22,isSudo='false',action="",ACCOUNT="",requestDesc=""):
-    log.info('celery runCommands2 start')
-    credentials=T_LOGIN_CREDENTIALS.objects.get(id=credentialsid)
-    login_user=credentials.LOGIN_USER
-    d = desJiami.DES()
-    d.input_key(SECRET_KEY)
-    login_pwd=d.decode(str(credentials.LOGIN_PWD))
-    PRIVILEGE_NAME=credentials.PRIVILEGE_NAME
-    PRIVILEGE_PWD=d.decode(str(credentials.PRIVILEGE_PWD))
-    #查出host列表
+        log.info('celery runCommands2 start')
+        credentials=T_LOGIN_CREDENTIALS.objects.get(id=credentialsid)
+        login_user=credentials.LOGIN_USER
+        d = desJiami.DES()
+        d.input_key(SECRET_KEY)
+        login_pwd=d.decode(str(credentials.LOGIN_PWD))
+        PRIVILEGE_NAME=credentials.PRIVILEGE_NAME
+        PRIVILEGE_PWD=d.decode(str(credentials.PRIVILEGE_PWD))
+        #查出host列表
 
-    com=commandsrun(file,hostList,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD)
-    result=com.run()
-    if action=='add':
-        if not result['success']=={}:
-            surecord=sudo_record(IP=hostList[0],CREDENTIALS_ID=credentials,DESCRIPTION=requestDesc,PORT=port,ACCOUNT=ACCOUNT,CREATE_USER_ID=userid,CREATE_USER_NAME=username)
-            surecord.save()
-    if  action=='cancel':
-        if not result['success']=={}:
-            if sudo_record.objects.filter(IP=hostList[0],ACCOUNT=ACCOUNT):
-                sudo_record.objects.filter(IP=hostList[0],ACCOUNT=ACCOUNT).delete()
-    t_command_event=T_COMMAND_EVENT(GROUP_ID=groupid,CREDENTIALS_ID=credentialsid,LOGFILE=file,COMMAND_NAME=commandName,COMMAND_VARS=vars,CREATE_USER_ID=userid,CREATE_USER_NAME=username,RESULT=str(result))
-    t_command_event.save()
-    log.info('celery runCommands2 end')
+        com=commandsrun(file,hostList,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD)
+        result=com.run()
+        if action=='add':
+             if not result['success']=={}:
+                 surecord=sudo_record(IP=hostList[0],CREDENTIALS_ID=credentials,DESCRIPTION=requestDesc,PORT=port,ACCOUNT=ACCOUNT,CREATE_USER_ID=userid,CREATE_USER_NAME=username)
+                 surecord.save()
+        if  action=='cancel':
+            if not result['success']=={}:
+                if sudo_record.objects.filter(IP=hostList[0],ACCOUNT=ACCOUNT):
+                    sudo_record.objects.filter(IP=hostList[0],ACCOUNT=ACCOUNT).delete()
+        t_command_event=T_COMMAND_EVENT(GROUP_ID=groupid,CREDENTIALS_ID=credentialsid,LOGFILE=file,COMMAND_NAME=commandName,COMMAND_VARS=vars,CREATE_USER_ID=userid,CREATE_USER_NAME=username,RESULT=str(result))
+        t_command_event.save()
+        log.info('celery runCommands2 end')
 
 
 #ansible的api执行playbook

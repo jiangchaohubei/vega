@@ -16,7 +16,7 @@ pip install  pyexcel_xls   0.5.0
 channels (1.1.8)
 Successfully installed asgi-redis-1.4.3 msgpack-python-0.5.1 redis-2.10.6
 
-
+mysqldump -uroot -p abc > abc.sql
 上线新版本后操作步骤：
 
 1.  python manage.py makemigrations   # 让 Django 知道我们在我们的模型有一些变更（当上传新版本时，要把所有app的migrations文件夹下的除__init__.py文件外的文件复制到新上传项目对应文件夹）

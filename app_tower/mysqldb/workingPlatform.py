@@ -692,6 +692,91 @@ def tool_run(request):
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 
+
+#description:重新执行工具任务
+#params: request.POST {"toolEventId":"",}
+#return: {"resultCode":"","resultDesc":""}
+@PermissionVerify()
+def tool_reRun(request):
+    response_data={}
+    form={}
+    try:
+        if request.POST:
+            form['toolEventId']=request.POST['toolEventId']
+            if not T_TOOL_EVENT.objects.check_id(request,int(form['toolid'])):
+                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"没有使用权限！"}))
+
+        print str(form)
+        tool_event=T_TOOL_EVENT.objects.get(id=int(form['toolEventId']))
+        tool=tool_event.TOOL_ID
+        if not tool.AUDIT_STATUS == 1:
+            return HttpResponse(json.dumps({"resultCode":"0001","resultDesc":"工具没有通过审核！"}))
+        file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
+        tool_event2=T_TOOL_EVENT(TOOL_ID=tool,CREDENTIALS_ID_id=tool_event.CREDENTIALS_ID_id,HOSTLIST=tool_event.HOSTLIST,INPUTPARAMS=tool_event.INPUTPARAMS,CREATE_USER_ID=request.session['userId'],
+                                CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
+        tool_event2.save()
+        if tool.SCRIPT_LANGUAGE==2:   #yaml脚本
+            jobTags=[]
+            skipTags=[]
+            extraVariable={}
+            for param in eval(tool_event2.INPUTPARAMS):
+                if param['type']=='5':
+                    jobTags.append(param['value'])
+                elif param['type']=='6':
+                    skipTags.append(param['value'])
+                elif param['type']=='7':
+                    extraVariable[param['name']]=param['value']
+            #临时playbook
+            playbook=tempfile.NamedTemporaryFile(delete=False)
+            fo = open(playbook.name, "w+")
+            fo.write(tool.SCRIPT_CODE)
+            fo.flush()
+            fo.close()
+            runtool = run_tool_yaml.delay(tool_event2.id,tool_event2.CREDENTIALS_ID_id,file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(tool_event2.HOSTLIST))
+            taskid = runtool.task_id
+            print taskid
+            result = AsyncResult(taskid)
+            log.info("STATUS:"+result.status)
+            T_TOOL_EVENT.objects.filter(id=tool_event2.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
+            response_data['toolEventId'] = tool_event2.id
+            response_data['taskid'] = taskid
+        elif tool.SCRIPT_LANGUAGE==0:   #shell脚本
+            vars=""
+            for param in eval(tool_event2.INPUTPARAMS):
+                if param['type']=='0':
+                    vars+=param['name']+"="+param['value']+"\n"
+            vars+=vars+tool.SCRIPT_CODE
+            #临时script
+            scriptPath=tempfile.NamedTemporaryFile(delete=False)
+            fo = open(scriptPath.name, "w+")
+            fo.write(vars)
+            fo.flush()
+            fo.close()
+            runtool = run_tool_shell.delay(file.name,tool_event2.id,tool_event2.CREDENTIALS_ID_id,scriptPath.name,hostList=eval(tool_event2.HOSTLIST))
+            taskid = runtool.task_id
+            print taskid
+            result = AsyncResult(taskid)
+            log.info("STATUS:"+result.status)
+            T_TOOL_EVENT.objects.filter(id=tool_event2.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
+            response_data['toolEventId'] = tool_event2.id
+            response_data['taskid'] = taskid
+
+
+        response_data['resultCode'] = '0000'
+        response_data['resultDesc'] = '成功！'
+        response_data['runUser'] = request.session['username']
+        response_data['toolName'] = tool.NAME
+        response_data['logfile'] = file.name
+        response_data['inputParams'] = tool_event2.INPUTPARAMS
+
+    except Exception,e:
+        traceback.print_exc()
+        log.error(e.__str__())
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = e.__str__()
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+
+
 #实时读取运行日志
 
 def read_log(request):

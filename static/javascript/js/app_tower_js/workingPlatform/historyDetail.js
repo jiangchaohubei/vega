@@ -14,6 +14,45 @@ $(function () {
     init(toolEventId);
 
 })
+
+function reRun() {
+    $.ajax({
+        url:"/app_tower/workingPlatform/tool_reRun",
+        type:"POST",
+        data:{
+            toolEventId:$('#toolEventId').val(),
+
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                console.log(data.resultCode)
+                opt_commons.dialogShow("失败信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+                $('#toolEventId').val(data.toolEventId)
+                init(data.toolEventId);
+
+                return;
+            }
+        },
+        error: function(data) {
+
+            opt_commons.dialogShow("错误","error",2000);
+            console.log("error");
+
+        },
+    })
+}
 //执行
 function init(toolEventId) {
 
@@ -50,6 +89,7 @@ function init(toolEventId) {
                 var inputParams=JSON.parse(data.toolEvent.INPUTPARAMS)
                 console.log(inputParams)
                 for (var i=0;i<inputParams.length;i++){
+                    $('#showInputList').html('')
                     $('#showInputList').append(
                         '<div >'+
                         '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+inputParams[i].name+'</label>'+
