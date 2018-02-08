@@ -16,6 +16,7 @@ $(function () {
 })
 
 function reRun() {
+    $('#stopbtn').css('display', 'block');
     $.ajax({
         url:"/app_tower/workingPlatform/tool_reRun",
         type:"POST",

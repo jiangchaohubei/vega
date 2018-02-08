@@ -61,7 +61,7 @@ function onload_runTool() {
 //执行
 function runTool() {
 
-
+    $('#stopbtn').css('display', 'block');
     var toolid=$('#toolid').val();
     var hoststr=$('#choosed_hosts').val()
     console.log(hoststr)
