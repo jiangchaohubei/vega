@@ -42,10 +42,13 @@ function onload_toolshop() {
                             iconColor='green';
                     }
                     var toolid="toolid"+data.tools_audited[j].pk
-                    console.log(data.tools_audited[j])
-                    console.log(data.toolimported)
-                    console.log($.inArray(data.tools_audited[j], data.toolimported))
-                    if ($.inArray(data.tools_audited[j], data.toolimported)!= -1 ){//存在
+                    var hasImport=false;
+                    for (t in data.toolimported){
+                        if (t.pk ==data.tools_audited[j].pk ){
+                            hasImport=true
+                        }
+                    }
+                    if (hasImport){//存在
                         htmlstr_audited+='<div class="tool-item" id="'+toolid+'">'+
                             '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
                             '<div class="tool-item-icon">'+
@@ -70,6 +73,7 @@ function onload_toolshop() {
                             '<button type="button" style="width: 100px" onclick="importTool('+data.tools_audited[j].pk+')" class="btn btn-hover btn-success ng-scope">导入</button>'+
                             '</div>'
                     }
+
 
 
                 }
