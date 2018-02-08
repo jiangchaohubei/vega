@@ -44,7 +44,7 @@ function onload_toolshop() {
                     var toolid="toolid"+data.tools_audited[j].pk
                     var hasImport=false;
                     for (t in data.toolimported){
-                        if (t.pk ==data.tools_audited[j].pk ){
+                        if (data.toolimported[t].pk ==data.tools_audited[j].pk ){
                             hasImport=true
                         }
                     }
