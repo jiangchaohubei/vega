@@ -662,7 +662,7 @@ def run_commands_changeSudoAuth(request):
     file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
 
 
-    result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList,port,'true',action,userName,requestDesc)
+    result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList,port,'true',action,userName,requestDesc,sudo=True)
     taskid = result.task_id
     log.info('run_commands_changeSudoAuth end')
     return HttpResponse(json.dumps({'resultCode':'0000','resultDesc':'开始执行','start':'true','file':file.name,'taskid':taskid}))
@@ -697,7 +697,7 @@ def run_commands_callbackSudoAuth(request):
         file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
 
 
-        result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList,port,'true',action,userName,requestDesc)
+        result = runCommands2.delay(file.name,groupid,credentialsid,commandName,vars,request.session['userId'],request.session['username'],hostList,port,'true',action,userName,requestDesc,sudo=True)
         taskid = result.task_id
     log.info('run_commands_callbackSudoAuth end')
     return HttpResponse(json.dumps({'resultCode':'0000','resultDesc':'开始执行','start':'true',}))

@@ -19,7 +19,7 @@ import logging
 log = logging.getLogger("commands_run") # 为loggers中定义的名称
 
 class commandsrun:
-    def __init__(self,file,hostName_list,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD):
+    def __init__(self,file,hostName_list,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD,sudo=False,su=False):
         log.info('commandsrun init')
 
         self.logfile=file
@@ -32,11 +32,13 @@ class commandsrun:
         self.isSudo=isSudo
         self.PRIVILEGE_NAME=PRIVILEGE_NAME
         self.PRIVILEGE_PWD=PRIVILEGE_PWD
+        self.sudo=sudo
+        self.su=su
 
 
     def run(self):
         log.info('commandsrun run')
-        play_book = my_commands_play(self.logfile,self.hostName_list,self.login_user,self.login_pwd,self.commandName,self.vars,self.port,self.isSudo,self.PRIVILEGE_NAME,self.PRIVILEGE_PWD)
+        play_book = my_commands_play(self.logfile,self.hostName_list,self.login_user,self.login_pwd,self.commandName,self.vars,self.port,self.isSudo,self.PRIVILEGE_NAME,self.PRIVILEGE_PWD,sudo=self.sudo,su=self.su)
         #play_book = my_ansible_play(self.logfile,'/root/code/ping.yml')
         run_msg=play_book.run()
 
@@ -211,7 +213,9 @@ class my_commands_play():
                  fork=50,
                  ansible_cfg=None,  # os.environ["ANSIBLE_CONFIG"] = None
                  passwords={},
-                 check=False):
+                 check=False,
+                 sudo=False,
+                 su=False):
         self.logfile=logfile
         self.hostName_list=hostName_list
         self.login_user=login_user
@@ -252,8 +256,8 @@ class my_commands_play():
                                ask_sudo_pass=False,
                                verbosity=5,
                                module_path=None,
-                               become=True if self.isSudo=="true" else False,
-                               become_method='sudo',
+                               become=True if sudo or su else False,
+                               become_method='sudo' if sudo else 'su',
                                become_user='root',
                                check=None,
                                listhosts=None,

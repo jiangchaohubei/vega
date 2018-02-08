@@ -53,13 +53,16 @@ def toolshop_init(request):
     toolList0 = serializers.serialize('json', tool_0, ensure_ascii=False)
     toolList1 = serializers.serialize('json', tool_1, ensure_ascii=False)
     toolList2 = serializers.serialize('json', tool_2, ensure_ascii=False)
+    #已经导入的工具
+    tools=User.objects.get(id=request.session['userId']).tools.all().filter(AUDIT_STATUS=1)
+    toolimported = serializers.serialize('json', tools, ensure_ascii=False)
 
     true = True
     false=False
     null = None
     #log.info('userList：'+userList)
     log.info('toolshop_init end')
-    return HttpResponse(json.dumps({'resultCode':'0000','tools_audited': eval(toolList1),'tools_notaudited': eval(toolList0),'tools_failaudited': eval(toolList2)}))
+    return HttpResponse(json.dumps({'resultCode':'0000','toolimported':eval(toolimported),'tools_audited': eval(toolList1),'tools_notaudited': eval(toolList0),'tools_failaudited': eval(toolList2)}))
 
 #初始化工具创建页面
 def toolcreate_init(request):
@@ -634,20 +637,34 @@ def tool_run(request):
             jobTags=[]
             skipTags=[]
             extraVariable={}
+            sudo=False
+            su=False
             for param in eval(form['inputParams']):
-                if param['type']=='5':
-                    jobTags.append(param['value'])
-                elif param['type']=='6':
-                    skipTags.append(param['value'])
-                elif param['type']=='7':
+                if param['type']=='5' and param['value']:
+                    jobtagstr=param['value']+','
+                    job_Tags=jobtagstr.split(',')
+                    job_Tags.pop()
+                    jobTags.extend(job_Tags)
+
+                elif param['type']=='6' and param['value']:
+                    skiptagstr=param['value']+','
+                    skip_Tags=skiptagstr.split(',')
+                    skip_Tags.pop()
+                    skipTags.extend(skip_Tags)
+                elif param['type']=='7' and param['value']:
                     extraVariable[param['name']]=param['value']
+                elif param['type']=='8' and param['value']:
+                    if  param['value']== '-s' :
+                        sudo=True
+                    elif  param['value']== '-S' :
+                        su=True
             #临时playbook
             playbook=tempfile.NamedTemporaryFile(delete=False)
             fo = open(playbook.name, "w+")
             fo.write(tool.SCRIPT_CODE)
             fo.flush()
             fo.close()
-            runtool = run_tool_yaml.delay(tool_event.id,int(form['credentialsId']),file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(request.POST['hostList']))
+            runtool = run_tool_yaml.delay(tool_event.id,int(form['credentialsId']),file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(request.POST['hostList']),sudo=sudo,su=su)
             taskid = runtool.task_id
             print taskid
             result = AsyncResult(taskid)
@@ -657,9 +674,16 @@ def tool_run(request):
             response_data['taskid'] = taskid
         elif tool.SCRIPT_LANGUAGE==0:   #shell脚本
             vars=""
+            sudo=False
+            su=False
             for param in eval(form['inputParams']):
-                if param['type']=='0':
+                if param['type']=='0' and param['value']:
                     vars+=param['name']+"="+param['value']+"\n"
+                elif param['type']=='8' and param['value']:
+                    if  param['value']== '-s' :
+                        sudo=True
+                    elif  param['value']== '-S' :
+                        su=True
             vars+=vars+tool.SCRIPT_CODE
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
@@ -667,7 +691,7 @@ def tool_run(request):
             fo.write(vars)
             fo.flush()
             fo.close()
-            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']))
+            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']),sudo=sudo,su=su)
             taskid = runtool.task_id
             print taskid
             result = AsyncResult(taskid)
@@ -713,26 +737,40 @@ def tool_reRun(request):
             return HttpResponse(json.dumps({"resultCode":"0001","resultDesc":"工具没有通过审核！"}))
         file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
         tool_event2=T_TOOL_EVENT(TOOL_ID=tool,CREDENTIALS_ID_id=tool_event.CREDENTIALS_ID_id,HOSTLIST=tool_event.HOSTLIST,INPUTPARAMS=tool_event.INPUTPARAMS,CREATE_USER_ID=request.session['userId'],
-                                CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
+                                 CREATE_USER_NAME=request.session['username'],LOGFILE=file.name,STATUS='STARTED',OWNER_ID=tool.OWNER_ID,OWNER_NAME=tool.OWNER_NAME,OWNER_PROJECT_ID=tool.OWNER_PROJECT_ID,OWNER_ALL=tool.OWNER_ALL)
         tool_event2.save()
         if tool.SCRIPT_LANGUAGE==2:   #yaml脚本
             jobTags=[]
             skipTags=[]
             extraVariable={}
+            sudo=False
+            su=False
             for param in eval(tool_event2.INPUTPARAMS):
-                if param['type']=='5':
-                    jobTags.append(param['value'])
-                elif param['type']=='6':
-                    skipTags.append(param['value'])
-                elif param['type']=='7':
+                if param['type']=='5' and param['value']:
+                    jobtagstr=param['value']+','
+                    job_Tags=jobtagstr.split(',')
+                    job_Tags.pop()
+                    jobTags.extend(job_Tags)
+
+                elif param['type']=='6' and param['value']:
+                    skiptagstr=param['value']+','
+                    skip_Tags=skiptagstr.split(',')
+                    skip_Tags.pop()
+                    skipTags.extend(skip_Tags)
+                elif param['type']=='7' and param['value']:
                     extraVariable[param['name']]=param['value']
+                elif param['type']=='8' and param['value']:
+                    if  param['value']== '-s' :
+                        sudo=True
+                    elif  param['value']== '-S' :
+                        su=True
             #临时playbook
             playbook=tempfile.NamedTemporaryFile(delete=False)
             fo = open(playbook.name, "w+")
             fo.write(tool.SCRIPT_CODE)
             fo.flush()
             fo.close()
-            runtool = run_tool_yaml.delay(tool_event2.id,tool_event2.CREDENTIALS_ID_id,file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(tool_event2.HOSTLIST))
+            runtool = run_tool_yaml.delay(tool_event2.id,tool_event2.CREDENTIALS_ID_id,file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su)
             taskid = runtool.task_id
             print taskid
             result = AsyncResult(taskid)
@@ -742,9 +780,16 @@ def tool_reRun(request):
             response_data['taskid'] = taskid
         elif tool.SCRIPT_LANGUAGE==0:   #shell脚本
             vars=""
+            sudo=False
+            su=False
             for param in eval(tool_event2.INPUTPARAMS):
-                if param['type']=='0':
+                if param['type']=='0' and param['value']:
                     vars+=param['name']+"="+param['value']+"\n"
+                elif param['type']=='8' and param['value']:
+                    if  param['value']== '-s' :
+                        sudo=True
+                    elif  param['value']== '-S' :
+                        su=True
             vars+=vars+tool.SCRIPT_CODE
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
@@ -752,7 +797,7 @@ def tool_reRun(request):
             fo.write(vars)
             fo.flush()
             fo.close()
-            runtool = run_tool_shell.delay(file.name,tool_event2.id,tool_event2.CREDENTIALS_ID_id,scriptPath.name,hostList=eval(tool_event2.HOSTLIST))
+            runtool = run_tool_shell.delay(file.name,tool_event2.id,tool_event2.CREDENTIALS_ID_id,scriptPath.name,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su)
             taskid = runtool.task_id
             print taskid
             result = AsyncResult(taskid)
