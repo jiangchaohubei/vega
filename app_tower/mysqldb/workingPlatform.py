@@ -55,6 +55,8 @@ def toolshop_init(request):
     toolList2 = serializers.serialize('json', tool_2, ensure_ascii=False)
     #已经导入的工具
     tools=User.objects.get(id=request.session['userId']).tools.all().filter(AUDIT_STATUS=1)
+    for t in tools:
+        t.ARGS1=t.TOOLTYPE_ID.NAME
     toolimported = serializers.serialize('json', tools, ensure_ascii=False)
 
     true = True
