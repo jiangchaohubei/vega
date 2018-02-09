@@ -271,11 +271,11 @@ class my_commands_play():
                                syntax=None)
         if ansible_cfg != None:
             os.environ["ANSIBLE_CONFIG"] = ansible_cfg
-        self.variable_manager = VariableManager()
+
         self.loader = DataLoader()
 
         self.inventory= InventoryManager(loader=self.loader, sources=self.hostName_list)
-
+        self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
         self.variable_manager.set_inventory(self.inventory)
 
     # 定义运行的方法和返回值

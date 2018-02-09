@@ -274,12 +274,12 @@ class my_ansible_play():
                                )
         if ansible_cfg != None:
             os.environ["ANSIBLE_CONFIG"] = ansible_cfg
-        self.variable_manager = VariableManager()
+
         self.loader = DataLoader()
 
-        self.inventory=myInventory(resource=group,loader=self.loader, variable_manager=self.variable_manager, host_list=[]).get_inventory()
+        self.inventory=myInventory(resource=group,loader=self.loader,  host_list=[]).get_inventory()
         #self.inventory = Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=host_list)
-
+        self.variable_manager =VariableManager(loader=self.loader, inventory=self.inventory)
         self.variable_manager.set_inventory(self.inventory)
 
         self.variable_manager.extra_vars=self.extra_vars
