@@ -6,43 +6,40 @@
 import os
 import json
 from collections import namedtuple
-from ansible.inventory import Inventory
+
+from app_tower.utils.myInventory import myInventory
 
 from ansible.vars import VariableManager
 from ansible.parsing.dataloader import DataLoader
-from ansible.playbook.play import Play
-from ansible.executor.task_queue_manager import TaskQueueManager
+from ansible.executor.playbook_executor import PlaybookExecutor
 from ansible.plugins.callback import CallbackBase
+from ansible.errors import AnsibleParserError
 
 from ansible import constants as C
+
 import logging
-log = logging.getLogger("commands_run") # 为loggers中定义的名称
+log = logging.getLogger("playbook_run") # 为loggers中定义的名称
 
-class commandsrun:
-    def __init__(self,file,hostName_list,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD,sudo=False,su=False):
-        log.info('commandsrun init')
-
-        self.logfile=file
-        self.hostName_list=hostName_list
-        self.login_user=login_user
-        self.login_pwd=login_pwd
-        self.commandName=commandName
-        self.vars=vars
-        self.port=port
-        self.isSudo=isSudo
-        self.PRIVILEGE_NAME=PRIVILEGE_NAME
-        self.PRIVILEGE_PWD=PRIVILEGE_PWD
-        self.sudo=sudo
-        self.su=su
-
+class runyaml:
+    def __init__(self, logfile,playbook_path,group,extra_vars={},tags=None,skip_tags=None,fork=5):
+        log.info('runplaybook init')
+        self.logfile=logfile
+        self.playbook_path=playbook_path
+        self.group=group
+        self.extra_vars=extra_vars
+        self.tags=tags
+        self.skip_tags=skip_tags
+        self.fork=fork
+        log.info('group:'+str(self.group))
 
     def run(self):
-        log.info('commandsrun run')
-        play_book = my_commands_play(self.logfile,self.hostName_list,self.login_user,self.login_pwd,self.commandName,self.vars,self.port,self.isSudo,self.PRIVILEGE_NAME,self.PRIVILEGE_PWD,sudo=self.sudo,su=self.su)
+        log.info('runplaybook run')
+        play_book = my_ansible_play(self.logfile,self.playbook_path,self.group,extra_vars=self.extra_vars,tags=self.tags,skip_tags=self.skip_tags,fork=self.fork)
         #play_book = my_ansible_play(self.logfile,'/root/code/ping.yml')
         run_msg=play_book.run()
-
-        log.info('commandsrun run'+str(play_book.get_result()))
+        if run_msg['code'] in [1001,1002,1003]:
+            return run_msg
+        log.info('runplaybook run'+str(play_book.get_result()))
         return play_book.get_result()
 
 
@@ -111,13 +108,16 @@ class mycallback(CallbackBase):
             self.on_file_diff(host, result._result['diff'])
             print 'v2_on_file_diff'
 
+
+
+
     def v2_runner_on_skipped(self, result):
         log.info('v2_runner_on_skipped')
         if C.DISPLAY_SKIPPED_HOSTS:
             host = result._host.get_name()
             self.runner_on_skipped(host, self._get_item(getattr(result._result,'results',{})))
             self.host_skipped[host] = result
-
+            print result._result['msg']
             self.fo.writelines('skipped['+host+']*****************************************************************************************************************'+'\n')
             self.fo.writelines('skipped:'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
             self.fo.flush()
@@ -131,10 +131,10 @@ class mycallback(CallbackBase):
         self.host_ok[host] = result
         self.fo.writelines('ok['+host+']*****************************************************************************************************************'+'\n')
 
-
-        self.fo.writelines( 'ok:=>'+host+'=>'+json.dumps(result._result['stdout_lines'] if result._result.has_key('stdout_lines') else  result._result,sort_keys=True,indent=8)+'\n')
+        print 'okokok',result._result
+        self.fo.writelines( 'ok'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
         self.fo.flush()
-        log.info('v2_runner_on_ok :'+str(result._result['stdout_lines']))
+        log.info('v2_runner_on_ok :'+str(result._result))
         # for i in result._result.keys():
         #      self.fo.writelines( i+'=>'+str(result._result[i]))
 
@@ -145,11 +145,10 @@ class mycallback(CallbackBase):
         self.runner_on_failed(host, result._result, ignore_errors)
         # self.status_fail=json.dumps({host:result._result},indent=4)
         self.host_failed[host] = result
-
         self.fo.writelines('failed['+host+']*****************************************************************************************************************'+'\n')
-        self.fo.writelines('failed:'+host+'=>'+json.dumps(result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result,sort_keys=True,indent=8)+'\n')
+        self.fo.writelines('failed:'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
         self.fo.flush()
-        log.info('v2_runner_on_failed: host'+host+' msg :'+result._result['stderr_lines'])
+        log.info('v2_runner_on_failed: host'+host+' msg :'+str(result._result))
 
     def v2_runner_on_unreachable(self, result):
         log.info('v2_runner_on_unreachable')
@@ -158,9 +157,9 @@ class mycallback(CallbackBase):
         # self.status_unreachable=json.dumps({host:result._result},indent=4)
         self.host_unreachable[host] = result
         self.fo.writelines('unreachable['+host+']*****************************************************************************************************************'+'\n')
-        self.fo.writelines('unreachable:'+host+'=>'+json.dumps(result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result,sort_keys=True,indent=8)+'\n')
+        self.fo.writelines('unreachable:'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
         self.fo.flush()
-        log.info('v2_runner_on_unreachable:host'+host+' msg :'+result._result['stderr_lines'])
+        log.info('v2_runner_on_unreachable:host'+host+' msg :'+str(result._result))
 
     def v2_playbook_on_no_hosts_matched(self):
         log.info('v2_playbook_on_no_hosts_matched')
@@ -175,7 +174,7 @@ class mycallback(CallbackBase):
         self.playbook_on_play_start(play.name)
         self.playbook_path = play.name
         self.fo.writelines('PLAY ['+play.name+'] *****************************************************************************************************************'+'\n')
-        self.fo.writelines('TASK [Gathering Facts] *****************************************************************************************************************'+'\n')
+        self.fo.writelines('TASK [Gathering Facts] **************************************************************************************************************'+'\n')
         self.fo.flush()
     def v2_playbook_on_stats(self, stats):
         log.info('v2_playbook_on_stats ')
@@ -201,10 +200,10 @@ class mycallback(CallbackBase):
         self.fo.writelines(myrecap+'\n')
         self.fo.flush()
 
-class my_commands_play():
+class my_ansible_play():
     # 这里是ansible运行
     # 初始化各项参数，大部分都定义好，只有几个参数是必须要传入的
-    def __init__(self,logfile,hostName_list,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD, extra_vars={},
+    def __init__(self,logfile, playbook,group, extra_vars={},
                  host_list='/etc/ansible/hosts',
                  connection='ssh',
                  become=False,
@@ -214,19 +213,11 @@ class my_commands_play():
                  ansible_cfg=None,  # os.environ["ANSIBLE_CONFIG"] = None
                  passwords={},
                  check=False,
-                 sudo=False,
-                 su=False):
+                 tags=None,
+                 skip_tags=None,
+                 ):
         self.logfile=logfile
-        self.hostName_list=hostName_list
-        self.login_user=login_user
-        self.login_pwd=login_pwd
-        self.commandName=commandName
-        self.vars=vars
-        self.port=port
-        self.isSudo=isSudo
-        self.PRIVILEGE_NAME=PRIVILEGE_NAME
-        self.PRIVILEGE_PWD=PRIVILEGE_PWD
-
+        self.playbook_path = playbook
         self.passwords = dict(conn_pass='AAA')
         self.extra_vars = extra_vars
         Options = namedtuple('Options',
@@ -246,98 +237,133 @@ class my_commands_play():
                               'listtags',
                               'syntax',
                               'sudo_user',
-                              'sudo'])
+                              'sudo',
+                              'tags',
+                              'skip_tags',
+                              'ssh_extra_args',
+                              ])
         self.options = Options(connection='smart',
                                remote_user='root',
-                               ack_pass=None,
-                               sudo_user=None,
-                               forks=5,
-                               sudo=None,
                                ask_sudo_pass=False,
                                verbosity=5,
+                               ack_pass=None,
                                module_path=None,
-                               become=True if sudo or su else False,
-                               become_method='sudo' if sudo else 'su',
-                               become_user='root',
-                               check=None,
+                               forks=fork,
+                               become=False,
+                               become_method=None,
+                               become_user=None,
+                               check=check,
                                listhosts=None,
                                listtasks=None,
                                listtags=None,
-                               syntax=None)
+                               syntax=None,
+                               sudo_user=None,
+                               sudo=None,
+                               tags=tags,
+                               skip_tags=skip_tags,
+                               ssh_extra_args=None,
+                               )
         if ansible_cfg != None:
             os.environ["ANSIBLE_CONFIG"] = ansible_cfg
         self.variable_manager = VariableManager()
         self.loader = DataLoader()
 
-        self.inventory= Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=self.hostName_list)
+        self.inventory=myInventory(resource=group,loader=self.loader, variable_manager=self.variable_manager, host_list=[]).get_inventory()
+        #self.inventory = Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=host_list)
 
         self.variable_manager.set_inventory(self.inventory)
+
+        self.variable_manager.extra_vars=self.extra_vars
+
 
     # 定义运行的方法和返回值
     def run(self):
         log.info('run')
-        fo = open(self.logfile, "a+")
-        print 'logfile ',self.logfile
+        fo = open(self.logfile, "r+")
+        complex_msg = {}
+        if not os.path.exists(self.playbook_path):
+            code = 1001
+            results = {'playbook': self.playbook_path, 'msg': self.playbook_path + ' playbook is not exist',
+                       'flag': False}
+            complex_msg['code']=code
+            complex_msg['results']=results
+            fo.writelines('[ERROR]>>>>>'+results['msg']+'\n')
+            fo.flush()
+            fo.close()
+            log.error('error:'+str(results))
+            return complex_msg
+            # results=self.playbook_path+'playbook is not existed'
+            # return code,complex_msg,results
+
+        pbex = PlaybookExecutor(playbooks=[self.playbook_path],
+                                inventory=self.inventory,
+                                variable_manager=self.variable_manager,
+                                loader=self.loader,
+                                options=self.options,
+                                passwords=self.passwords)
+
         self.results_callback = mycallback(fo)
-        if self.PRIVILEGE_NAME=="su" or self.PRIVILEGE_NAME=="sudo":
-            self.variable_manager.extra_vars={"ansible_ssh_user":self.login_user , "ansible_ssh_pass":self.login_pwd,"ansible_ssh_port":self.port,"ansible_become":True,
-                                              "ansible_become_method":self.PRIVILEGE_NAME,"ansible_become_user":"root","ansible_become_pass":self.PRIVILEGE_PWD} # 增加外部变量
-        else:
-            self.variable_manager.extra_vars={"ansible_ssh_user":self.login_user , "ansible_ssh_pass":self.login_pwd,"ansible_ssh_port":self.port} # 增加外部变量
-        # 构建pb, 这里很有意思, 新版本运行ad-hoc或playbook都需要构建这样的pb, 只是最后调用play的类不一样
-        # :param name: 任务名,类似playbook中tasks中的name
-        # :param hosts: playbook中的hosts
-        # :param tasks: playbook中的tasks, 其实这就是playbook的语法, 因为tasks的值是个列表,因此可以写入多个task
-        log.info(self.hostName_list)
-        if self.isSudo =='true':
-            play_source = {"name":"Ansible Ad-Hoc","hosts":self.hostName_list,"gather_facts":"no","tasks":[{"action":{"module":self.commandName,"args":self.vars,}}]}
-        else :
-            play_source = {"name":"Ansible Ad-Hoc","hosts":self.hostName_list,"gather_facts":"no","tasks":[{"action":{"module":self.commandName,"args":self.vars,}}]}
-        play = Play().load(play_source, variable_manager=self.variable_manager, loader=self.loader)
-        tqm = None
+        pbex._tqm._stdout_callback = self.results_callback
         try:
             log.info('run start')
-            tqm = TaskQueueManager(
-                inventory=self.inventory,
-                variable_manager=self.variable_manager,
-                loader=self.loader,
-                options=self.options,
-                passwords=None,
-                stdout_callback=self.results_callback,
-                run_tree=False,
-            )
-            result = tqm.run(play)
-            print 'commands result',result
+            code = pbex.run()
             log.info('run end')
-        finally:
+            print code
+        except AnsibleParserError:
+            code = 1002
+            results = {'playbook': self.playbook_path, 'msg': self.playbook_path + ' playbook have syntax error',
+                       'flag': False}
+            complex_msg['code']=code
+            complex_msg['results']=results
+            fo.writelines('[ERROR]>>>>>'+results['msg']+'\n')
+            fo.flush()
             fo.close()
-            if tqm is not None:
-                tqm.cleanup()
+            log.error('error:'+str(results))
+            return complex_msg
+        else:
+            pass
+        finally:
+            pass
 
+        if self.results_callback.status_no_hosts:
+            code = 1003
+            results = {'playbook': self.playbook_path, 'msg': self.results_callback.status_no_hosts, 'flag': False,
+                       'executed': False}
+            complex_msg['code']=code
+            complex_msg['results']=results
+            fo.close()
+            log.error('error:'+str(results))
+            return complex_msg
+
+        complex_msg['code']=1000
+        complex_msg['results']=''
+        fo.close()
+        log.info(str(complex_msg))
+        return complex_msg
     def get_result(self):
         log.info('get_result start')
         self.result_all = {'code':1000,'recap':self.results_callback.recap,'no_host_matched':self.results_callback.status_no_hosts,'success': {}, 'fail': {}, 'unreachable': {},'skipped':{}}
         # print result_all
         # print dir(self.results_callback)
         for host, result in self.results_callback.host_ok.items():
-            self.result_all['success'][host] = result._result['stdout_lines'] if result._result.has_key('stdout_lines') else  result._result
+            self.result_all['success'][host] = result._result
 
         for host, result in self.results_callback.host_failed.items():
             pass
-            self.result_all['fail'][host] = result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result
-
+            self.result_all['fail'][host] = result._result
         for host, result in self.results_callback.host_skipped.items():
             pass
             self.result_all['skipped'][host] = result._result
         for host, result in self.results_callback.host_unreachable.items():
             #self.result_all['unreachable'][host] = result._result['msg']
-            self.result_all['unreachable'][host] = result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result
+            self.result_all['unreachable'][host] = result._result
 
         for i in self.result_all['success'].keys():
             print i, self.result_all['success'][i]
-
+        print self.result_all['fail']
+        print self.result_all['unreachable']
         log.info('result: '+str(self.result_all))
-        log.info('get_result start')
+        log.info('get_result end')
         return self.result_all
 
 
