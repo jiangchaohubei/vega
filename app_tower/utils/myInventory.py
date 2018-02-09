@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf8 -*-
-from ansible.inventory import Inventory
+#from ansible.inventory import Inventory
+from ansible.inventory.manager import InventoryManager
+
 from ansible.inventory.group import Group
 from ansible.inventory.host import Host
 
-class myInventory(Inventory):
+class myInventory(InventoryManager):
     """
     this is my ansible inventory object.
     """
@@ -31,7 +33,7 @@ class myInventory(Inventory):
         #         'vars': {'anisble_ssh_pass': 'z8xFC9l~', 'ansible_ssh_user': 'root'}
         #     }
         # }
-        self.inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list=host_list)
+        self.inventory = InventoryManager(loader=loader, sources=host_list)
 
 
     def my_add_group(self, hosts, groupname, groupvars=None):

@@ -8,14 +8,19 @@ import json
 from collections import namedtuple
 
 from app_tower.utils.myInventory import myInventory
+#from ansible.vars import VariableManager
+from ansible.vars.manager import VariableManager
+from ansible.inventory.manager import InventoryManager
 
-from ansible.vars import VariableManager
+
 from ansible.parsing.dataloader import DataLoader
 from ansible.executor.playbook_executor import PlaybookExecutor
 from ansible.plugins.callback import CallbackBase
 from ansible.errors import AnsibleParserError
 
 from ansible import constants as C
+
+
 
 import logging
 log = logging.getLogger("playbook_run") # 为loggers中定义的名称
