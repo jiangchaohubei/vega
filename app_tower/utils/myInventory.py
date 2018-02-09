@@ -4,6 +4,7 @@ from ansible.inventory import Inventory
 from ansible.inventory.group import Group
 from ansible.inventory.host import Host
 
+
 class myInventory(Inventory):
     """
     this is my ansible inventory object.
