@@ -6,9 +6,14 @@
 import os
 import json
 from collections import namedtuple
-from ansible.inventory import Inventory
 
-from ansible.vars import VariableManager
+
+# from ansible.inventory import Inventory
+# from ansible.vars import VariableManager
+from ansible.vars.manager import VariableManager
+from ansible.inventory.manager import InventoryManager
+
+
 from ansible.parsing.dataloader import DataLoader
 from ansible.playbook.play import Play
 from ansible.executor.task_queue_manager import TaskQueueManager
@@ -266,11 +271,11 @@ class my_commands_play():
                                syntax=None)
         if ansible_cfg != None:
             os.environ["ANSIBLE_CONFIG"] = ansible_cfg
-        self.variable_manager = VariableManager()
+
         self.loader = DataLoader()
 
-        self.inventory= Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=self.hostName_list)
-
+        self.inventory= InventoryManager(loader=self.loader, sources=self.hostName_list)
+        self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
         self.variable_manager.set_inventory(self.inventory)
 
     # 定义运行的方法和返回值
