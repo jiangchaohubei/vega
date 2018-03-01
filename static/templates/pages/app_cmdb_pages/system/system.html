@@ -275,10 +275,21 @@
             </div>
             <div class="modal-body">
                 <form id="importForm" enctype="multipart/form-data" method="post">
+                    <div class="row">
+                        <label for="input-b1" class="control-label col-md-2  requiredField " style="height:64px;line-height:50px;text-align:center">选择文件</label>
+                        <input id="inputHostFile" name="inputFile" type="file" class="file controls col-md-8">
 
-                    <label for="input-b1">选择文件</label>
-                    <input id="inputHostFile" name="inputFile"  type="file" class="file">
+                    </div>
+                    <div class="row">
+                        <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">使用权限<span class="asteriskField">*</span> </label>
+                        <div class="controls col-md-8">
 
+                            <select class="form-control " name="credentials" id="import_owner">
+                                <option value="onlyOne" selected>仅自己</option>
+                                <option value="all">所有人</option>
+                            </select>
+                        </div>
+                    </div>
                 </form>
 
             </div>

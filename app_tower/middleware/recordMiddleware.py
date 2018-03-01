@@ -91,8 +91,11 @@ class recordMiddleware(object):
                         OPERATION_DESCRIPTION+="应("+requestUser+")要求查询sudo权限"
                     if OPERATION_ACTION=='searchFile':
                         OPERATION_DESCRIPTION+="应("+requestUser+")要求查询sudoer文件"
-
-                    record=operation_record(NAME=ul['cname'],PERMISSION_NAME=ul['name'],URL=ul['url'],REQUEST=str(request),REQUEST_BODY=str(request.body),RESPONSE_CONTENT=str(response.content),
+                    bodyStr=str(request.body)
+                    for x in str(request.body):
+                        if len(x.encode("utf8"))==4:
+                            bodyStr=''
+                    record=operation_record(NAME=ul['cname'],PERMISSION_NAME=ul['name'],URL=ul['url'],REQUEST=str(request),REQUEST_BODY=bodyStr,RESPONSE_CONTENT=str(response.content),
                                             CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'],OPERATION_IP=OPERATION_IP,OPERATION_PORT=OPERATION_PORT,OPERATION_ACCOUNT=OPERATION_ACCOUNT,
                                             OPERATION_ACTION=OPERATION_ACTION,OPERATION_DESCRIPTION=OPERATION_DESCRIPTION)
                 else :
@@ -100,6 +103,10 @@ class recordMiddleware(object):
                     contentStr=""
                     try:
                         bodyStr=str(request.body)
+                        for x in str(request.body):
+                            if len(x.encode("utf8"))==4:
+                                bodyStr=''
+
                     except RawPostDataException,e:
                         bodyStr=None
                     try:

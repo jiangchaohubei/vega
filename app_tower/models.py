@@ -88,9 +88,9 @@ class T_HOST(models.Model):
     #名字
     NAME=models.CharField(max_length=128)
     #描述
-    DESCRIPTION=models.CharField(max_length=256)
+    DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
     #变量
-    VARIABLES=models.CharField(max_length=512)
+    VARIABLES=models.CharField(max_length=512,null=True,blank=True)
     #1,0    =0不可用
     ENABLED=models.IntegerField(null=True,blank=True)
     #创建时间

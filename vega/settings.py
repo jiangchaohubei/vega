@@ -100,6 +100,7 @@ DATABASES = {
         'PASSWORD': 'root',   #root                                                                                       #DBVega568SQL
         'HOST': 'localhost',
         'PORT': '3306',
+
     },
     # 'innodb': {
     #         'ENGINE': 'django.db.backends.mysql',
@@ -123,7 +124,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-ENVIRONMENT='预览'  #&'现网'
+ENVIRONMENT='阿里云'  #&'预览'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

@@ -538,7 +538,11 @@ function showSaveUserModel () {
             }
             rolesList = data.roles
             for (var i=0;i<rolesList.length;i++){
-                $('#save_role').append("<option  value='" + rolesList[i].fields.name + "'>" + rolesList[i].fields.name + "</option>");
+                if (rolesList[i].fields.name=='运维人员'){
+                    $('#save_role').append("<option  value='" + rolesList[i].fields.name + "' selected>" + rolesList[i].fields.name + "</option>");
+                }else{
+                    $('#save_role').append("<option  value='" + rolesList[i].fields.name + "'>" + rolesList[i].fields.name + "</option>");
+                }
 
             }
 

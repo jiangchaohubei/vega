@@ -12,6 +12,29 @@ Array.prototype.removeByValue = function(val) {
     }
 }
 $(function(){
+    $.ajax({
+        url:"/app_tower/project/init_project_select",
+        type:"POST",
+        data:{
+
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            for (var i=0;i<data.projectList.length;i++){
+                $('#import_owner').append('<option value="'+data.projectList[i].pk+'">'+data.projectList[i].fields.NAME+'</option>')
+            }
+
+        },
+        error: function(data) {
+            console.log('error')
+        }
+
+    })
+
     var oTable_inventories = new TableInit_inventories();
     oTable_inventories.Init();
 
@@ -394,6 +417,7 @@ function downloadExcel(filepath){
 
 function importSystem() {
     var formData = new FormData($( "#importForm" )[0]);
+    formData.append("owner",$('#import_owner').val());
     $.ajax({
             url:"/app_cmdb/system/import",
             type:"POST",

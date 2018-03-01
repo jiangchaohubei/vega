@@ -104,7 +104,7 @@ def project_add(request):
             log.info('add project:'+str(model_to_dict(project)))
             log.info('USERS[]： '+ str(form['USERS']))
             for userId in form['USERS']:
-                if type(userId)==int:
+
                     t_user=User.objects.get(id=int(userId))
                     project_user = T_PROJECT_User_ID(PROJECT_ID=project, User_ID=t_user)
                     project_user.save()
@@ -249,8 +249,8 @@ def project_update(request):
             #批量删除和插入
             project_user_list = list()
             for x in form['USERS']:
-                if type(x)==int:
-                    project_user_list.append(T_PROJECT_User_ID(User_ID=User.objects.get(id=x),PROJECT_ID=project))
+
+                    project_user_list.append(T_PROJECT_User_ID(User_ID=User.objects.get(id=int(x)),PROJECT_ID=project))
             T_PROJECT_User_ID.objects.bulk_create(project_user_list)
 
         response_data['resultCode'] = '0000'

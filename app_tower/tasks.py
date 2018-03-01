@@ -44,12 +44,14 @@ def runCommands2(file,groupid,credentialsid,commandName,vars,userid,username,hos
         result=com.run()
         if action=='add':
              if not result['success']=={}:
-                 surecord=sudo_record(IP=hostList[0],CREDENTIALS_ID=credentials,DESCRIPTION=requestDesc,PORT=port,ACCOUNT=ACCOUNT,CREATE_USER_ID=userid,CREATE_USER_NAME=username)
-                 surecord.save()
+                 for host in result['success'].keys():
+                     surecord=sudo_record(IP=host,CREDENTIALS_ID=credentials,DESCRIPTION=requestDesc,PORT=port,ACCOUNT=ACCOUNT,CREATE_USER_ID=userid,CREATE_USER_NAME=username)
+                     surecord.save()
         if  action=='cancel':
             if not result['success']=={}:
-                if sudo_record.objects.filter(IP=hostList[0],ACCOUNT=ACCOUNT):
-                    sudo_record.objects.filter(IP=hostList[0],ACCOUNT=ACCOUNT).delete()
+                for host in result['success'].keys():
+                    if sudo_record.objects.filter(IP=host,ACCOUNT=ACCOUNT):
+                        sudo_record.objects.filter(IP=host,ACCOUNT=ACCOUNT).delete()
         t_command_event=T_COMMAND_EVENT(GROUP_ID=groupid,CREDENTIALS_ID=credentialsid,LOGFILE=file,COMMAND_NAME=commandName,COMMAND_VARS=vars,CREATE_USER_ID=userid,CREATE_USER_NAME=username,RESULT=str(result))
         t_command_event.save()
         log.info('celery runCommands2 end')
@@ -104,7 +106,7 @@ def run_playbook(file,jobsid,hostList=None):
     log.info('result>>>>'+str(result))
     if result['code'] in [1001,1002,1003]:
         jobs.STATUS='FAILURE'
-    elif result['skipped'] or result['fail'] or result['unreachable'] or result['success']=={}:
+    elif  result['fail'] or result['unreachable'] or result['success']=={}:
         jobs.STATUS='FAILURE'
     else:
         jobs.STATUS='SUCCESS'
@@ -199,7 +201,7 @@ def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,e
     log.info('result>>>>'+str(result))
     if result['code'] in [1001,1002,1003]:
         tool_event.STATUS='FAILURE'
-    elif result['skipped'] or result['fail'] or result['unreachable'] or result['success']=={}:
+    elif  result['fail'] or result['unreachable'] or result['success']=={}:
         tool_event.STATUS='FAILURE'
     else:
         tool_event.STATUS='SUCCESS'
@@ -248,7 +250,7 @@ def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=
     log.info('result>>>>'+str(result))
     if result['code'] in [1001,1002,1003]:
         tool_event.STATUS='FAILURE'
-    elif result['skipped'] or result['fail'] or result['unreachable'] or result['success']=={}:
+    elif  result['fail'] or result['unreachable'] or result['success']=={}:
         tool_event.STATUS='FAILURE'
     else:
         tool_event.STATUS='SUCCESS'
