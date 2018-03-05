@@ -32,7 +32,7 @@
             	$this.wrap($wraper);
 
             	$button=$("<span class=\"input-group-addon pointer\"><i class=\"glyphicon  glyphicon-picture\"></i></span>");
-            	$this.after($button);
+            	$this.before($button);
             	(function(ele){
 	            	$button.click(function(){
 			       		createUI(ele);
