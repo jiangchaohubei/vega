@@ -27,8 +27,11 @@
         }, options);
         return this.each( function() {
         	element=this;
-
-            if(!settings.buttonOnly && $(this).data("iconPicker")==undefined || refresh){
+        	if (refresh){
+                $(".icon-list",$popup).html('');
+                showList(element,icons,newIcons);
+			}
+            if(!settings.buttonOnly && $(this).data("iconPicker")==undefined ){
             	$this=$(this).addClass("form-control");
             	$wraper=$("<div/>",{class:"input-group"});
             	$this.wrap($wraper);
