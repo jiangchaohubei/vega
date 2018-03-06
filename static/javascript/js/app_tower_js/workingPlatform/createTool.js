@@ -238,7 +238,9 @@ function showImgUploadModal() {
     //指定上传controller访问地址
     var path = '/app_tower/workingPlatform/icon_upload';
     //页面初始化加载initFileInput()方法传入ID名和上传地址
-    initFileInput("itemImagers",path);
+    var oFileInput = new FileInput();
+    oFileInput.Init("itemImagers", path);
+    //initFileInput("itemImagers",path);
     $('#imgUploadModal').modal('show');
 }
 
@@ -279,6 +281,37 @@ function initFileInput(ctrlName, uploadUrl) {
     });
 }
 
+//初始化fileinput
+var FileInput = function () {
+    var oFile = new Object();
+//初始化fileinput控件（第一次初始化）
+    oFile.Init = function(ctrlName, uploadUrl) {
+        var control = $('#' + ctrlName);
+        //初始化上传控件的样式
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            showUpload: true, //是否显示上传按钮
+            autoReplace: true,
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 10, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        });
+        //导入文件上传完成之后的事件
+        $("#itemImagers").on("fileuploaded", function (event, data, previewId, index) {
+            var failCount = data.response.failCount;
+            var susccessCount = data.response.susccessCount;
+            var totalCount = data.response.totalCount;
+            console.log(susccessCount)
 
+        });
+
+
+    }
+    return oFile;
+};
 
 //@ sourceURL=createTool.js
