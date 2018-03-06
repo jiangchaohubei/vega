@@ -114,7 +114,7 @@
 	        function showList($element,arrLis,newIcons){
 	        	$ul=$("<ul>");
                 for (var i in newIcons) {
-                    $ul.append("<li><a href=\"#\" title="+newIcons[i]+"><img src='/icons/img/"+newIcons[i]+"' style='width:14px;height:16px'> </a></li>");
+                    $ul.append("<li><a href=\"#\" title="+newIcons[i]+"><img src='/icons/img/"+newIcons[i]+"' style='width:14px;height:14px'> </a></li>");
                 };
 	        	for (var i in arrLis) {
 	        		$ul.append("<li><a href=\"#\" title=\"glyphicon  glyphicon-"+arrLis[i]+"\"><span class=\"glyphicon  glyphicon-"+arrLis[i]+"\"></span></a></li>");
