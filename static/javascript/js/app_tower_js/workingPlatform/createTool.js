@@ -322,7 +322,7 @@ function iconPickerFresh() {
                 for (var i=0;i<data.imgList.length;i++){
                     newIcons.push(data.imgList[i].fields.NAME);
                 }
-                $('#tool_icon').iconPicker({newIcons:newIcons});
+                $('#tool_icon').iconPicker({newIcons:newIcons,refresh:true});
 
                 return;
             }
