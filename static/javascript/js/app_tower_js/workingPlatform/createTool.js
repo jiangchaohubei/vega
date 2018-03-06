@@ -250,6 +250,14 @@ function initFileInput(ctrlName, uploadUrl) {
         uploadUrl: uploadUrl, //上传的地址
         enctype: 'multipart/form-data',
         allowedFileExtensions : ['jpg', 'png','bmp','jpeg'],//接收的文件后缀
+        showUpload: true, //是否显示上传按钮
+        autoReplace: true,
+        browseClass: "btn btn-primary", //按钮样式
+        maxFileCount: 10, //表示允许同时上传的最大文件个数
+
+        validateInitialCount:true,
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
         // showUpload: false, //是否显示上传按钮
         // showPreview: true,              //展前预览
         // showCaption: false,//是否显示标题

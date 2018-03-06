@@ -202,7 +202,7 @@ def icon_upload(request):
         log.error(traceback.print_exc())
         response_data['resultCode']='0001'
         response_data['resultDesc']=ex.__str__()
-    log.info('project_add end')
+    log.info('icon_upload end')
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 #description:添加工具
