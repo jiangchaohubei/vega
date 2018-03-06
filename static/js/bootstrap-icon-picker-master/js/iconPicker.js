@@ -117,14 +117,14 @@
                     $ul.append("<li><a href=\"#\" title="+newIcons[i]+"><img src='/icons/img/"+newIcons[i]+"' style='width:14px;height:16px'> </a></li>");
                 };
 	        	for (var i in arrLis) {
-	        		$ul.append("<li><a href=\"#\" title="+arrLis[i]+"><span class=\"glyphicon  glyphicon-"+arrLis[i]+"\"></span></a></li>");
+	        		$ul.append("<li><a href=\"#\" title=\"glyphicon  glyphicon-"+arrLis[i]+"\"><span class=\"glyphicon  glyphicon-"+arrLis[i]+"\"></span></a></li>");
 	        	};
 
 	        	$(".icon-list",$popup).html($ul);
 	        	$(".icon-list li a",$popup).click(function(e){
 	        		e.preventDefault();
 	        		var title=$(this).attr("title");
-	        		$element.val("glyphicon glyphicon-"+title);
+	        		$element.val(title);
 	        		removeInstance();
 	        	});
 	        }

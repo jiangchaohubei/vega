@@ -74,13 +74,29 @@ def toolcreate_init(request):
     tooltypeList = serializers.serialize('json', tooltype, ensure_ascii=False)
     project=T_PROJECT.objects.check_own(request)
     projectList = serializers.serialize('json', project, ensure_ascii=False)
+    imgs=IMG.objects.all()
+    imgList = serializers.serialize('json', imgs, ensure_ascii=False)
 
     true = True
     false=False
     null = None
     #log.info('userList：'+userList)
     log.info('toolcreate_init end')
-    return HttpResponse(json.dumps({'resultCode':'0000','tooltypeList': eval(tooltypeList),'projectList': eval(projectList)}))
+    return HttpResponse(json.dumps({'resultCode':'0000','tooltypeList': eval(tooltypeList),'projectList': eval(projectList),'imgList': eval(imgList)}))
+
+#初始化工具创建页面
+def icons_init(request):
+    log.info('icons_init start')
+    imgs=IMG.objects.all()
+    imgList = serializers.serialize('json', imgs, ensure_ascii=False)
+
+    true = True
+    false=False
+    null = None
+    #log.info('userList：'+userList)
+    log.info('icons_init end')
+    return HttpResponse(json.dumps({'resultCode':'0000','imgList': eval(imgList)}))
+
 
 #初始化工具明细
 def toolDetail_init(request):

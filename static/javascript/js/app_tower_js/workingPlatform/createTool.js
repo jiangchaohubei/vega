@@ -5,7 +5,7 @@
 $(function () {
     //textarea全屏,图标插件
     $('#tool_scriptCode').textareafullscreen();
-    $('#tool_icon').iconPicker({newIcons:['1476694422.jpg']});
+
     $.ajax({
         url:"/app_tower/workingPlatform/toolcreate_init",
         type:"POST",
@@ -33,6 +33,11 @@ $(function () {
                 for (var i=0;i<data.projectList.length;i++){
                     $('#tool_owner').append('<option value="'+data.projectList[i].pk+'">'+data.projectList[i].fields.NAME+'</option>')
                 }
+                var newIcons=[]
+                for (var i=0;i<data.imgList.length;i++){
+                    newIcons.push(data.imgList[i].fields.NAME);
+                }
+                $('#tool_icon').iconPicker({newIcons:newIcons});
 
                 return;
             }
@@ -280,7 +285,7 @@ var FileInput = function () {
             }
             if(data.resultCode=="0000"){
                 opt_commons.dialogShow("成功信息","添加成功！",2000);
-
+                iconPickerFresh();
                 return;
             }
 
@@ -290,5 +295,47 @@ var FileInput = function () {
     }
     return oFile;
 };
+//刷新图标选择
+function iconPickerFresh() {
+    $.ajax({
+        url:"/app_tower/workingPlatform/icons_init",
+        type:"POST",
+        data:{
+
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+
+                var newIcons=[]
+                for (var i=0;i<data.imgList.length;i++){
+                    newIcons.push(data.imgList[i].fields.NAME);
+                }
+                $('#tool_icon').iconPicker({newIcons:newIcons});
+
+                return;
+            }
+        },
+
+        error:function(data){
+            opt_commons.dialogShow("错误信息","error",2000);
+
+
+        },
+    });
+}
+
 
 //@ sourceURL=createTool.js
