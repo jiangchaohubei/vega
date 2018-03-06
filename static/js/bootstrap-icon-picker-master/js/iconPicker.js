@@ -17,7 +17,7 @@
 (function($) {
 
     $.fn.iconPicker = function( options ) {
-        this.newIcons=options.newIcons;
+        newIcons=options.newIcons;
         var refresh=options.refresh;
         var mouseOver=false;
         var $popup=null;
@@ -29,7 +29,7 @@
         	element=this;
         	if (refresh){
                 $(".icon-list",$popup).html('');
-                showList(element,icons,this.newIcons);
+                showList(element,icons,newIcons);
 			}
             if(!settings.buttonOnly && $(this).data("iconPicker")==undefined ){
             	$this=$(this).addClass("form-control");
@@ -41,7 +41,7 @@
             	(function(ele){
 	            	$button.click(function(){
 			       		createUI(ele);
-			       		showList(ele,icons,this.newIcons);
+			       		showList(ele,icons,newIcons);
 	            	});
 	            })($this);
 
