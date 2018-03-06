@@ -5,7 +5,7 @@
 $(function () {
     //textarea全屏,图标插件
     $('#tool_scriptCode').textareafullscreen();
-    $('#tool_icon').iconPicker();
+    $('#tool_icon').iconPicker({newIcons:['1476694422.jpg']});
     $.ajax({
         url:"/app_tower/workingPlatform/toolcreate_init",
         type:"POST",
@@ -237,48 +237,11 @@ function addTool() {
 function showImgUploadModal() {
     //指定上传controller访问地址
     var path = '/app_tower/workingPlatform/icon_upload';
-    //页面初始化加载initFileInput()方法传入ID名和上传地址
+    //页面初始化加载
     var oFileInput = new FileInput();
     oFileInput.Init("itemImagers", path);
-    //initFileInput("itemImagers",path);
+
     $('#imgUploadModal').modal('show');
-}
-
-//初始化fileinput控件（第一次初始化）
-function initFileInput(ctrlName, uploadUrl) {
-    var control = $('#' + ctrlName);
-    control.fileinput({
-        language: 'zh', //设置语言
-        uploadUrl: uploadUrl, //上传的地址
-        enctype: 'multipart/form-data',
-        allowedFileExtensions : ['jpg', 'png','bmp','jpeg'],//接收的文件后缀
-        showUpload: true, //是否显示上传按钮
-        autoReplace: true,
-        browseClass: "btn btn-primary", //按钮样式
-        maxFileCount: 10, //表示允许同时上传的最大文件个数
-
-        validateInitialCount:true,
-        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        // showUpload: false, //是否显示上传按钮
-        // showPreview: true,              //展前预览
-        // showCaption: false,//是否显示标题
-        // maxFileSize : 10000,//上传文件最大的尺寸
-        // maxFilesNum : 10,//
-        // dropZoneEnabled: false,//是否显示拖拽区域
-        // browseClass: "btn btn-primary", //按钮样式
-        // uploadAsync: false,
-        // layoutTemplates :{
-        //     // actionDelete:'', //去除上传预览的缩略图中的删除图标
-        //     actionUpload:'',//去除上传预览缩略图中的上传图片；
-        //     actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
-        // },
-    }).on("fileuploaded", function(event, data) {
-        //上传图片后的回调函数，可以在这做一些处理
-        var failCount = data.response.failCount;
-        var susccessCount = data.response.susccessCount;
-        var totalCount = data.response.totalCount;
-    });
 }
 
 //初始化fileinput
@@ -291,6 +254,7 @@ var FileInput = function () {
         control.fileinput({
             language: 'zh', //设置语言
             uploadUrl: uploadUrl, //上传的地址
+            allowedFileExtensions : ['jpg', 'png','bmp','jpeg'],//接收的文件后缀
             showUpload: true, //是否显示上传按钮
             autoReplace: true,
             browseClass: "btn btn-primary", //按钮样式
@@ -302,10 +266,23 @@ var FileInput = function () {
         });
         //导入文件上传完成之后的事件
         $("#itemImagers").on("fileuploaded", function (event, data, previewId, index) {
-            var failCount = data.response.failCount;
-            var susccessCount = data.response.susccessCount;
-            var totalCount = data.response.totalCount;
-            console.log(susccessCount)
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+                opt_commons.dialogShow("成功信息","添加成功！",2000);
+
+                return;
+            }
 
         });
 
