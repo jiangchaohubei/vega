@@ -270,19 +270,19 @@ var FileInput = function () {
             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
         })
         .on("fileuploaded", function (event, data, previewId, index) {
-            if (data.resultCode=="0087"){
-                alert(data.resultDesc);
+            if (data.response.resultCode=="0087"){
+                alert(data.response.resultDesc);
                 top.location.href ='/login'
             }
-            if(data.resultCode=="0057"){
-                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+            if(data.response.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.response.resultDesc,2000);
                 return;
             }
-            if(data.resultCode=="0001"){
-                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+            if(data.response.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.response.resultDesc,2000);
                 return;
             }
-            if(data.resultCode=="0000"){
+            if(data.response.resultCode=="0000"){
                 opt_commons.dialogShow("成功信息","添加成功！",2000);
                 iconPickerFresh();
                 return;
