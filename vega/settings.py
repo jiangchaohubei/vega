@@ -96,8 +96,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vega',
-        'USER': 'vegauser',  #root                                                                                             #vegauser
-        'PASSWORD': 'DBVega568SQL',   #root                                                                                       #DBVega568SQL
+        'USER': 'root',  #root                                                                                             #vegauser
+        'PASSWORD': 'root',   #root                                                                                       #DBVega568SQL
         'HOST': 'localhost',
         'PORT': '3306',
 
@@ -124,7 +124,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-ENVIRONMENT='现网'  #&'预览'
+ENVIRONMENT='阿里云'  #&'预览'
 VERSIONS_PATH='/opt/versions'
 
 #图片文件夹
