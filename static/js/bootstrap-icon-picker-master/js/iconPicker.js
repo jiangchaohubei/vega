@@ -27,11 +27,8 @@
         }, options);
         return this.each( function() {
         	element=this;
-        	if (refresh){
-                $(".icon-list",$popup).html('');
-                showList(ele,icons,newIcons);
-			}
-            if(!settings.buttonOnly && $(this).data("iconPicker")==undefined ){
+
+            if(!settings.buttonOnly && $(this).data("iconPicker")==undefined || refresh){
             	$this=$(this).addClass("form-control");
             	$wraper=$("<div/>",{class:"input-group"});
             	$this.wrap($wraper);
