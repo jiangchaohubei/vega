@@ -234,6 +234,31 @@ function addTool() {
 
 }
 
+function showImgUploadModal() {
+    //指定上传controller访问地址
+    var path = '/app_tower/workingPlatform/icon_upload';
+    //页面初始化加载initFileInput()方法传入ID名和上传地址
+    initFileInput("itemImagers",path);
+    $('#imgUploadModal').modal('show');
+}
+
+//初始化fileinput控件（第一次初始化）
+function initFileInput(ctrlName, uploadUrl) {
+    var control = $('#' + ctrlName);
+    control.fileinput({
+        language: 'zh', //设置语言
+        uploadUrl: uploadUrl, //上传的地址
+        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+        //uploadAsync: false, //插件支持同步和异步
+        showUpload: true, //是否显示上传按钮
+    }).on("fileuploaded", function(event, data) {
+        //上传图片后的回调函数，可以在这做一些处理
+        var failCount = data.response.failCount;
+        var susccessCount = data.response.susccessCount;
+        var totalCount = data.response.totalCount;
+    });
+}
+
 
 
 //@ sourceURL=createTool.js

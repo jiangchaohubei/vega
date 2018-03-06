@@ -11,6 +11,7 @@ import traceback
 import os
 from django.core import serializers
 from authority.permission import PermissionVerify
+from vega.settings import VERSIONS_PATH
 import logging
 log = logging.getLogger("version")
 
@@ -38,7 +39,7 @@ def version_add(request):
         #创建存储文件夹
         software=T_SOFTWARE.objects.get(id=int(softwareId))
         #rote_path="C:\Users\PC\Desktop\\versions"
-        rote_path="/opt/versions"
+        rote_path=VERSIONS_PATH
         if not os.path.exists(rote_path):
             os.makedirs(rote_path)
         systemName=software.MODULE_ID.SYSTEM_ID.NAME

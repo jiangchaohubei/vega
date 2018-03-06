@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf8 -*-
-from app_tower.models import T_TOOL,T_TOOL_INPUT,T_TOOL_OUTPUT,T_TOOLTYPE,T_PROJECT,T_TOOL_User_ID,User,T_LOGIN_CREDENTIALS,T_TOOL_EVENT
+from app_tower.models import T_TOOL,T_TOOL_INPUT,T_TOOL_OUTPUT,T_TOOLTYPE,T_PROJECT,T_TOOL_User_ID,User,T_LOGIN_CREDENTIALS,T_TOOL_EVENT,IMG
 from django.forms.models import model_to_dict
 from django.http import HttpRequest, HttpResponse
 from django.http import JsonResponse
@@ -182,6 +182,28 @@ def runTool_init(request):
     log.info('toolDetail_init end')
     print str(model_to_dict(tool))
     return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'credentialsList': eval(credentialsList)}))
+
+def icon_upload(request):
+    log.info('icon_upload start')
+    log.info("request: "+str(request))
+    response_data={}
+    try:
+        new_img = IMG(
+            IMG=request.FILES.get('itemImagers'),
+            NAME = request.FILES.get('itemImagers').name
+        )
+        new_img.save()
+        response_data['resultCode']='0000'
+        response_data['resultDesc']=request.FILES.get('itemImagers').name+'上传成功！'
+    except Exception, ex:
+        print Exception, ex
+        traceback.print_exc()
+        log.error(ex.__str__())
+        log.error(traceback.print_exc())
+        response_data['resultCode']='0001'
+        response_data['resultDesc']=ex.__str__()
+    log.info('project_add end')
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 
 #description:添加工具
 #params: request.POST {"name":"","type":"","language":"","scriptCode":"","des":"","inputParam":"[]","outputParam":"[]","owner":""}

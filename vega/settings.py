@@ -96,8 +96,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vega',
-        'USER': 'root',  #root                                                                                             #vegauser
-        'PASSWORD': 'root',   #root                                                                                       #DBVega568SQL
+        'USER': 'vegauser',  #root                                                                                             #vegauser
+        'PASSWORD': 'DBVega568SQL',   #root                                                                                       #DBVega568SQL
         'HOST': 'localhost',
         'PORT': '3306',
 
@@ -124,10 +124,12 @@ USE_L10N = True
 
 USE_TZ = False
 
-ENVIRONMENT='阿里云'  #&'预览'
+ENVIRONMENT='现网'  #&'预览'
+VERSIONS_PATH='/opt/versions'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+#图片文件夹
+MEDIA_ROOT = '/opt/images'     #设置静态文件路径为主目录下的media文件夹
+MEDIA_URL = '/icon/'                                                 #url映射
 
 STATIC_URL = BASE_DIR+'/static/'
 

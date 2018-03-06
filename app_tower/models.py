@@ -779,6 +779,9 @@ class T_VERSION(models.Model):
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
 
 
+class IMG(models.Model):
+    IMG = models.ImageField(upload_to='img')
+    NAME = models.CharField(max_length=64)
 
 #工具
 class T_TOOL(models.Model):

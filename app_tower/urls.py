@@ -110,6 +110,7 @@ urlpatterns = patterns('inventories',
 
 
                        url(r'^workingPlatform/tool_add$', workingPlatform.tool_add),
+                       url(r'^workingPlatform/icon_upload$', workingPlatform.icon_upload),
                        url(r'^workingPlatform/tool_update$', workingPlatform.tool_update),
                        url(r'^workingPlatform/tool_delete$', workingPlatform.tool_delete),
                        url(r'^workingPlatform/tool_select$', workingPlatform.tool_select),

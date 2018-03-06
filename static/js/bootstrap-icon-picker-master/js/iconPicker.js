@@ -57,6 +57,7 @@
 						            <li><a href="javascript:;" class="btn" data-dir="-1"><span class="glyphicon  glyphicon-fast-backward"></span></a></li> \
 						            <li><input type="text" class="ip-search glyphicon  glyphicon-search" placeholder="Search" /></li> \
 						            <li><a href="javascript:;"  class="btn" data-dir="1"><span class="glyphicon  glyphicon-fast-forward"></span></a></li> \
+						            <li><a href="javascript:;" onclick="showImgUploadModal()"   ><span class="glyphicon  glyphicon-upload"></span></a></li> \
 						          </ul> \
 						      </div> \
 						     <div class="icon-list"> </div> \
@@ -84,6 +85,7 @@
 	                  start_index=180;
 	                }
 	            });
+
 	        	
 	        	$('.ip-control .ip-search',$popup).on("keyup",function(e){
 	                if(lastVal!=$(this).val()){
