@@ -250,19 +250,19 @@ function initFileInput(ctrlName, uploadUrl) {
         uploadUrl: uploadUrl, //上传的地址
         enctype: 'multipart/form-data',
         allowedFileExtensions : ['jpg', 'png','bmp','jpeg'],//接收的文件后缀
-        showUpload: false, //是否显示上传按钮
-        showPreview: true,              //展前预览
-        showCaption: false,//是否显示标题
-        maxFileSize : 10000,//上传文件最大的尺寸
-        maxFilesNum : 10,//
-        dropZoneEnabled: false,//是否显示拖拽区域
-        browseClass: "btn btn-primary", //按钮样式
-        uploadAsync: false,
-        layoutTemplates :{
-            // actionDelete:'', //去除上传预览的缩略图中的删除图标
-            actionUpload:'',//去除上传预览缩略图中的上传图片；
-            actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
-        },
+        // showUpload: false, //是否显示上传按钮
+        // showPreview: true,              //展前预览
+        // showCaption: false,//是否显示标题
+        // maxFileSize : 10000,//上传文件最大的尺寸
+        // maxFilesNum : 10,//
+        // dropZoneEnabled: false,//是否显示拖拽区域
+        // browseClass: "btn btn-primary", //按钮样式
+        // uploadAsync: false,
+        // layoutTemplates :{
+        //     // actionDelete:'', //去除上传预览的缩略图中的删除图标
+        //     actionUpload:'',//去除上传预览缩略图中的上传图片；
+        //     actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+        // },
     }).on("fileuploaded", function(event, data) {
         //上传图片后的回调函数，可以在这做一些处理
         var failCount = data.response.failCount;
