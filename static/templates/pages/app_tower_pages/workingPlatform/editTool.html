@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="/static/js/textareafullscreen/textareafullscreen.css">
     <!-- 图标插件-->
     <link rel="stylesheet" href="/static/js/bootstrap-icon-picker-master/css/icon-picker.css">
+    <!-- fileinput css-->
+    <link rel="stylesheet" href="/static/js/bootstrap-fileinput/css/fileinput.min.css">
     <style>
         .form-preview {
             margin-bottom: 15px;
@@ -392,8 +394,40 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div><!-- /.modal -->
+
+<!--图标上传模态框-->
+<div class="modal fade" id="imgUploadModal">
+    <div class="modal-dialog">
+        <div class="modal-content message_align" style="width: 800px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" title="上传图标">上传图标</h4>
+            </div>
+            <div class="modal-body" style="padding: 25px">
+
+                <div class="form-group">
+                    <!--<input id="itemImagers" name="itemImagers" type="file" multiple class="file" >-->
+                    <input type="file" name="itemImagers" id="itemImagers" multiple class="file-loading" />
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div><!-- /.modal -->
+
+
 <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
 <script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
+<!--bootstrap fileinput js-->
+<script src="/static/js/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/static/js/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
+
 <script src="/static/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/static/javascript/bootbox.js" type="text/javascript"></script>
 

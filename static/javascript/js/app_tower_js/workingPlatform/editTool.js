@@ -4,7 +4,7 @@
 var INPUTPARAM=[]
 var OUTPUTPARAM=[]
 function  onload_editTool() {
-    $('#tool_icon').iconPicker();
+
     var C1 = window.location.href.split("?")[1];
     var C2 = C1.split("&");
     var toolid = C2[0].split("=")[1]
@@ -36,6 +36,11 @@ function  onload_editTool() {
                 return;
             }
             if(data.resultCode=="0000"){
+                var newIcons=[]
+                for (var i=0;i<data.imgList.length;i++){
+                    newIcons.push(data.imgList[i].fields.NAME);
+                }
+                $('#tool_icon').iconPicker({newIcons:newIcons});
                 $('#tool_name').val(data.tool.NAME)
                 $('#tool_icon').val(data.tool.ICON);
                 $("#tool_dangerlevel input[name='tool-radio'][value='"+data.tool.DANGER_LEVEL+"']").prop("checked",true);
@@ -322,6 +327,105 @@ function updateTool() {
 
 
 }
+
+
+function showImgUploadModal() {
+    //指定上传controller访问地址
+    var path = '/app_tower/workingPlatform/icon_upload';
+    //页面初始化加载
+    var oFileInput = new FileInput();
+    oFileInput.Init("itemImagers", path);
+
+    $('#imgUploadModal').modal('show');
+}
+
+//初始化fileinput
+var FileInput = function () {
+    var oFile = new Object();
+//初始化fileinput控件（第一次初始化）
+    oFile.Init = function(ctrlName, uploadUrl) {
+        var control = $('#' + ctrlName);
+        //初始化上传控件的样式
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            allowedFileExtensions : ['jpg', 'png','bmp','jpeg'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            autoReplace: true,
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 10, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        })
+            .on("fileuploaded", function (event, data, previewId, index) {
+                if (data.response.resultCode=="0087"){
+                    alert(data.response.resultDesc);
+                    top.location.href ='/login'
+                }
+                if(data.response.resultCode=="0057"){
+                    opt_commons.dialogShow("提示信息",data.response.resultDesc,2000);
+                    return;
+                }
+                if(data.response.resultCode=="0001"){
+                    opt_commons.dialogShow("提示信息",data.response.resultDesc,2000);
+                    return;
+                }
+                if(data.response.resultCode=="0000"){
+                    opt_commons.dialogShow("成功信息","添加成功！",2000);
+                    iconPickerFresh();
+                    return;
+                }
+
+            });
+
+
+    }
+    return oFile;
+};
+//刷新图标选择
+function iconPickerFresh() {
+    $.ajax({
+        url:"/app_tower/workingPlatform/icons_init",
+        type:"POST",
+        data:{
+
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+
+                var newIcons=[]
+                for (var i=0;i<data.imgList.length;i++){
+                    newIcons.push(data.imgList[i].fields.NAME);
+                }
+                $('#tool_icon').iconPicker({newIcons:newIcons,refresh:true});
+
+                return;
+            }
+        },
+
+        error:function(data){
+            opt_commons.dialogShow("错误信息","error",2000);
+
+
+        },
+    });
+}
+
 
 
 

@@ -48,11 +48,20 @@ function onload_toolshop() {
                             hasImport=true
                         }
                     }
+                    var a=/^glyphicon glyphicon-/;
+                    var iconHtml=''
+                    var b=data.tools_audited[j].fields.ICON;
+
+                    if (a.test(b)){
+                        iconHtml='<i class="'+b+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'
+                    }else{
+                        iconHtml="<img src='/icons/img/"+b+"' style='width:32px;height:32px;color:'"+iconColor+"'>"
+                    }
                     if (hasImport){//存在
                         htmlstr_audited+='<div class="tool-item" id="'+toolid+'">'+
                             '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
                             '<div class="tool-item-icon">'+
-                            '<i class="'+data.tools_audited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
+                            iconHtml+
                             '</div>'+
                             '<div class="tool-item-name">'+data.tools_audited[j].fields.NAME+'</div>'+
                             '</a>'+
@@ -64,7 +73,7 @@ function onload_toolshop() {
                         htmlstr_audited+='<div class="tool-item" id="'+toolid+'">'+
                             '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_audited[j].pk+'&toolname='+data.tools_audited[j].fields.NAME+'" >'+
                             '<div class="tool-item-icon">'+
-                            '<i class="'+data.tools_audited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
+                            iconHtml+
                             '</div>'+
                             '<div class="tool-item-name">'+data.tools_audited[j].fields.NAME+'</div>'+
                             '</a>'+
@@ -98,11 +107,20 @@ function onload_toolshop() {
                         default:
                             iconColor='green';
                     }
+                    var a=/^glyphicon glyphicon-/;
+                    var iconHtml=''
+                    var b=data.tools_notaudited[j].fields.ICON;
+
+                    if (a.test(b)){
+                        iconHtml='<i class="'+b+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'
+                    }else{
+                        iconHtml="<img src='/icons/img/"+b+"' style='width:32px;height:32px;color:'"+iconColor+"'>"
+                    }
                     var toolid="toolid"+data.tools_notaudited[j].pk
                     htmlstr_notaudited+='<div class="tool-item" id="'+toolid+'">'+
                         '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_notaudited[j].pk+'&toolname='+data.tools_notaudited[j].fields.NAME+'" >'+
                         '<div class="tool-item-icon">'+
-                        '<i class="'+data.tools_notaudited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
+                        iconHtml+
                         '</div>'+
                         '<div class="tool-item-name">'+data.tools_notaudited[j].fields.NAME+'</div>'+
                         '</a>'+
@@ -133,11 +151,20 @@ function onload_toolshop() {
                         default:
                             iconColor='green';
                     }
+                    var a=/^glyphicon glyphicon-/;
+                    var iconHtml=''
+                    var b=data.tools_failaudited[j].fields.ICON;
+
+                    if (a.test(b)){
+                        iconHtml='<i class="'+b+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'
+                    }else{
+                        iconHtml="<img src='/icons/img/"+b+"' style='width:32px;height:32px;color:'"+iconColor+"'>"
+                    }
                     var toolid="toolid"+data.tools_failaudited[j].pk
                     htmlstr_failaudited+='<div class="tool-item" id="'+toolid+'">'+
                         '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+data.tools_failaudited[j].pk+'&toolname='+data.tools_failaudited[j].fields.NAME+'" >'+
                         '<div class="tool-item-icon">'+
-                        '<i class="'+data.tools_failaudited[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
+                        iconHtml+
                         '</div>'+
                         '<div class="tool-item-name">'+data.tools_failaudited[j].fields.NAME+'</div>'+
                         '</a>'+

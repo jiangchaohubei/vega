@@ -50,7 +50,16 @@ function onload_toolAudit() {
                     default:
                         iconColor='green';
                 }
-                $('#toolIcon').html('<i class="'+data.tool.ICON+'" style="font-size:xx-large;line-height: 100px;height: 100px;color:'+iconColor+'" aria-hidden="true"></i>')
+                var a=/^glyphicon glyphicon-/;
+                var iconHtml=''
+                var b=data.tool.ICON;
+
+                if (a.test(b)){
+                    iconHtml='<i class="'+b+'" style="font-size:xx-large;line-height: 100px;height: 100px;color:'+iconColor+'" aria-hidden="true"></i>'
+                }else{
+                    iconHtml="<img src='/icons/img/"+b+"' style='width:32px;height:32px;line-height: 100px;height: 100px;color:'"+iconColor+"'>"
+                }
+                $('#toolIcon').html(iconHtml)
                 $('#tool_creater').html(data.tool.CREATE_USER_NAME)
                 $('#tool_desc').html(data.tool.DESCRIPTION)
                 $('#tool_type').html(data.tool.ARGS1)

@@ -126,7 +126,7 @@ def toolDetail_init(request):
 
 #初始化编辑
 def tooledit_init(request):
-    log.info('toolDetail_init start')
+    log.info('tooledit_init start')
     toolid=request.POST['toolid']
     tool=T_TOOL.objects.get(id=int(toolid))
     tool.AUDIT_TIME=json.dumps(tool.AUDIT_TIME, cls=dateutil.CJsonEncoder)
@@ -146,13 +146,15 @@ def tooledit_init(request):
     tooltypeList = serializers.serialize('json', tooltype, ensure_ascii=False)
     project=T_PROJECT.objects.check_own(request)
     projectList = serializers.serialize('json', project, ensure_ascii=False)
+    imgs=IMG.objects.all()
+    imgList = serializers.serialize('json', imgs, ensure_ascii=False)
     true = True
     false=False
     null = None
     #log.info('userList：'+userList)
-    log.info('toolDetail_init end')
+    log.info('tooledit_init end')
     print str(model_to_dict(tool))
-    return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'tooltypeList': eval(tooltypeList),'projectList': eval(projectList)}))
+    return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'tooltypeList': eval(tooltypeList),'projectList': eval(projectList),'imgList': eval(imgList)}))
 
 
 #初始化历史任务
