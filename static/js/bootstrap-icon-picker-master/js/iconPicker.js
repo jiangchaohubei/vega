@@ -141,7 +141,7 @@
 	        	$(".icon-list li a",$popup).click(function(e){
 	        		e.preventDefault();
 	        		var title=$(this).attr("title");
-	        		$element.val(title);
+	        		$element.val(title).change();
 
 	        		removeInstance();
 	        	});

@@ -42,7 +42,7 @@ function  onload_editTool() {
                 }
                 $('#tool_icon').iconPicker({newIcons:newIcons});
                 $('#tool_name').val(data.tool.NAME)
-                $('#tool_icon').val(data.tool.ICON);
+                $('#tool_icon').val(data.tool.ICON).change();
                 $("#tool_dangerlevel input[name='tool-radio'][value='"+data.tool.DANGER_LEVEL+"']").prop("checked",true);
 
                 if (data.tool.SCRIPT_LANGUAGE==0){
