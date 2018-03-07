@@ -126,7 +126,7 @@
 	        	};
 
 	        	$(".icon-list",$popup).html($ul);
-                $element.bind("propertychange", function () {
+                $element.bind("input propertychange", function () {
                     var iconName=this.val()
                     if (iconName){
                         if (/^glyphicon glyphicon-/.test(iconName)){
