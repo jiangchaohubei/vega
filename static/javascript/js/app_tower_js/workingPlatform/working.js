@@ -58,13 +58,13 @@ $(function () {
                                 if (a.test(data.tools[j].fields.ICON)){
                                     iconHtml='<i class="'+data.tools[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'
                                 }else{
-                                    iconHtml="<img src='/icons/img/"+data.tools[j].fields.ICON+"' style='width:32px;height:32px;color:'"+iconColor+"\'>"
+                                    iconHtml="<img src='/icons/img/"+data.tools[j].fields.ICON+"' style='width:32px;height:32px;color:'"+iconColor+"'>"
                                 }
                                 tooltypehtml+='<div class="tool-item" id="'+toolid+'">'+
                                         '<span class="close red ace-icon fa fa-times bigger-120" title="移除工具" onclick="removeTool('+data.tools[j].pk+')" style="" aria-hidden="true"></span>'+
                                         '<a class="tool-item-inner" id="toolId" href="/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+data.tools[j].pk+'&toolname='+data.tools[j].fields.NAME+'" >'+
                                         '<div class="tool-item-icon">'+
-                                        '<i class="'+data.tools[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'+
+                                        iconHtml+
                                         '</div>'+
                                         '<div class="tool-item-name">'+data.tools[j].fields.NAME+'</div>'+
                                         '</a>'+
