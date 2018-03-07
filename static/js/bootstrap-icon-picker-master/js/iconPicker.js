@@ -29,7 +29,7 @@
         	element=this;
         	if (refresh){
                 $(".icon-list",$popup).html('');
-                showList(element,icons,newIcons);
+                showList(element,icons,newIcons,$button);
 			}
             if(!settings.buttonOnly && $(this).data("iconPicker")==undefined ){
             	$this=$(this).addClass("form-control");
@@ -96,12 +96,15 @@
 	                if(lastVal!=$(this).val()){
 	                    lastVal=$(this).val();
 	                    if(lastVal==""){
-	                    	showList(icons);
+	                    	showList($element,icons,newIcons,$button);
 	                    }else{
 	                    	showList($element, $(icons)
 							        .map(function(i,v){ 
 								            if(v.toLowerCase().indexOf(lastVal.toLowerCase())!=-1){return v} 
-								        }).get());
+								        }).get(),$(newIcons)
+                                .map(function(i,v){
+                                    if(v.toLowerCase().indexOf(lastVal.toLowerCase())!=-1){return v}
+                                }).get(),$button);
 						}
 	                    
 	                }
