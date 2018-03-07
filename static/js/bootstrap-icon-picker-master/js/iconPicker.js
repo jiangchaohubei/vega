@@ -41,7 +41,7 @@
             	(function(ele){
 	            	$button.click(function(){
 			       		createUI(ele);
-			       		showList(ele,icons,newIcons);
+			       		showList(ele,icons,newIcons,$button);
 	            	});
 	            })($this);
 
@@ -116,20 +116,33 @@
 	        function removeInstance(){
 	        	$(".icon-popup").remove();
 	        }
-	        function showList($element,arrLis,newIcons){
+	        function showList($element,arrLis,newIcons,$button){
 	        	$ul=$("<ul>");
                 for (var i in newIcons) {
                     $ul.append("<li><a href=\"#\" title="+newIcons[i]+"><img src='/icons/img/"+newIcons[i]+"' style='width:14px;height:14px'> </a></li>");
                 };
 	        	for (var i in arrLis) {
-	        		$ul.append("<li><a href=\"#\" title=\"glyphicon  glyphicon-"+arrLis[i]+"\"><span class=\"glyphicon  glyphicon-"+arrLis[i]+"\"></span></a></li>");
+	        		$ul.append("<li><a href=\"#\" title=\"glyphicon glyphicon-"+arrLis[i]+"\"><span class=\"glyphicon glyphicon-"+arrLis[i]+"\"></span></a></li>");
 	        	};
 
 	        	$(".icon-list",$popup).html($ul);
+                $element.bind("propertychange", function () {
+                    var iconName=this.val()
+                    if (iconName){
+                        if (/^glyphicon glyphicon-/.test(iconName)){
+                            $button.html("<i class='"+iconName+"'></i>")
+                        }else{
+                            $button.html("<img src='/icons/img/"+iconName+"' style='width:14px;height:14px'>")
+                        }
+                    }else{
+                        $button.html("<i class=\"glyphicon  glyphicon-picture\"></i>")
+					}
+                });
 	        	$(".icon-list li a",$popup).click(function(e){
 	        		e.preventDefault();
 	        		var title=$(this).attr("title");
 	        		$element.val(title);
+
 	        		removeInstance();
 	        	});
 	        }

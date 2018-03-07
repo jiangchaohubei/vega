@@ -57,7 +57,7 @@ function onload_toolAudit() {
                 if (a.test(b)){
                     iconHtml='<i class="'+b+'" style="font-size:xx-large;line-height: 100px;height: 100px;color:'+iconColor+'" aria-hidden="true"></i>'
                 }else{
-                    iconHtml="<img src='/icons/img/"+b+"' style='width:32px;height:32px;line-height: 100px;height: 100px;color:'"+iconColor+"'>"
+                    iconHtml="<img src='/icons/img/"+b+"' style='width:100px;line-height: 100px;height: 100px;color:'"+iconColor+"'>"
                 }
                 $('#toolIcon').html(iconHtml)
                 $('#tool_creater').html(data.tool.CREATE_USER_NAME)
