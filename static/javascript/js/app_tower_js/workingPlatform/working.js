@@ -53,11 +53,10 @@ $(function () {
                                     default:
                                         iconColor='green';
                                 }
-                                var a=/^glyphicon  glyphicon-/;
+                                var a=/^glyphicon glyphicon-/;
                                 var iconHtml=''
                                 var b=data.tools[j].fields.ICON;
-                                console.log(b)
-                                console.log(a.test(b))
+
                                 if (a.test(b)){
                                     iconHtml='<i class="'+data.tools[j].fields.ICON+'" style="font-size:xx-large;color:'+iconColor+'" aria-hidden="true"></i>'
                                 }else{
