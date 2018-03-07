@@ -38,6 +38,18 @@
 
             	$button=$("<span class=\"input-group-addon pointer\"><i class=\"glyphicon  glyphicon-picture\"></i></span>");
             	$this.before($button);
+                $this.bind("input propertychange change", function () {
+                    var iconName=$(this).val()
+                    if (iconName){
+                        if (/^glyphicon glyphicon-/.test(iconName)){
+                            $button.html("<i class='"+iconName+"'></i>")
+                        }else{
+                            $button.html("<img src='/icons/img/"+iconName+"' style='width:14px;height:14px'>")
+                        }
+                    }else{
+                        $button.html("<i class=\"glyphicon  glyphicon-picture\"></i>")
+                    }
+                });
             	(function(ele){
 	            	$button.click(function(){
 			       		createUI(ele);
@@ -129,18 +141,7 @@
 	        	};
 
 	        	$(".icon-list",$popup).html($ul);
-                $element.bind("input propertychange change", function () {
-                    var iconName=$(this).val()
-                    if (iconName){
-                        if (/^glyphicon glyphicon-/.test(iconName)){
-                            $button.html("<i class='"+iconName+"'></i>")
-                        }else{
-                            $button.html("<img src='/icons/img/"+iconName+"' style='width:14px;height:14px'>")
-                        }
-                    }else{
-                        $button.html("<i class=\"glyphicon  glyphicon-picture\"></i>")
-					}
-                });
+
 	        	$(".icon-list li a",$popup).click(function(e){
 	        		e.preventDefault();
 	        		var title=$(this).attr("title");
