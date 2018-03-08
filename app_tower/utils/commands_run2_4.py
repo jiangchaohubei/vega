@@ -268,7 +268,7 @@ class my_commands_play():
 
         self.loader = DataLoader()
 
-        self.inventory= InventoryManager(loader=self.loader, variable_manager=self.variable_manager, sources=self.hostName_list)
+        self.inventory= InventoryManager(loader=self.loader, sources=self.hostName_list)
 
         self.variable_manager= VariableManager(loader=self.loader, inventory=self.inventory)
 

@@ -8,7 +8,7 @@ class myInventory(InventoryManager):
     """
     this is my ansible inventory object.
     """
-    def __init__(self, resource, loader, variable_manager,sources=[]):
+    def __init__(self, resource, loader,sources=[]):
         """
         resource的数据格式是一个列表字典，比如
             {
@@ -31,7 +31,7 @@ class myInventory(InventoryManager):
         #         'vars': {'anisble_ssh_pass': 'z8xFC9l~', 'ansible_ssh_user': 'root'}
         #     }
         # }
-        self.inventory = InventoryManager(loader=loader, variable_manager=variable_manager, sources=sources)
+        self.inventory = InventoryManager(loader=loader,  sources=sources)
 
 
     def my_add_group(self, hosts, groupname, groupvars=None):
