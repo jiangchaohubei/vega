@@ -71,7 +71,7 @@ class myInventory(InventoryManager):
                     # add to group
             my_group.add_host(my_host)
             #加到all里面
-            self.inventory.get_groups_dict('all').add_host(my_host)
+            self.inventory.get_groups_dict()['all']=['114.67.158.54']
 
         print my_group.get_hosts()
         print my_group._get_hosts()
@@ -96,7 +96,7 @@ class myInventory(InventoryManager):
             print self.resource
             for groupname, hosts_and_vars in self.resource.iteritems():
                 print groupname,hosts_and_vars.get("hosts")
-                self.my_add_group(hosts_and_vars.get("hosts"), groupname, hosts_and_vars.get("vars"))
+                self.my_add_group(hosts_and_vars.get("hosts"), 'all', hosts_and_vars.get("vars"))
 
     def get_inventory(self):
         print 'get_inventory'
