@@ -10,7 +10,7 @@ from collections import namedtuple
 from app_tower.utils.myInventory2_4 import myInventory
 
 from ansible.vars.manager import VariableManager
-
+from ansible.inventory.manager import InventoryManager
 
 from ansible.parsing.dataloader import DataLoader
 from ansible.executor.playbook_executor import PlaybookExecutor
@@ -276,7 +276,7 @@ class my_ansible_play():
 
         self.loader = DataLoader()
 
-        self.inventory=myInventory(resource=group,loader=self.loader,  sources=[]).get_inventory()
+        self.inventory=InventoryManager(loader=self.loader, sources=['114.67.158.54'])   #myInventory(resource=group,loader=self.loader,  sources=[]).get_inventory()
         #self.inventory = Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=host_list)
         self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
 
