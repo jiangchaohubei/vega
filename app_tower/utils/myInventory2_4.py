@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf8 -*-
 from ansible.inventory.manager import InventoryManager
-from ansible.inventory.manager.group import Group
-from ansible.inventory.manager.host import Host
+from ansible.inventory.group import Group
+from ansible.inventory.host import Host
 
 class myInventory(InventoryManager):
     """
