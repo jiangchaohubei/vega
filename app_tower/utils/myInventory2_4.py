@@ -71,15 +71,15 @@ class myInventory(InventoryManager):
                     # add to group
             my_group.add_host(my_host)
             #加到all里面
-            self.inventory.get_groups_dict()['all']=['114.67.158.54']
+            self.inventory.get_groups_dict()['all'].add_host(my_host)
 
         print my_group.get_hosts()
         print my_group._get_hosts()
         print my_group.get_vars()
-        self.inventory.add_group(my_group)
+        #self.inventory.add_group(my_group)
 
-        print self.inventory.get_hosts()
-        print self.inventory.get_group_dict()
+        # print self.inventory.get_hosts()
+        # print self.inventory.get_group_dict()
 
 
     def gen_inventory(self):
