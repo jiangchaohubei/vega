@@ -245,7 +245,8 @@ class my_commands_play():
                               'listtags',
                               'syntax',
                               'sudo_user',
-                              'sudo'])
+                              'sudo',
+                              'diff'])
         self.options = Options(connection='smart',
                                remote_user='root',
                                ack_pass=None,
@@ -262,7 +263,8 @@ class my_commands_play():
                                listhosts=None,
                                listtasks=None,
                                listtags=None,
-                               syntax=None)
+                               syntax=None,
+                               diff=False)
         if ansible_cfg != None:
             os.environ["ANSIBLE_CONFIG"] = ansible_cfg
 

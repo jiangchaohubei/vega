@@ -247,7 +247,7 @@ class my_ansible_play():
                               'tags',
                               'skip_tags',
                               'ssh_extra_args',
-                              ])
+                              'diff'])
         self.options = Options(connection='smart',
                                remote_user='root',
                                ask_sudo_pass=False,
@@ -268,7 +268,7 @@ class my_ansible_play():
                                tags=tags,
                                skip_tags=skip_tags,
                                ssh_extra_args=None,
-                               )
+                               diff=False)
         if ansible_cfg != None:
             os.environ["ANSIBLE_CONFIG"] = ansible_cfg
 
