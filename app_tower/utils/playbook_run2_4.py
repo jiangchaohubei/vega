@@ -315,30 +315,30 @@ class my_ansible_play():
         play = Play().load(play_source, variable_manager=self.variable_manager, loader=self.loader)
         tqm = None
         try:
-            self.results_callback = mycallback(fo)
-            tqm = TaskQueueManager(
-                inventory=self.inventory,
-                variable_manager=self.variable_manager,
-                loader=self.loader,
-                options=self.options,
-                passwords=self.passwords,
-                stdout_callback=self.results_callback,  # Use our custom callback instead of the ``default`` callback plugin
-            )
-            code = tqm.run(play)
-            # pbex = PlaybookExecutor(playbooks=[self.playbook_path],
-            #                         inventory=self.inventory,
-            #                         variable_manager=self.variable_manager,
-            #                         loader=self.loader,
-            #                         options=self.options,
-            #                         passwords=self.passwords)
-            #
             # self.results_callback = mycallback(fo)
-            # pbex._tqm._stdout_callback = self.results_callback
+            # tqm = TaskQueueManager(
+            #     inventory=self.inventory,
+            #     variable_manager=self.variable_manager,
+            #     loader=self.loader,
+            #     options=self.options,
+            #     passwords=self.passwords,
+            #     stdout_callback=self.results_callback,  # Use our custom callback instead of the ``default`` callback plugin
+            # )
+            # code = tqm.run(play)
+            pbex = PlaybookExecutor(playbooks=[self.playbook_path],
+                                    inventory=self.inventory,
+                                    variable_manager=self.variable_manager,
+                                    loader=self.loader,
+                                    options=self.options,
+                                    passwords=self.passwords)
 
-            # log.info('run start')
-            # code = pbex.run()
-            # log.info('run end')
-            # print code
+            self.results_callback = mycallback(fo)
+            pbex._tqm._stdout_callback = self.results_callback
+
+            log.info('run start')
+            code = pbex.run()
+            log.info('run end')
+            print code
         except AnsibleParserError:
             code = 1002
             results = {'playbook': self.playbook_path, 'msg': self.playbook_path + ' playbook have syntax error',
