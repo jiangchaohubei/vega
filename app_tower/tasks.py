@@ -3,8 +3,8 @@
 from celery import task
 from billiard.exceptions import Terminated#方便更好的取消任务
 import time
-from app_tower.utils.playbook_run import runplaybook
-from app_tower.utils.commands_run import commandsrun
+from app_tower.utils.playbook_run2_4 import runplaybook
+from app_tower.utils.commands_run2_4 import commandsrun
 from app_tower.models import T_JOB,T_Group,T_LOGIN_CREDENTIALS,T_JOB_EVENT,T_COMMAND_EVENT,sudo_record,T_JOB_TEMPLATE,T_TOOL_EVENT
 from app_tower.utils.mygroup import mygroup
 from app_tower.utils.mygroup_tool import mygroup_tool

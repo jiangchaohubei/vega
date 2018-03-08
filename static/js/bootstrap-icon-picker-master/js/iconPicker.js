@@ -71,10 +71,10 @@
 
 	        	$popup.html('<div class="ip-control"> \
 						          <ul> \
-						            <li><a href="javascript:;" class="btn" data-dir="-1" title="上一页"><span class="glyphicon  glyphicon-fast-backward"></span></a></li> \
+						            <li><a href="javascript:;" class="btn" data-dir="-1" title="脡脧脪禄脪鲁"><span class="glyphicon  glyphicon-fast-backward"></span></a></li> \
 						            <li><input type="text" class="ip-search glyphicon  glyphicon-search" placeholder="Search" /></li> \
-						            <li><a href="javascript:;"  class="btn" data-dir="1" title="下一页"><span class="glyphicon  glyphicon-fast-forward"></span></a></li> \
-						            <li><a href="javascript:;" class="btn" onclick="showImgUploadModal()" title="上传"  ><span class="glyphicon  glyphicon-cloud-upload"></span></a></li> \
+						            <li><a href="javascript:;"  class="btn" data-dir="1" title="脧脗脪禄脪鲁"><span class="glyphicon  glyphicon-fast-forward"></span></a></li> \
+						            <li><a href="javascript:;" class="btn" onclick="showImgUploadModal()" title="脡脧麓芦"  ><span class="glyphicon  glyphicon-cloud-upload"></span></a></li> \
 						          </ul> \
 						      </div> \
 						     <div class="icon-list"> </div> \

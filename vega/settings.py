@@ -124,7 +124,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-ENVIRONMENT='阿里云'  #&'预览'
+ENVIRONMENT='预览'  #&'预览'
 VERSIONS_PATH='/opt/versions'
 
 #图片文件夹
