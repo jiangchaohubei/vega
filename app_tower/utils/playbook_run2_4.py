@@ -276,11 +276,9 @@ class my_ansible_play():
 
         self.loader = DataLoader()
 
-        #self.inventory=InventoryManager(loader=self.loader, sources=['114.67.158.54'])   #myInventory(resource=group,loader=self.loader,  sources=[]).get_inventory()
         self.inventory=myInventory(resource=group,loader=self.loader,  sources=[]).get_inventory()
-        #self.inventory = Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=host_list)
-        self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
 
+        self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
 
         self.variable_manager.extra_vars=self.extra_vars
 
@@ -304,28 +302,9 @@ class my_ansible_play():
             # results=self.playbook_path+'playbook is not existed'
             # return code,complex_msg,results
             # create play with tasks
-        play_source =  dict(
-            name = "Ansible Play",
-            hosts = 'localhost',
-            gather_facts = 'no',
-            tasks = [
-                dict(action=dict(module='shell', args='ls'), register='shell_out'),
-                dict(action=dict(module='debug', args=dict(msg='{{shell_out.stdout}}')))
-            ]
-        )
-        play = Play().load(play_source, variable_manager=self.variable_manager, loader=self.loader)
-        tqm = None
+
         try:
-            # self.results_callback = mycallback(fo)
-            # tqm = TaskQueueManager(
-            #     inventory=self.inventory,
-            #     variable_manager=self.variable_manager,
-            #     loader=self.loader,
-            #     options=self.options,
-            #     passwords=self.passwords,
-            #     stdout_callback=self.results_callback,  # Use our custom callback instead of the ``default`` callback plugin
-            # )
-            # code = tqm.run(play)
+
             pbex = PlaybookExecutor(playbooks=[self.playbook_path],
                                     inventory=self.inventory,
                                     variable_manager=self.variable_manager,

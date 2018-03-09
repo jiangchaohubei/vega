@@ -40,14 +40,7 @@ class myInventory(InventoryManager):
         """
         add hosts to a group
         """
-        my_group = Group(name=groupname)
 
-        # if group variables exists, add them to group
-        if groupvars:
-            for key, value in groupvars.iteritems():
-                my_group.set_variable(key, value)
-
-                # add hosts to group
         self.inventory.add_group(groupname)
         for host in hosts:
             print host
@@ -58,19 +51,6 @@ class myInventory(InventoryManager):
             username = host.get("username")
             password = host.get("password")
             #ssh_key = host.get("ssh_key")
-            my_host = Host(name=hostname, port=hostport)
-            my_host.set_variable('ansible_ssh_host', hostip)
-            my_host.set_variable('ansible_ssh_port', hostport)
-            my_host.set_variable('ansible_ssh_user', username)
-            my_host.set_variable('ansible_ssh_pass', password)
-            #my_host.set_variable('ansible_ssh_private_key_file', ssh_key)
-
-            # set other variables
-            for key, value in host.iteritems():
-                if key not in ["hostname", "port",'ip', "username", "password"]:
-                    my_host.set_variable(key, value)
-                    # add to group
-            my_group.add_host(my_host)
 
             self.inventory.add_host(hostname,groupname)
             self.inventory.get_host(hostname).set_variable( 'ansible_ssh_host', hostip)
@@ -83,13 +63,7 @@ class myInventory(InventoryManager):
             #加到all里面
             #self.inventory.get_groups_dict()['all'].add_host(my_host)
 
-        print my_group.get_hosts()
-        print my_group._get_hosts()
-        print my_group.get_vars()
-        #self.inventory.add_group(my_group)
 
-        # print self.inventory.get_hosts()
-        # print self.inventory.get_group_dict()
 
 
     def gen_inventory(self):
