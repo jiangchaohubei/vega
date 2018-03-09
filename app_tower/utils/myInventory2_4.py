@@ -48,6 +48,7 @@ class myInventory(InventoryManager):
                 my_group.set_variable(key, value)
 
                 # add hosts to group
+        self.inventory.add_group(groupname)
         for host in hosts:
             print host
             # set connection variables
@@ -70,6 +71,15 @@ class myInventory(InventoryManager):
                     my_host.set_variable(key, value)
                     # add to group
             my_group.add_host(my_host)
+
+            self.inventory.add_host(hostname,groupname)
+            self.inventory.set_variable(hostname, 'ansible_ssh_host', hostip)
+            self.inventory.set_variable(hostname, 'ansible_ssh_port', hostip)
+            self.inventory.set_variable(hostname, 'ansible_ssh_user', username)
+            self.inventory.set_variable(hostname, 'ansible_ssh_pass', password)
+            for key, value in host.iteritems():
+                if key not in ["hostname", "port",'ip', "username", "password"]:
+                    self.inventory.set_variable(hostname,key, value)
             #加到all里面
             self.inventory.get_groups_dict()['all'].add_host(my_host)
 
