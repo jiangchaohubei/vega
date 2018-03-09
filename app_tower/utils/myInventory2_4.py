@@ -74,14 +74,14 @@ class myInventory(InventoryManager):
 
             self.inventory.add_host(hostname,groupname)
             self.inventory.get_host(hostname).set_variable( 'ansible_ssh_host', hostip)
-            self.inventory.get_host(hostname).set_variable('ansible_ssh_port', hostip)
+            self.inventory.get_host(hostname).set_variable('ansible_ssh_port', hostport)
             self.inventory.get_host(hostname).set_variable( 'ansible_ssh_user', username)
             self.inventory.get_host(hostname).set_variable( 'ansible_ssh_pass', password)
             for key, value in host.iteritems():
                 if key not in ["hostname", "port",'ip', "username", "password"]:
                     self.inventory.get_host(hostname).set_variable(key, value)
             #加到all里面
-            self.inventory.get_groups_dict()['all'].add_host(my_host)
+            #self.inventory.get_groups_dict()['all'].add_host(my_host)
 
         print my_group.get_hosts()
         print my_group._get_hosts()

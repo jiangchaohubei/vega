@@ -271,6 +271,16 @@ class my_commands_play():
         self.loader = DataLoader()
 
         self.inventory= InventoryManager(loader=self.loader, sources=self.hostName_list)
+        self.inventory.add_group('all')
+        for hostname in self.hostName_list:
+            self.inventory.add_host(hostname,'all')
+            self.inventory.get_host(hostname).set_variable( 'ansible_ssh_host', hostname)
+            self.inventory.get_host(hostname).set_variable('ansible_ssh_port', self.port)
+            self.inventory.get_host(hostname).set_variable( 'ansible_ssh_user', self.login_user)
+            self.inventory.get_host(hostname).set_variable( 'ansible_ssh_pass', self.login_pwd)
+            # for key, value in host.iteritems():
+            #     if key not in ["hostname", "port",'ip', "username", "password"]:
+            #         self.inventory.get_host(hostname).set_variable(key, value)
 
         self.variable_manager= VariableManager(loader=self.loader, inventory=self.inventory)
 
