@@ -272,7 +272,7 @@ class my_ansible_play():
         self.variable_manager = VariableManager()
         self.loader = DataLoader()
 
-        self.inventory=myInventory(resource=group,loader=self.loader, variable_manager=self.variable_manager, host_list=[]).get_inventory()
+        self.inventory=myInventory(resource=group,loader=self.loader, variable_manager=self.variable_manager, sources=[]).get_inventory()
         #self.inventory = Inventory(loader=self.loader, variable_manager=self.variable_manager, host_list=host_list)
 
         self.variable_manager.set_inventory(self.inventory)
