@@ -15,6 +15,7 @@ import traceback
 import os
 import cStringIO
 from app_tower.utils import gitlabApi
+from vega.settings import PLAYBOOK_ROOT
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -63,16 +64,16 @@ def playbook_add(request):
             response_data['resultDesc']='NAME已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
         PLAYBOOK_PATH=""
-        if not os.path.exists('/opt/playbooks'):
-            os.makedirs('/opt/playbooks')
+        if not os.path.exists(PLAYBOOK_ROOT):
+            os.makedirs(PLAYBOOK_ROOT)
 
-        if not os.path.exists('/opt/playbooks/'+playbookPath):
-            os.makedirs('/opt/playbooks/'+playbookPath)
-        PLAYBOOK_PATH='/opt/playbooks/'+playbookPath
+        if not os.path.exists(PLAYBOOK_ROOT+playbookPath):
+            os.makedirs(PLAYBOOK_ROOT+playbookPath)
+        PLAYBOOK_PATH=PLAYBOOK_ROOT+playbookPath
         if  form['dir']:
-            if not os.path.exists('/opt/playbooks/'+playbookPath+'/'+form['dir']):
-                os.makedirs('/opt/playbooks/'+playbookPath+'/'+form['dir'])
-            PLAYBOOK_PATH='/opt/playbooks/'+playbookPath+'/'+form['dir']
+            if not os.path.exists(PLAYBOOK_ROOT+playbookPath+'/'+form['dir']):
+                os.makedirs(PLAYBOOK_ROOT+playbookPath+'/'+form['dir'])
+            PLAYBOOK_PATH=PLAYBOOK_ROOT+playbookPath+'/'+form['dir']
 
         PLAYBOOK_PATH+='/'+form['name']+'.yaml'
         log.info("playbookPath:"+PLAYBOOK_PATH)
@@ -246,16 +247,16 @@ def playbook_update(request):
             if os.path.exists(pb.PLAYBOOK_PATH):
                 os.remove(pb.PLAYBOOK_PATH)#删除原文件
             PLAYBOOK_PATH=""
-            if not os.path.exists('/opt/playbooks'):
-                os.makedirs('/opt/playbooks')
+            if not os.path.exists(PLAYBOOK_ROOT):
+                os.makedirs(PLAYBOOK_ROOT)
 
-            if not os.path.exists('/opt/playbooks/'+playbookPath):
-                os.makedirs('/opt/playbooks/'+playbookPath)
-            PLAYBOOK_PATH='/opt/playbooks/'+playbookPath
+            if not os.path.exists(PLAYBOOK_ROOT+playbookPath):
+                os.makedirs(PLAYBOOK_ROOT+playbookPath)
+            PLAYBOOK_PATH=PLAYBOOK_ROOT+playbookPath
             if  form['dir']:
-                if not os.path.exists('/opt/playbooks/'+playbookPath+'/'+form['dir']):
-                    os.makedirs('/opt/playbooks/'+playbookPath+'/'+form['dir'])
-                PLAYBOOK_PATH='/opt/playbooks/'+playbookPath+'/'+form['dir']
+                if not os.path.exists(PLAYBOOK_ROOT+playbookPath+'/'+form['dir']):
+                    os.makedirs(PLAYBOOK_ROOT+playbookPath+'/'+form['dir'])
+                PLAYBOOK_PATH=PLAYBOOK_ROOT+playbookPath+'/'+form['dir']
 
             PLAYBOOK_PATH+='/'+form['name']+'.yaml'
             # if not os.path.exists('C:\Users\PC\Desktop\example\playbooks'):

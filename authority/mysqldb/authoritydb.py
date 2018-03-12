@@ -2,14 +2,14 @@
 from django.http import JsonResponse
 from django.core import serializers
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from json import dumps
+from vega.ipConfig import message_ip
 from django.core.mail import send_mail
 from vega import permission_config
 from authority.permission import PermissionVerify
 import json
 import re
 from django.db.models import Count
-import time
+from vega.settings import EMAIL_HOST_USER
 import datetime
 from django.shortcuts import render
 from app_tower.models import User,T_JOB,RoleList,PermissionList,T_RoleList_PermissionList_ID,JobStatusControl,T_PROJECT
@@ -190,7 +190,7 @@ def resetPasswordByEmail(request):
                 user.save()
                 title=str(request.POST['userName'])+"您好,您的密码被重置了!"
                 content = str(request.POST['userName']) + "您的新密码为:" + newPassword
-                send_mail(title, content, '15221459431@163.com',
+                send_mail(title, content, EMAIL_HOST_USER,
                           [str(Useremail)], fail_silently=False)
                 response_data['result'] = 'Success!'
                 response_data['email'] = Useremail
@@ -233,7 +233,7 @@ def resetPasswordByMobile(request):
                     user.save()
                     content = "【咪咕视讯】,重置密码:" + newPassword + "（切勿告诉他人)"
                     log.info("content:"+content)
-                    url = 'http://172.16.9.132/mtv/HttpSendSM?userName=ZDHBS&password=1qaz!QAZ&srcId=1065802710111&channel=1&destMsisdn='+Usermobile+'&content='+content+'&needReport=1'
+                    url = 'http://'+message_ip+'/mtv/HttpSendSM?userName=ZDHBS&password=1qaz!QAZ&srcId=1065802710111&channel=1&destMsisdn='+Usermobile+'&content='+content+'&needReport=1'
                     response_data['result'] = 'resetPasswordByMobile Success!'
                     response_data['mobile'] = Usermobile
                     getResponseData(url)
@@ -332,7 +332,7 @@ def loginCapcha(request):
         verifyCode=createPhoneCode()
         request.session['check_capcha'] =verifyCode
         contnet="【咪咕视讯】，动态密码：" + verifyCode + "（切勿告诉他人）,该验证码用于自动化部署系统登陆,5分钟有效"
-        url = 'http://172.16.9.132/mtv/HttpSendSM?userName=ZDHBS&password=1qaz!QAZ&srcId=1065802710111&channel=1&destMsisdn='+mobile+'&content='+ contnet+'&needReport=1'
+        url = 'http://'+message_ip+'/mtv/HttpSendSM?userName=ZDHBS&password=1qaz!QAZ&srcId=1065802710111&channel=1&destMsisdn='+mobile+'&content='+ contnet+'&needReport=1'
         try:
            response_data['result'] = 'Success!'
            getResponseData(url)

@@ -2,6 +2,7 @@
 from django.http import JsonResponse
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.core.mail import send_mail
+from vega.settings import EMAIL_HOST_USER
 import os
 from pyexcel_xls import save_data
 from collections import OrderedDict
@@ -27,7 +28,7 @@ def saveFeedBack(request):
             superAdminEmail=User.objects.get(username="Admin").email
             title =str(request.session['username'])+ "用户为自动化部署项目提取了宝贵意见!"
             content = "意见主题是:"+form['TOPIC'].encode("utf-8")+"意见内容是:"+form['CONTENT'].encode("utf-8")
-            send_mail(title, content, '15221459431@163.com',
+            send_mail(title, content, EMAIL_HOST_USER,
                       [str(superAdminEmail)], fail_silently=False)
 
             response_data['resultCode'] = '0000'

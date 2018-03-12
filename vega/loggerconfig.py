@@ -1,7 +1,8 @@
 # /usr/bin/python2
 # -*- coding:utf8 -*-
 import datetime
-from logging.handlers import TimedRotatingFileHandler
+#from logging.handlers import TimedRotatingFileHandler
+from settings import LOG_ROOT
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -33,7 +34,7 @@ LOGGING = {
         'test1_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/test1/test1-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/test1/test1-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -43,7 +44,7 @@ LOGGING = {
         'test2_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/test2/test2-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/test2/test2-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -52,7 +53,7 @@ LOGGING = {
         'jobTempletedb_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/jobTempletedb/jobTempletedb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/jobTempletedb/jobTempletedb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -61,7 +62,7 @@ LOGGING = {
         'inventoriesdb_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/inventoriesdb/inventoriesdb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/inventoriesdb/inventoriesdb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -70,7 +71,7 @@ LOGGING = {
         'jobsdb_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/jobsdb/jobsdb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/jobsdb/jobsdb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -80,7 +81,7 @@ LOGGING = {
         'playbook_run_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/playbook_run/playbook_run-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/playbook_run/playbook_run-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -89,7 +90,7 @@ LOGGING = {
         'commands_run_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/commands_run/commands_run-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/commands_run/commands_run-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -98,7 +99,7 @@ LOGGING = {
         'usersdb_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/usersdb/usersdb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/usersdb/usersdb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -108,7 +109,7 @@ LOGGING = {
         'authoritydb_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/authoritydb/authoritydb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/authoritydb/authoritydb-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -118,7 +119,7 @@ LOGGING = {
         'tasks_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/tasks/tasks-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/tasks/tasks-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -127,7 +128,7 @@ LOGGING = {
         'credentials_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/credentials/credentials-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/credentials/credentials-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -136,7 +137,7 @@ LOGGING = {
         'project_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/project/project-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/project/project-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -145,7 +146,7 @@ LOGGING = {
         'feedback_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/feedback/feedback-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/feedback/feedback-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -154,7 +155,7 @@ LOGGING = {
         'playbook_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/playbook/playbook-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/playbook/playbook-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -163,7 +164,7 @@ LOGGING = {
         'timerTask_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/timerTask/timerTask-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/timerTask/timerTask-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -172,7 +173,7 @@ LOGGING = {
         'host_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/host/host-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/host/host-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -181,7 +182,7 @@ LOGGING = {
         'system_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/system/system-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/system/system-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -190,7 +191,7 @@ LOGGING = {
         'module_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/module/module-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/module/module-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -199,7 +200,7 @@ LOGGING = {
         'software_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/software/software-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/software/software-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -208,7 +209,7 @@ LOGGING = {
         'version_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/version/version-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/version/version-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -217,7 +218,7 @@ LOGGING = {
         'working_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/working/working-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/working/working-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间
@@ -226,7 +227,7 @@ LOGGING = {
         'message_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.TimedRotatingFileHandler',
-            'filename':'./logs/message/message-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
+            'filename':LOG_ROOT+'/message/message-'+datetime.datetime.now().strftime("%Y%m%d")+'.log',
             'formatter':'standard',
             'when':'midnight', #天“S”: Seconds“M”: Minutes“H”: Hours“D”: Days“W”: Week day (0=Monday)“midnight”: Roll over at midnight
             'interval':1,   #间隔when时间

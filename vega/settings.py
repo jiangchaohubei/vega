@@ -124,8 +124,9 @@ USE_L10N = True
 
 USE_TZ = False
 
-ENVIRONMENT='阿里云'  #&'预览'
+ENVIRONMENT='预览'  #&'预览'
 VERSIONS_PATH='/opt/versions'
+PLAYBOOK_ROOT='/opt/playbooks/'
 
 #图片文件夹
 MEDIA_ROOT = '/opt/images'     #设置静态文件路径为主目录下的media文件夹
@@ -159,6 +160,7 @@ DEFAULT_FROM_EMAIL = '15221459431@163.com'  #这样别人收到的邮件中就�
 
 #日志配置
 DEBUG = True
+LOG_ROOT='/opt/logs'   #日志根目录  './logs'
 import loggerconfig
 import datetime
 LOGGING=loggerconfig.LOGGING
