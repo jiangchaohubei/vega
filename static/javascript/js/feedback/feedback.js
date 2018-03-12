@@ -21,7 +21,10 @@ function feedback(){
                         $("#content").val("");
                         return;
                     }
-                }
+                },
+                 error: function(data) {
+                     opt_commons.dialogShow("错误", "服务器错误！", 1000);
+                 },
             });
     }else{
         opt_commons.dialogShow("提示信息", "请输入您的主题和您宝贵的意见！", 2000);
@@ -48,7 +51,10 @@ function exportFeedback(){
                         downloadExcel(data.filepath);
                         return;
                     }
-                }
+                },
+           error: function(data) {
+               opt_commons.dialogShow("错误", "服务器错误！", 1000);
+           },
             });
 }
 

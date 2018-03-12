@@ -152,7 +152,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # 邮件配置
 EMAIL_USE_TLS = False
 EMAIL_HOST = 'smtp.163.com'   #SMTP地址
-EMAIL_PORT = 25  #SMTP端口
+EMAIL_PORT = 465  #SMTP端口
 EMAIL_HOST_USER = 'jiangchao_hubei@163.com' #我自己的邮箱是发件人     需要去自己的邮箱开启SMTP 邮件服务
 EMAIL_HOST_PASSWORD = 'jc216612'   #SMTP密码   不是你的邮箱登录密码
 DEFAULT_FROM_EMAIL = 'jiangchao_hubei@163.com'  #这样别人收到的邮件中就会有你设定的名称 发件人:<jiangchao_hubei@163.com>
