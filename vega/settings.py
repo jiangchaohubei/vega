@@ -160,7 +160,7 @@ DEFAULT_FROM_EMAIL = '15221459431@163.com'  #这样别人收到的邮件中就�
 
 #日志配置
 DEBUG = True
-LOG_ROOT='/opt/logs'   #日志根目录  './logs'
+LOG_ROOT='./logs'   #日志根目录  './logs'
 import loggerconfig
 import datetime
 LOGGING=loggerconfig.LOGGING
