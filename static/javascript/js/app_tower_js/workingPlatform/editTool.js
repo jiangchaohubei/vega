@@ -3,16 +3,24 @@
  */
 var INPUTPARAM=[]
 var OUTPUTPARAM=[]
+var from='detail'
 function  onload_editTool() {
 
     var C1 = window.location.href.split("?")[1];
     var C2 = C1.split("&");
     var toolid = C2[0].split("=")[1]
     var toolname = decodeURI(C2[1].split("=")[1])
+    from= decodeURI(C2[2].split("=")[1])
     $('#toolname').html(toolname)
     $('#toolid').val(toolid)
-    $('#toolDetail').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+toolid+'&toolname='+toolname)
-    $('#toolDetail').html(toolname)
+    if (from=='audit'){
+        $('#toolDetail').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+toolid+'&toolname='+toolname)
+        $('#toolDetail').html(toolname)
+    }else{
+        $('#toolDetail').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+toolid+'&toolname='+toolname)
+        $('#toolDetail').html(toolname)
+    }
+
     //textarea全屏
     $('#tool_scriptCode').textareafullscreen();
     $.ajax({
@@ -313,7 +321,13 @@ function updateTool() {
             }
             if(data.resultCode=="0000"){
                 opt_commons.dialogShow("成功信息","编辑成功！",2000);
-                window.location.href='/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+$('#toolid').val()+'&toolname='+$('#toolname').html()
+                if (editFrom=='audit'){
+                    window.location.href='/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+$('#toolid').val()+'&toolname='+$('#toolname').html()
+
+                }else{
+                    window.location.href='/static/templates/pages/app_tower_pages/workingPlatform/toolDetail.html?toolid='+$('#toolid').val()+'&toolname='+$('#toolname').html()
+
+                }
                 return;
             }
         },

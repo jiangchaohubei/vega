@@ -12,7 +12,7 @@ function onload_tooldetail() {
     $('#toolname').html(toolname)
     $('#toolid').val(toolid)
     $('#runtoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/runTool.html?toolid='+toolid+'&toolname='+toolname)
-    $('#edittoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/editTool.html?toolid='+toolid+'&toolname='+toolname)
+    $('#edittoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/editTool.html?toolid='+toolid+'&toolname='+toolname+'&from=detail')
 
     $.ajax({
         url:"/app_tower/workingPlatform/toolDetail_init",

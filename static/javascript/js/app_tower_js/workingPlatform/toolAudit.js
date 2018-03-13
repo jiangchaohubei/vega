@@ -11,7 +11,7 @@ function onload_toolAudit() {
     var toolname = decodeURI(C2[1].split("=")[1])
     $('#toolname').html(toolname)
     $('#toolid').val(toolid)
-
+    $('#edittoolbt').attr('href','/static/templates/pages/app_tower_pages/workingPlatform/editTool.html?toolid='+toolid+'&toolname='+toolname+'&from=audit')
 
     $.ajax({
         url:"/app_tower/workingPlatform/toolDetail_init",
