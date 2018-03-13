@@ -321,7 +321,7 @@ function updateTool() {
             }
             if(data.resultCode=="0000"){
                 opt_commons.dialogShow("成功信息","编辑成功！",2000);
-                if (editFrom=='audit'){
+                if (from=='audit'){
                     window.location.href='/static/templates/pages/app_tower_pages/workingPlatform/toolAudit.html?toolid='+$('#toolid').val()+'&toolname='+$('#toolname').html()
 
                 }else{
