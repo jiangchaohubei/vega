@@ -192,6 +192,8 @@ function runTool() {
                             setTimeout(function () {
                                     if (result.read_flag == 'True') {
                                         getlog(seek)
+                                    }else{
+                                        event_sumarise_init($("#log_toolEventId").val())
                                     }}
 
                                 , 1000)
@@ -217,6 +219,75 @@ function runTool() {
             console.log("error");
 
         },
+    })
+}
+//概要统计
+function event_sumarise_init(id) {
+
+    var toolEventId = id;
+    $.ajax({
+        type: 'POST',
+        url: "/app_tower/workingPlatform/get_event",
+        data: {
+            toolEventId: toolEventId
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+
+            eventList = data.eventList
+            for (var i=0;i<eventList.length;i++){
+                $('#eventTable').find('tbody').append(
+                    '<tr>'+
+                    '<td>'+eventList[i].fields.HOST_NAME+'</td>'+
+                    '<td>'+eventList[i].fields.SUCCESS+'</td>'+
+                    '<td>'+eventList[i].fields.FAILED+'</td>'+
+                    '<td>'+eventList[i].fields.CHANGED+'</td>'+
+                    '<td>'+eventList[i].fields.UNREACHABLE+'</td>'+
+                    '<td>'+eventList[i].fields.SKIPPED+'</td>'+
+                    '</tr>')
+                // var str=''+eventList[i].fields.HOST_NAME+" ";
+                // if (eventList[i].fields.SUCCESS!=0){
+                //     str+='ok'+eventList[i].fields.SUCCESS+" ";
+                // }
+                // if (eventList[i].fields.FAILED!=0){
+                //     str+='faield'+eventList[i].fields.FAILED+" ";
+                // }
+                // if (eventList[i].fields.CHANGED!=0){
+                //     str+='changed'+eventList[i].fields.CHANGED+" ";
+                // }
+                // if (eventList[i].fields.UNREACHABLE!=0){
+                //     str+='unreachable'+eventList[i].fields.UNREACHABLE+" ";
+                // }
+                // if (eventList[i].fields.SKIPPED!=0){
+                //     str+='skipped'+eventList[i].fields.SKIPPED+" ";
+                // }
+                //
+                // $('#backHostSelect').append('<option value="'+eventList[i].fields.HOST_ID+'">'+str+'</option>')
+            }
+            // //初始化双向列表
+            // init_dualListbox();
+            /*
+             * 还要初始化主机组，凭证的下拉选择框
+             *
+             * */
+
+
+
+        },
+        error: function () {
+            console.log("error");
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            console.log("complete");
+        }
     })
 }
 

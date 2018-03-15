@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf8 -*-
-from app_tower.models import T_TOOL,T_TOOL_INPUT,T_TOOL_OUTPUT,T_TOOLTYPE,T_PROJECT,T_TOOL_User_ID,User,T_LOGIN_CREDENTIALS,T_TOOL_EVENT,IMG
+from app_tower.models import T_TOOL,T_TOOL_INPUT,T_TOOL_OUTPUT,T_TOOLTYPE,T_PROJECT,T_TOOL_User_ID,User,T_LOGIN_CREDENTIALS,T_TOOL_EVENT,IMG,T_TOOL_EVENT_COUNT
 from django.forms.models import model_to_dict
 from django.http import HttpRequest, HttpResponse
 from django.http import JsonResponse
@@ -156,6 +156,14 @@ def tooledit_init(request):
     print str(model_to_dict(tool))
     return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'tooltypeList': eval(tooltypeList),'projectList': eval(projectList),'imgList': eval(imgList)}))
 
+def get_event(request):
+    toolEventId=request.POST['toolEventId']
+    t_tool_event_count=T_TOOL_EVENT_COUNT.objects.filter(TOOL_EVENT_ID=toolEventId)
+    eventList= serializers.serialize('json', t_tool_event_count,ensure_ascii=False)
+    true = True
+    false=False
+    null = None
+    return HttpResponse(json.dumps({'eventList':eval(eventList)}))
 
 #初始化历史任务
 def toolEvent_init(request):

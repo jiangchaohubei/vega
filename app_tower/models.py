@@ -972,6 +972,18 @@ class T_TOOL_EVENT(models.Model):
     ARGS2=models.CharField(max_length=128,null=True,blank=True)
     ARGS3=models.CharField(max_length=128,null=True,blank=True)
 
+class T_TOOL_EVENT_COUNT(models.Model):
+    TOOL_EVENT_ID=models.IntegerField(null=True,blank=True)
+    HOST_NAME=models.CharField(max_length=128)
+
+    CREATE=models.DateTimeField('创建时间',auto_now_add=True,null=True,blank=True)
+    MODIFY=models.DateTimeField('更新时间',auto_now=True,null=True,blank=True)
+
+    SUCCESS=models.IntegerField(null=True,blank=True)
+    FAILED=models.IntegerField(null=True,blank=True)
+    CHANGED=models.IntegerField(null=True,blank=True)
+    UNREACHABLE=models.IntegerField(null=True,blank=True)
+    SKIPPED=models.IntegerField(null=True,blank=True)
 
 #消息
 class T_MESSAGE(models.Model):

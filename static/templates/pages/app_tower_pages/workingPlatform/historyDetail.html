@@ -111,7 +111,7 @@
             <div class="panel-body col-md-12">
                 <ul id="myTab" class="nav nav-tabs"  >
                     <li class="active"><a href="#logTab" data-toggle="tab">日志输出</a></li>
-                    <li ><a href="#jsonTab" data-toggle="tab">json</a></li>
+                    <li ><a href="#jsonTab" data-toggle="tab">概要统计</a></li>
                 </ul>
                 <input type="hidden" id="log_taskid">
                 <input type="hidden" id="log_logfile">
@@ -121,7 +121,23 @@
                         <textarea class="form-control" wrap="off" style="border-style:solid;overflow:scroll;" rows="20" ng-model="ansible_log" ng-show="ansible_log" id="run_log"></textarea>
                     </div>
                     <div class="tab-pane fade " id="jsonTab">
-                        json
+                        <table class="table table-striped" id="eventTable">
+                            <!--<caption>EVENT SUMMARY</caption>-->
+                            <thead>
+                            <tr>
+                                <th>host</th>
+                                <th>ok</th>
+                                <th>failed</th>
+                                <th>changed</th>
+                                <th>unreachable</th>
+                                <th>skipped</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

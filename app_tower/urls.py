@@ -131,6 +131,7 @@ urlpatterns = patterns('inventories',
                        url(r'^workingPlatform/read_log$', workingPlatform.read_log),
                        url(r'^workingPlatform/stop_tool$', workingPlatform.stop_tool),
                        url(r'^workingPlatform/tool_audit$', workingPlatform.tool_audit),
+                       url(r'^workingPlatform/get_event', workingPlatform.get_event),
 
 
 

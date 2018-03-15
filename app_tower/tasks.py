@@ -4,13 +4,13 @@ from celery import task
 from billiard.exceptions import Terminated#方便更好的取消任务
 import time
 #ansible2.4  API
-from app_tower.utils.playbook_run2_4 import runplaybook
-from app_tower.utils.commands_run2_4 import commandsrun
+# from app_tower.utils.playbook_run2_4 import runplaybook
+# from app_tower.utils.commands_run2_4 import commandsrun
 #ansible2.3  API
-# from app_tower.utils.playbook_run import runplaybook
-# from app_tower.utils.commands_run import commandsrun
+from app_tower.utils.playbook_run import runplaybook
+from app_tower.utils.commands_run import commandsrun
 
-from app_tower.models import T_JOB,T_Group,T_LOGIN_CREDENTIALS,T_JOB_EVENT,T_COMMAND_EVENT,sudo_record,T_JOB_TEMPLATE,T_TOOL_EVENT
+from app_tower.models import T_JOB,T_Group,T_LOGIN_CREDENTIALS,T_JOB_EVENT,T_COMMAND_EVENT,sudo_record,T_JOB_TEMPLATE,T_TOOL_EVENT,T_TOOL_EVENT_COUNT
 from app_tower.utils.mygroup import mygroup
 from app_tower.utils.mygroup_tool import mygroup_tool
 import commands
@@ -218,6 +218,19 @@ def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,e
     tool_event.save()
 
 
+    #记录T_TOOL_EVENT_COUNT表
+
+    for host in hostList:
+
+        if host in result['recap']:
+            tool_event_count=T_TOOL_EVENT_COUNT(TOOL_EVENT_ID=int(toolEventId),HOST_NAME=host,SUCCESS=result['recap'][host]['ok'],FAILED=result['recap'][host]['failed'],
+                                  CHANGED=result['recap'][host]['changed'],UNREACHABLE=result['recap'][host]['unreachable'],SKIPPED=result['recap'][host]['skipped'])
+            tool_event_count.save()
+        else:  #这里是skip_tags跳过的部分
+            tool_event_count=T_TOOL_EVENT_COUNT(TOOL_EVENT_ID=int(toolEventId),HOST_NAME=host,SUCCESS=0,FAILED=0,
+                                  CHANGED=0,UNREACHABLE=0,SKIPPED=0)
+            tool_event_count.save()
+
     log.info('celery run_tool_yaml end')
 
 
@@ -265,6 +278,19 @@ def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=
         f.seek(0)
         tool_event.LOGCONTENT =f.read()
     tool_event.save()
+
+    #记录T_TOOL_EVENT_COUNT表
+
+    for host in hostList:
+
+        if host in result['recap']:
+            tool_event_count=T_TOOL_EVENT_COUNT(TOOL_EVENT_ID=int(toolEventId),HOST_NAME=host,SUCCESS=result['recap'][host]['ok'],FAILED=result['recap'][host]['failed'],
+                                                CHANGED=result['recap'][host]['changed'],UNREACHABLE=result['recap'][host]['unreachable'],SKIPPED=result['recap'][host]['skipped'])
+            tool_event_count.save()
+        else:  #这里是skip_tags跳过的部分
+            tool_event_count=T_TOOL_EVENT_COUNT(TOOL_EVENT_ID=int(toolEventId),HOST_NAME=host,SUCCESS=0,FAILED=0,
+                                                CHANGED=0,UNREACHABLE=0,SKIPPED=0)
+            tool_event_count.save()
 
     log.info('celery run_tool_shell end')
     return result

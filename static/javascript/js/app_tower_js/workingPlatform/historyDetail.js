@@ -177,9 +177,55 @@ function getlog(taskid,logfile) {
             setTimeout(function () {
                     if (result.read_flag == 'True') {
                         getlog($("#log_taskid").val(), $("#log_logfile").val())
+                    }else{
+                        event_sumarise_init($("#log_toolEventId").val())
                     }}
 
                 , 1000)
+
+        },
+        error: function () {
+            console.log("error");
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            console.log("complete");
+        }
+    })
+}
+//概要统计
+function event_sumarise_init(id) {
+
+    var toolEventId = id;
+    $.ajax({
+        type: 'POST',
+        url: "/app_tower/workingPlatform/get_event",
+        data: {
+            toolEventId: toolEventId
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+
+            eventList = data.eventList
+            for (var i=0;i<eventList.length;i++){
+                $('#eventTable').find('tbody').append(
+                    '<tr>'+
+                    '<td>'+eventList[i].fields.HOST_NAME+'</td>'+
+                    '<td>'+eventList[i].fields.SUCCESS+'</td>'+
+                    '<td>'+eventList[i].fields.FAILED+'</td>'+
+                    '<td>'+eventList[i].fields.CHANGED+'</td>'+
+                    '<td>'+eventList[i].fields.UNREACHABLE+'</td>'+
+                    '<td>'+eventList[i].fields.SKIPPED+'</td>'+
+                    '</tr>')
+
+            }
 
         },
         error: function () {
