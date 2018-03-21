@@ -949,7 +949,7 @@ def tool_export(request):
         if request.POST["toolid"]:
             toolid = request.POST["toolid"]
         tool=T_TOOL.objects.get(id=int(toolid))
-
+        tool.AUDIT_TIME=json.dumps(tool.AUDIT_TIME, cls=dateutil.CJsonEncoder)
         toolinput=tool.T_TOOL_ID_T_TOOL_INPUT.all()
         tooloutput=tool.T_TOOL_ID_T_TOOL_OUTPUT.all()
         toolinputList = serializers.serialize('json', toolinput, ensure_ascii=False)
@@ -962,7 +962,7 @@ def tool_export(request):
         toolDetail['toolinput']=eval(toolinputList)
         toolDetail['tooloutput']=eval(tooloutputList)
 
-        exporttime=time.time()
+        exporttime=str(time.time())
         exportRoot = str(os.getcwd()) + "/export/"+tool.NAME+exporttime+".json"
         fl=open(exportRoot, 'w')
         fl.write(json.dumps(toolDetail,ensure_ascii=False,indent=2))
