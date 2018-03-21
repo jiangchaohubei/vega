@@ -1022,11 +1022,59 @@ def leadinginTool(request):
     response_data = {}
     log.info("leadinginTool start")
     try:
+        OWNER_ID=None
+        OWNER_NAME=None
+        OWNER_PROJECT_ID=None
+        OWNER_ALL=False
         toolJson=""
         myFile = request.FILES.get("inputFile", None)  # 获取上传的文件，如果没有文件，则默认为None
+        import_owner = request.POST['owner']
+        if import_owner=='onlyOne':
+            OWNER_ID=request.session['userId']
+            OWNER_NAME=request.session['username']
+        elif import_owner=='all':
+            OWNER_ALL=True
+        else:
+            if not T_PROJECT.objects.check_id(request,int(import_owner)):
+                return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"项目组没有使用权限！"}))
+            OWNER_PROJECT_ID=import_owner
         for chunk in myFile.chunks():
             toolJson+=chunk
-        log.info(toolJson)
+        toolDic=eval(toolJson)
+
+        with transaction.atomic():
+            tooltype,create=T_TOOLTYPE.objects.get_or_create(NAME=toolDic['type'])
+            tooltype.save()
+
+            tool = T_TOOL(NAME=toolDic['tool']['NAME'], DESCRIPTION=toolDic['tool']['DESCRIPTION'], TOOLTYPE_ID=tooltype,SCRIPT_LANGUAGE=toolDic['tool']['SCRIPT_LANGUAGE'],SCRIPT_CODE=toolDic['tool']['SCRIPT_CODE'],ICON=toolDic['tool']['ICON'],DANGER_LEVEL=toolDic['tool']['DANGER_LEVEL'],
+                          OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                          CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'],
+                          )
+            tool.save()
+            #批量添加输入输出参数
+            false=False
+            true=True
+            inputParam_list=list()
+            for item in toolDic['toolinput']:
+                if not str(item)=='0':
+
+                    inputparam=T_TOOL_INPUT(NAME=item['fields']['NAME'], DESCRIPTION=item['fields']['DESCRIPTION'],DEFAULT=item['fields']['DEFAULT'],ISREQUIRED=item['fields']['ISREQUIRED'],TYPE=int(item['fields']['TYPE']),T_TOOL_ID=tool,
+                                            OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                            CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                    inputParam_list.append(inputparam)
+            T_TOOL_INPUT.objects.bulk_create(inputParam_list)
+
+            outputParam_list=list()
+            for item in toolDic['tooloutput']:
+                if not str(item)=='0':
+                    outputparam=T_TOOL_OUTPUT(NAME=item['fields']['NAME'], DESCRIPTION=item['fields']['DESCRIPTION'],TYPE=int(item['fields']['TYPE']),T_TOOL_ID=tool,
+                                              OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
+                                              CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
+                    outputParam_list.append(outputparam)
+            T_TOOL_OUTPUT.objects.bulk_create(outputParam_list)
+            #触发信号
+            tool_create.send(sender='tool_add',toolname=tool.NAME)
+
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] ="成功"
     except Exception, ex:
