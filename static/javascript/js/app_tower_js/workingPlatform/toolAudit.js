@@ -182,5 +182,41 @@ function deleteTool() {
 
 }
 
+//工具导出
+function toolExport() {
+    var toolid=$('#toolid').val();
+    $.ajax({
+        url:"/app_tower/workingPlatform/tool_export",
+        type:"POST",
+        data:{
+            toolid:toolid
+        },
+        dataType:"json",
+        success:function(data){
+            if (data.resultCode=="0087"){
+                alert(data.resultDesc);
+                top.location.href ='/login'
+            }
+            if(data.resultCode=="0057"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0001"){
+                opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                return;
+            }
+            if(data.resultCode=="0000"){
+                window.open("/app_tower/workingPlatform/tool_export/download?filepath="+data.filepath+"&filename="+data.filename);
+            }
+        },
+
+        error:function(data){
+            opt_commons.dialogShow("错误信息","error",2000);
+
+
+        },
+    });
+}
+
 
 //@ sourceURL=toolAudit.js

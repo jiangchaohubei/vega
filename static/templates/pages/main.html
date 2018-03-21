@@ -56,19 +56,19 @@
                         <li {% if 'jobTemplete_select' not in PERMISSIONNAMELIST and 'jobTemplete_add' not in PERMISSIONNAMELIST and 'jobTemplete_delete' not in PERMISSIONNAMELIST and 'jobTemplete_update' not in PERMISSIONNAMELIST and 'jobTemplete_run' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobTemplete/jobTemplate.html" data-index="3"><i class="fa-fw fa fa-book"></i>任务模板</a></li>
                         <li {% if 'jobs_select' not in PERMISSIONNAMELIST and 'jobs_delete' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/jobs/jobs.html" data-index="3"><i class="fa-fw fa fa-tasks"></i>任务</a></li>
                         <li {% if 'runSH' not in PERMISSIONNAMELIST and 'searchProcess' not in PERMISSIONNAMELIST and 'changeProcess' not in PERMISSIONNAMELIST and 'updateSudo' not in PERMISSIONNAMELIST and 'searchLog' not in PERMISSIONNAMELIST and 'copyFile' not in PERMISSIONNAMELIST and 'searchSN' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/commands/commands.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>commands</a></li>
-                        <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/timerTask/timerTask.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>定时任务</a></li>
-                        <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/workingPlatform/working.html" data-index="3"><i class="fa fa-fw fa-th-large"></i>作业平台</a></li>
+                        <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/timerTask/timerTask.html" data-index="3"><i class="glyphicon glyphicon-time"></i>定时任务</a></li>
+                        <li ><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/workingPlatform/working.html" data-index="3"><i class="fa fa-wrench"></i>作业平台</a></li>
 
                     </ul>
                 </li>
                 <li class="">
-                    <a><i class="fa fa fa-comment-o"></i>
+                    <a><i class="fa fa-gears"></i>
                         <span class="nav-label">系统配置管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
-                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/system/system.html" data-index="3"><i class="fa fa fa-comment-o"></i>系统管理</a></li>
-                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/module/module.html" data-index="3"><i class="fa fa fa-comment-o"></i>模块管理</a></li>
-                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/software/software.html" data-index="3"><i class="fa fa fa-comment-o"></i>程序管理</a></li>
-                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/host/host.html" data-index="3"><i class="fa fa fa-comment-o"></i>主机管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/system/system.html" data-index="3"><i class="fa fa-cube"></i>系统管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/module/module.html" data-index="3"><i class="fa fa-folder"></i>模块管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/software/software.html" data-index="3"><i class="fa fa-link"></i>程序管理</a></li>
+                        <li><a class="J_menuItem" href="/static/templates/pages/app_cmdb_pages/host/host.html" data-index="3"><i class="fa fa-hdd-o"></i>主机管理</a></li>
 
 
                     </ul>
@@ -87,7 +87,7 @@
                     <ul class="nav nav-second-level collapse ">
                         <li {% if 'JobStatus_select' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/authority/datastatistics.html" data-index="3"><i class="fa-fw fa fa-line-chart"></i>数据统计</a></li>
                         <li {% if 'sudo_select' not in PERMISSIONNAMELIST and 'callbackSudo' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/commands/commandstatistics.html" data-index="3"><i class="fa-fw fa fa-table"></i>sudo权限统计</a></li>
-                        <li {% if 'operation_select' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/operation/operation_recoder.html" data-index="3"><i class="fa-fw fa fa-table"></i>操作记录统计</a></li>
+                        <li {% if 'operation_select' not in PERMISSIONNAMELIST %}style="display:none " {% endif %}><a class="J_menuItem" href="/static/templates/pages/app_tower_pages/operation/operation_recoder.html" data-index="3"><i class="glyphicon glyphicon-list-alt"></i>操作记录统计</a></li>
                     </ul>
                 </li>
                 <li class="">

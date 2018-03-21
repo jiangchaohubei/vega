@@ -133,6 +133,9 @@ urlpatterns = patterns('inventories',
                        url(r'^workingPlatform/tool_audit$', workingPlatform.tool_audit),
                        url(r'^workingPlatform/get_event', workingPlatform.get_event),
 
+                       url(r'^workingPlatform/tool_export', workingPlatform.tool_export),
+                       url(r'^workingPlatform/tool_export/download', workingPlatform.tool_download),
+
 
 
                        url(r'^message/message_init$', message.message_init),

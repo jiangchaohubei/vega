@@ -938,3 +938,74 @@ def stop_tool(request):
     return HttpResponse(json.dumps({'success':'true','status':result.status}))
 
 
+#导出工具
+
+def tool_export(request):
+    response_data = {}
+    log.info('tool_export start')
+    toolDetail={}
+    try:
+
+        if request.POST["toolid"]:
+            toolid = request.POST["toolid"]
+        tool=T_TOOL.objects.get(id=int(toolid))
+
+        toolinput=tool.T_TOOL_ID_T_TOOL_INPUT.all()
+        tooloutput=tool.T_TOOL_ID_T_TOOL_OUTPUT.all()
+        toolinputList = serializers.serialize('json', toolinput, ensure_ascii=False)
+        tooloutputList = serializers.serialize('json', tooloutput, ensure_ascii=False)
+        true = True
+        false=False
+        null = None
+        toolDetail['tool']=model_to_dict(tool)
+        toolDetail['type']=tool.TOOLTYPE_ID.NAME
+        toolDetail['toolinput']=eval(toolinputList)
+        toolDetail['tooloutput']=eval(tooloutputList)
+
+        exporttime=time.time()
+        exportRoot = str(os.getcwd()) + "/export/"+tool.NAME+exporttime+".json"
+        fl=open(exportRoot, 'w')
+        fl.write(json.dumps(toolDetail,ensure_ascii=False,indent=2))
+        fl.close()
+
+        response_data['resultCode'] = '0000'
+        response_data['filepath'] =exportRoot
+        response_data['filename'] =tool.NAME
+        response_data['resultDesc'] = 'Success'
+    except Exception, ex:
+        traceback.print_exc()
+        log.error(ex.__str__())
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = ex.__str__()
+    log.info('tool_export end')
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+
+
+def tool_download(request):
+    response_data={}
+    form={}
+    log.info('tool_download start')
+    form["filepath"]=request.GET['filepath']
+    form["filename"]=request.GET['filename']
+    form["filetype"]=".json"
+    # 下载文件
+    def readFile(fn, buf_size=262144):  # 大文件下载，设定缓存大小
+        f = open(fn, "rb")
+        while True:  # 循环读取
+            c = f.read(buf_size)
+            if c:
+                yield c
+            else:
+                break
+        f.close()
+
+    response = HttpResponse(readFile(form["filepath"]),
+                            content_type='APPLICATION/OCTET-STREAM')  # 设定文件头，这种设定可以让任意文件都能正确下载，而且已知文本文件不是本地打开
+    response['Content-Disposition'] = 'attachment; filename=' + form["filename"] + form["filetype"] # 设定传输给客户端的文件名称
+    response['Content-Length'] = os.path.getsize(form["filepath"])  # 传输给客户端的文件大小
+    log.info('system_download end')
+    # 导出成功之后   删除服务器上的文件
+    os.remove(form["filepath"])
+    return response
+
+
