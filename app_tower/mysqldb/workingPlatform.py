@@ -19,6 +19,9 @@ from celery.result import AsyncResult
 from django.utils.timezone import now, timedelta
 from authority.permission import PermissionVerify
 from app_tower.signals import tool_passaudit,tool_create
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 import logging
 log = logging.getLogger("working")
 
@@ -986,8 +989,9 @@ def tool_download(request):
     form={}
     log.info('tool_download start')
     form["filepath"]=request.GET['filepath']
-    form["filename"]=request.GET['filename']
+    form["filename"]=request.GET['filename'].encode('utf8')
     form["filetype"]=".json"
+    log.info(form["filename"])
     # 下载文件
     def readFile(fn, buf_size=262144):  # 大文件下载，设定缓存大小
         f = open(fn, "rb")
@@ -1003,7 +1007,7 @@ def tool_download(request):
                             content_type='APPLICATION/OCTET-STREAM')  # 设定文件头，这种设定可以让任意文件都能正确下载，而且已知文本文件不是本地打开
     response['Content-Disposition'] = 'attachment; filename=' + form["filename"] + form["filetype"] # 设定传输给客户端的文件名称
     response['Content-Length'] = os.path.getsize(form["filepath"])  # 传输给客户端的文件大小
-    log.info('system_download end')
+    log.info('tool_download end')
     # 导出成功之后   删除服务器上的文件
     os.remove(form["filepath"])
     return response
