@@ -1040,8 +1040,14 @@ def leadinginTool(request):
             OWNER_PROJECT_ID=import_owner
         for chunk in myFile.chunks():
             toolJson+=chunk
+        false=False
+        true=True
+        null=None
         toolDic=eval(toolJson)
-
+        if T_TOOL.objects.filter(NAME=toolDic['tool']['NAME']).exists():
+            response_data['resultCode']='0001'
+            response_data['resultDesc']='工具名称已存在，名称不能重复！'
+            return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
         with transaction.atomic():
             tooltype,create=T_TOOLTYPE.objects.get_or_create(NAME=toolDic['type'])
             tooltype.save()
@@ -1052,8 +1058,7 @@ def leadinginTool(request):
                           )
             tool.save()
             #批量添加输入输出参数
-            false=False
-            true=True
+
             inputParam_list=list()
             for item in toolDic['toolinput']:
                 if not str(item)=='0':
