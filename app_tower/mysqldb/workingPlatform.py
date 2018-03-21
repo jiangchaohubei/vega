@@ -46,6 +46,11 @@ def toolshop_init(request):
     tool_0 = T_TOOL.objects.all().filter(AUDIT_STATUS=0)
     tool_1 = T_TOOL.objects.all().filter(AUDIT_STATUS=1)
     tool_2 = T_TOOL.objects.all().filter(AUDIT_STATUS=2)
+    project=T_PROJECT.objects.check_own(request)
+
+    true = True
+    null = None
+    false=False
 
     for t in tool_0:
         t.ARGS1=t.TOOLTYPE_ID.NAME
@@ -56,6 +61,7 @@ def toolshop_init(request):
     toolList0 = serializers.serialize('json', tool_0, ensure_ascii=False)
     toolList1 = serializers.serialize('json', tool_1, ensure_ascii=False)
     toolList2 = serializers.serialize('json', tool_2, ensure_ascii=False)
+    projectList = serializers.serialize('json', project, ensure_ascii=False)
     #已经导入的工具
     tools=User.objects.get(id=request.session['userId']).tools.all().filter(AUDIT_STATUS=1)
     for t in tools:
@@ -67,7 +73,7 @@ def toolshop_init(request):
     null = None
     #log.info('userList：'+userList)
     log.info('toolshop_init end')
-    return HttpResponse(json.dumps({'resultCode':'0000','toolimported':eval(toolimported),'tools_audited': eval(toolList1),'tools_notaudited': eval(toolList0),'tools_failaudited': eval(toolList2)}))
+    return HttpResponse(json.dumps({'resultCode':'0000','toolimported':eval(toolimported),'tools_audited': eval(toolList1),'tools_notaudited': eval(toolList0),'tools_failaudited': eval(toolList2),'projectList': eval(projectList)}))
 
 #初始化工具创建页面
 def toolcreate_init(request):
@@ -991,7 +997,6 @@ def tool_download(request):
     form["filepath"]=request.GET['filepath']
     form["filename"]=request.GET['filename'].encode('utf8')
     form["filetype"]=".json"
-    log.info(form["filename"])
     # 下载文件
     def readFile(fn, buf_size=262144):  # 大文件下载，设定缓存大小
         f = open(fn, "rb")
@@ -1007,9 +1012,27 @@ def tool_download(request):
                             content_type='APPLICATION/OCTET-STREAM')  # 设定文件头，这种设定可以让任意文件都能正确下载，而且已知文本文件不是本地打开
     response['Content-Disposition'] = 'attachment; filename=' + form["filename"] + form["filetype"] # 设定传输给客户端的文件名称
     response['Content-Length'] = os.path.getsize(form["filepath"])  # 传输给客户端的文件大小
-    log.info('tool_download end')
+    log.info('system_download end')
     # 导出成功之后   删除服务器上的文件
     os.remove(form["filepath"])
     return response
 
-
+#导入工具
+def leadinginTool(request):
+    response_data = {}
+    log.info("leadinginTool start")
+    try:
+        toolJson=""
+        myFile = request.FILES.get("inputFile", None)  # 获取上传的文件，如果没有文件，则默认为None
+        for chunk in myFile.chunks():
+            toolJson+=chunk
+        log.info(toolJson)
+        response_data['resultCode'] = '0000'
+        response_data['resultDesc'] ="成功"
+    except Exception, ex:
+        traceback.print_exc()
+        log.error(ex.__str__())
+        response_data['resultCode'] = '0001'
+        response_data['resultDesc'] = ex.__str__()
+    log.info("leadinginTool end")
+    return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")

@@ -135,6 +135,7 @@ urlpatterns = patterns('inventories',
 
                        url(r'^workingPlatform/tool_export$', workingPlatform.tool_export),
                        url(r'^workingPlatform/tool_export/download$', workingPlatform.tool_download),
+                       url(r'^workingPlatform/leadinginTool$', workingPlatform.leadinginTool),
 
 
 

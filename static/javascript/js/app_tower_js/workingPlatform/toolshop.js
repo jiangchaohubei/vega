@@ -24,6 +24,9 @@ function onload_toolshop() {
                 return;
             }
             if(data.resultCode=="0000"){
+                for (var i=0;i<data.projectList.length;i++){
+                    $('#leadingin_owner').append('<option value="'+data.projectList[i].pk+'">'+data.projectList[i].fields.NAME+'</option>')
+                }
                 var htmlstr_audited=""
                 for (var j=0;j<data.tools_audited.length;j++){
                     var iconColor='green'
@@ -224,6 +227,51 @@ function importTool(toolId) {
     });
 }
 
+
+//外部工具导入
+function leadinginTool() {
+
+        var formData = new FormData($( "#leadinginForm" )[0]);
+        formData.append("owner",$('#leadingin_owner').val());
+        $.ajax({
+                url:"/app_tower/workingPlatform/leadinginTool",
+                type:"POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(data){
+                    if (data.resultCode=="0087"){
+                        alert(data.resultDesc);
+                        top.location.href ='/login'
+                    }
+                    if(data.resultCode=="0057"){
+                        opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                        return;
+                    }
+                    if(data.resultCode=="0001"){
+                        opt_commons.dialogShow("提示信息",data.resultDesc,2000);
+                        return;
+                    }
+                    if(data.resultCode=="0000"){
+
+                        $("#leadinginModal").modal("hide");
+
+                        opt_commons.dialogShow("成功信息",data.resultDesc,2000);
+                        location.reload();
+                        return;
+                    }
+                },
+                error: function(data) {
+                    opt_commons.dialogShow("错误","error",2000);
+
+
+                },
+            }
+        )
+
+}
 
 
 //@ sourceURL=toolshop.js
