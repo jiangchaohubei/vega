@@ -200,7 +200,7 @@ function runTool() {
                                         event_sumarise_init($("#log_toolEventId").val())
                                     }}
 
-                                , 1000)
+                                , 2000)
 
                         },
                         error: function () {
