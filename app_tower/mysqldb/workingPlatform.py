@@ -476,7 +476,7 @@ def tool_select(request):
         ordername='id'
         if request.GET.get('ordername'):
             ordername= str(request.GET.get('ordername'))
-        ordername.replace('fields.','')
+        ordername=ordername.replace('fields.','')
         orderBy=order+ordername
         name = ''
         description = ''
@@ -532,7 +532,7 @@ def history_select(request):
         ordername='id'
         if request.GET.get('ordername'):
             ordername= str(request.GET.get('ordername'))
-        ordername.replace('fields.','')
+        ordername=ordername.replace('fields.','')
         orderBy=order+ordername
         name = ''
         description = ''
