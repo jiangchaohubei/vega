@@ -1040,9 +1040,10 @@ def leadinginTool(request):
             OWNER_PROJECT_ID=import_owner
         for chunk in myFile.chunks():
             toolJson+=chunk
+
         false=False
-        true=True
         null=None
+        true=True
         toolDic=eval(toolJson)
         if T_TOOL.objects.filter(NAME=toolDic['tool']['NAME']).exists():
             response_data['resultCode']='0001'
