@@ -204,6 +204,7 @@ function runTool() {
 
                         },
                         error: function () {
+                            $('#runAnimate').fadeOut('slow');
                             console.log("error");
                         },
                         complete: function (XMLHttpRequest, textStatus) {
@@ -218,7 +219,7 @@ function runTool() {
             }
         },
         error: function(data) {
-
+            $('#runAnimate').fadeOut('slow');
             opt_commons.dialogShow("错误","error",2000);
             console.log("error");
 

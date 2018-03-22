@@ -740,11 +740,15 @@ function readLog(id, file) {
                 $("#log").scrollTop($("#log")[0].scrollHeight);
                 setTimeout(function () {
                     if (data.read_flag == 'True') {
+                        $('#runAnimate').fadeToggle('slow');
                         seek();
+                    }else{
+                        $('#runAnimate').fadeOut('slow');
                     }
                 }, 1000)
             },
             error: function () {
+                $('#runAnimate').fadeOut('slow');
                 console.log("error");
             },
             complete: function (XMLHttpRequest, textStatus) {

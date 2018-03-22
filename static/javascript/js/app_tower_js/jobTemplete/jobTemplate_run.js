@@ -43,6 +43,7 @@ function onload_jobrun() {
     var seek = 0;
     getlog(seek);
     function getlog(se) {
+
         $.ajax({
             type: 'POST',
             url: "/app_tower/job/read_job_log",
@@ -104,8 +105,10 @@ function onload_jobrun() {
                 $("#textscroll").scrollTop($("#textscroll")[0].scrollHeight);
                 setTimeout(function () {
                     if (result.read_flag == 'True') {
+                        $('#runAnimate').fadeToggle('slow');
                         getlog(seek)
                     }else{
+                        $('#runAnimate').fadeOut('slow');
                         event_sumarise_init(jobsid)
                     }}
 
@@ -113,6 +116,7 @@ function onload_jobrun() {
 
             },
             error: function () {
+                $('#runAnimate').fadeOut('slow');
                 console.log("error");
             },
             complete: function (XMLHttpRequest, textStatus) {

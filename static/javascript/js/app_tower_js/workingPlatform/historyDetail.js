@@ -117,6 +117,7 @@ function init(toolEventId) {
     })
 }
 function getlog(taskid,logfile) {
+    $('#runAnimate').fadeToggle('slow');
     $.ajax({
         type: 'POST',
         url: "/app_tower/workingPlatform/read_log",
@@ -128,6 +129,7 @@ function getlog(taskid,logfile) {
         },
         dataType: "json",
         success: function (data) {
+            $('#runAnimate').fadeToggle('slow');
             if (data.resultCode=="0087"){
                 alert(data.resultDesc);
                 top.location.href ='/login'
@@ -176,8 +178,10 @@ function getlog(taskid,logfile) {
             $("#run_log").scrollTop($("#run_log")[0].scrollHeight);
             setTimeout(function () {
                     if (result.read_flag == 'True') {
+                        $('#runAnimate').fadeToggle('slow');
                         getlog($("#log_taskid").val(), $("#log_logfile").val())
                     }else{
+                        $('#runAnimate').fadeOut('slow');
                         event_sumarise_init($("#log_toolEventId").val())
                     }}
 
@@ -185,6 +189,7 @@ function getlog(taskid,logfile) {
 
         },
         error: function () {
+                $('#runAnimate').fadeOut('slow');
             console.log("error");
         },
         complete: function (XMLHttpRequest, textStatus) {
