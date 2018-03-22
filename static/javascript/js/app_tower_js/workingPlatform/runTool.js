@@ -93,6 +93,7 @@ function runTool() {
         },
         dataType:"json",
         success:function(data){
+            $('#runAnimate').fadeToggle('slow');
             if (data.resultCode=="0087"){
                 alert(data.resultDesc);
                 top.location.href ='/login'
@@ -143,6 +144,7 @@ function runTool() {
                         },
                         dataType: "json",
                         success: function (data) {
+                            $('#runAnimate').fadeToggle('slow');
                             if (data.resultCode=="0087"){
                                 alert(data.resultDesc);
                                 top.location.href ='/login'
@@ -191,8 +193,10 @@ function runTool() {
                             $("#run_log").scrollTop($("#run_log")[0].scrollHeight);
                             setTimeout(function () {
                                     if (result.read_flag == 'True') {
+                                        $('#runAnimate').fadeToggle('slow');
                                         getlog(seek)
                                     }else{
+                                        $('#runAnimate').fadeOut('slow');
                                         event_sumarise_init($("#log_toolEventId").val())
                                     }}
 

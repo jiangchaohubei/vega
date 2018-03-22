@@ -281,15 +281,29 @@
     <a class="fa fa-angle-double-left" style="font-size: xx-large;color: #00abf8;text-decoration: none;top: 50%" aria-hidden="true" href="javascript:void(0);" onclick="showRunModal()"></a>
 </div>
 <style>
-    .img1 {
-        transition: All 0.4s ease-in-out;
-        -webkit-transition: All 0.4s ease-in-out;
-        -moz-transition: All 0.4s ease-in-out;
-        -o-transition: All 0.4s ease-in-out;
+    .animate {
+
+        -webkit-animation:gogogo 2s infinite linear ;
     }
+    @-webkit-keyframes gogogo {
+        0% {
+
+            -webkit-transform: rotate(0deg);
+
+        }
+        50% {
+            -webkit-transform: rotate(180deg);
+
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+
+        }
+    }
+
 </style>
-<div style="position: fixed;bottom:50px;right:50px;width:150px;height:70px;border:2px solid #dededd;;background-color:#ffffff;border-radius: 5%;padding-top: 20px;padding-left: 20px;box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);">
-    <i class="fa fa-cog img1" style="font-size: xx-large;color: #00abf8;text-decoration: none;" aria-hidden="true"></i><span style="font-size: x-large;">运行中</span>
+<div id="runAnimate" style="position: fixed;bottom:100px;right:50px;width:150px;height:70px;border:2px solid #dededd;;background-color:#ffffff;border-radius: 5%;padding-top: 20px;padding-left: 20px;box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);">
+    <i class="fa fa-cog animate" style="font-size: xx-large;color: #00abf8;text-decoration: none;" aria-hidden="true"></i><span style="font-size: x-large;">运行中</span>
 </div>
 <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
 <script src="/static/js/bootstrap/js/jquery-3.2.1.min.js"></script>
