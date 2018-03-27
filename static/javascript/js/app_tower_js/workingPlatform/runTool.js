@@ -41,7 +41,7 @@ function onload_runTool() {
                         var enums=JSON.parse(data.toolinput[i].fields.ENUM)
                         var enumstr=''
                         if (enums){
-                            for (var j;j<enums.length;j++){
+                            for (var j=0;j<enums.length;j++){
                                 enumstr+= '<option value="'+enums[j]+'">'+enums[j]+'</option>'
                             }
                         }
