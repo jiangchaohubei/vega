@@ -40,9 +40,12 @@ function onload_runTool() {
                     if (data.toolinput[i].fields.TYPE==3){
                         var enums=JSON.parse(data.toolinput[i].fields.ENUM)
                         var enumstr=''
-                        for (var j;j<enums.length;j++){
-                            enumstr+= '<option value="'+enums[j]+'">'+enums[j]+'</option>'
+                        if (enums){
+                            for (var j;j<enums.length;j++){
+                                enumstr+= '<option value="'+enums[j]+'">'+enums[j]+'</option>'
+                            }
                         }
+
                         $('#inputList').append(
                             '<div >'+
                             '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+data.toolinput[i].fields.NAME+'</label>'+

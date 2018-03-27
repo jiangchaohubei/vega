@@ -99,9 +99,12 @@ function showInputModal(id) {
     $('#update_input_isrequired').prop("checked", INPUTPARAM[parseInt(id)].isrequired);
     $('#enumInputList').html('')
     var enums=INPUTPARAM[parseInt(id)].enums
-    for (var i=0;i<enums.length;i++){
-        $('#enumInputList').append('<input type="text" value="'+enums[i]+'"  class="form-control">')
+    if(enums){
+        for (var i=0;i<enums.length;i++){
+            $('#enumInputList').append('<input type="text" value="'+enums[i]+'"  class="form-control">')
+        }
     }
+
     $('#updateInputParamModal').modal('show')
 
 }

@@ -95,6 +95,9 @@ function  onload_editTool() {
                     var def=data.toolinput[i].fields.DEFAULT
                     var isrequired=data.toolinput[i].fields.ISREQUIRED
                     var enums=JSON.parse(data.toolinput[i].fields.ENUM)
+                    if (!enums){
+                        enums=[]
+                    }
                     var input={
                         name:name,
                         des:des,
@@ -114,11 +117,7 @@ function  onload_editTool() {
                         '</div>'+
                         '</div>'
                     )
-                    if (type==3){
-                        for (var i=0;i<enums.length;i++){
-                            $('#enumInputList').append('<input type="text" value="'+enums[i]+'"  class="form-control">')
-                        }
-                    }
+
 
 
                 }
@@ -204,8 +203,10 @@ function showInputModal(id) {
     $('#update_input_isrequired').prop("checked", INPUTPARAM[parseInt(id)].isrequired);
     $('#enumInputList').html('')
     var enums=INPUTPARAM[parseInt(id)].enums
-    for (var i=0;i<enums.length;i++){
-        $('#enumInputList').append('<input type="text" value="'+enums[i]+'"  class="form-control">')
+    if(enums) {
+        for (var i = 0; i < enums.length; i++) {
+            $('#enumInputList').append('<input type="text" value="' + enums[i] + '"  class="form-control">')
+        }
     }
     $('#updateInputParamModal').modal('show')
 
