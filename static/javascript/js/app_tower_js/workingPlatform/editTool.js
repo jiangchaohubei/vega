@@ -165,7 +165,7 @@ function addInputParam() {
     var isrequired=$('#add_input_isrequired').is(":checked")
     var enums=[]
     if (type==3){
-        $('#enumInputList input').forEach(function (v,n) {
+        $('#enumInputList input').each(function (n,v) {
             var enumInput=$(v).val()
             if (enumInput){
                 enums.push(enumInput)
