@@ -710,7 +710,7 @@ def tool_run(request):
                     skip_Tags=skiptagstr.split(',')
                     skip_Tags.pop()
                     skipTags.extend(skip_Tags)
-                elif param['type']=='7' and param['value']:
+                elif param['type']=='7' or param['type']=='0' or param['type']=='3' and param['value']:
                     extraVariable[param['name']]=param['value']
                 elif param['type']=='8' and param['value']:
                     if  param['value']== '-s' :
@@ -737,6 +737,8 @@ def tool_run(request):
             su=False
             for param in eval(form['inputParams']):
                 if param['type']=='0' and param['value']:
+                    vars+=param['name']+"="+param['value']+"\n"
+                elif param['type']=='3' and param['value']:
                     vars+=param['name']+"="+param['value']+"\n"
                 elif param['type']=='8' and param['value']:
                     if  param['value']== '-s' :
@@ -816,7 +818,7 @@ def tool_reRun(request):
                     skip_Tags=skiptagstr.split(',')
                     skip_Tags.pop()
                     skipTags.extend(skip_Tags)
-                elif param['type']=='7' and param['value']:
+                elif param['type']=='7' or param['type']=='0' or param['type']=='3' and param['value']:
                     extraVariable[param['name']]=param['value']
                 elif param['type']=='8' and param['value']:
                     if  param['value']== '-s' :
@@ -842,7 +844,7 @@ def tool_reRun(request):
             sudo=False
             su=False
             for param in eval(tool_event2.INPUTPARAMS):
-                if param['type']=='0' and param['value']:
+                if param['type']=='0' or param['type']=='3' and param['value']:
                     vars+=param['name']+"="+param['value']+"\n"
                 elif param['type']=='8' and param['value']:
                     if  param['value']== '-s' :
