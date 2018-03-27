@@ -42,7 +42,11 @@ function onload_runTool() {
                         var enumstr=''
                         if (enums){
                             for (var j=0;j<enums.length;j++){
-                                enumstr+= '<option value="'+enums[j]+'">'+enums[j]+'</option>'
+                                if (data.toolinput[i].fields.DEFAULT==enums[j]){
+                                    enumstr+= '<option selected value="'+enums[j]+'">'+enums[j]+'</option>'
+                                }else {
+                                    enumstr += '<option value="' + enums[j] + '">' + enums[j] + '</option>'
+                                }
                             }
                         }
 
