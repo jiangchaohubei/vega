@@ -36,14 +36,33 @@ function onload_runTool() {
                     $('#runTool_credentials').append("<option value='" + data.credentialsList[i].pk + "'>" + data.credentialsList[i].fields.NAME + "</option>");
                 }
                 for (var i=0;i<data.toolinput.length;i++){
-                    $('#inputList').append(
-                        '<div >'+
-                        '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+data.toolinput[i].fields.NAME+'</label>'+
-                        '<div class="controls col-md-10" style="height:64px;">'+
-                        '<input type="text" class="form-control" param_type="'+data.toolinput[i].fields.TYPE+'" value="'+data.toolinput[i].fields.DEFAULT+'" placeholder="'+data.toolinput[i].fields.DESCRIPTION+'" name="'+data.toolinput[i].fields.NAME+'" >&nbsp;'+
-                        '</div>'+
-                        ' </div>'
-                    )
+
+                    if (data.toolinput[i].fields.TYPE==3){
+                        var enums=JSON.parse(data.toolinput[i].fields.ENUM)
+                        var enumstr=''
+                        for (var j;j<enums.length;j++){
+                            enumstr+= '<option value="'+enums[j]+'">'+enums[j]+'</option>'
+                        }
+                        $('#inputList').append(
+                            '<div >'+
+                            '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+data.toolinput[i].fields.NAME+'</label>'+
+                            '<div class="controls col-md-10" style="height:64px;">'+
+                            '<select type="text" class="form-control" param_type="'+data.toolinput[i].fields.TYPE+'" value="'+data.toolinput[i].fields.DEFAULT+'" placeholder="'+data.toolinput[i].fields.DESCRIPTION+'" name="'+data.toolinput[i].fields.NAME+'" >&nbsp;'+
+                            enumstr+
+                            '</select>'+
+                            '</div>'+
+                            ' </div>'
+                        )
+                    }else{
+                        $('#inputList').append(
+                            '<div >'+
+                            '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+data.toolinput[i].fields.NAME+'</label>'+
+                            '<div class="controls col-md-10" style="height:64px;">'+
+                            '<input type="text" class="form-control" param_type="'+data.toolinput[i].fields.TYPE+'" value="'+data.toolinput[i].fields.DEFAULT+'" placeholder="'+data.toolinput[i].fields.DESCRIPTION+'" name="'+data.toolinput[i].fields.NAME+'" >&nbsp;'+
+                            '</div>'+
+                            ' </div>'
+                        )
+                    }
                 }
 
 
@@ -73,6 +92,16 @@ function runTool() {
     }
     var inputParams=[]
     $('#inputList input').each(function (n,v) {
+        var input={}
+        var name=$(v).attr('name')
+        var type=$(v).attr('param_type')
+        var value=$(v).val()
+        input['name']=name
+        input['value']=value
+        input['type']=type
+        inputParams.push(input)
+    })
+    $('#inputList select').each(function (n,v) {
         var input={}
         var name=$(v).attr('name')
         var type=$(v).attr('param_type')

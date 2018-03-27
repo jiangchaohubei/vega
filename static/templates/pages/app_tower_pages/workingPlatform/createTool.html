@@ -154,7 +154,7 @@
                 <label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">输入定义<span class="asteriskField">*</span> </label>
                 <div class="controls col-md-8" style="">
                     <div class="form-preview">
-                        <button type="button" class="btn btn-hover btn-default ng-scope" data-toggle="modal"  data-target="#addInputParamModal">
+                        <button type="button" class="btn btn-hover btn-default ng-scope" onclick="showAddInputParamModal()" >
                             <i class="glyphicon glyphicon-plus"></i> 添加输入参数
                         </button>
                             <div id="inputList">
@@ -231,17 +231,23 @@
                     </div>
                     <div class="form-group" style="margin: 10px">
                         <label class="control-label">参数类型：</label>
-                        <select class="form-control" id="add_input_type">
+                        <div class="col-md-12" style="margin-left: -12px">
+                        <select class="form-control col-md-10" id="add_input_type" onchange="document.getElementById('setEnumBt').style.display= this.value==3 ? 'block' :'none' ">
                             <option value="0">单行字符串</option>
                             <option value="1">多行字符串</option>
                             <option value="2">整型</option>
-                            <option value="3">枚举</option>
+                            <option value="3" >枚举</option>
                             <option value="4">IP列表</option>
                             <option value="5">JobTags</option>
                             <option value="6">SkipTags</option>
                             <option value="7">ExtraVariable</option>
                             <option value="8">执行时参数（目前只支持-s,-S）</option>
                         </select>
+                            <button type="button" id="setEnumBt" style="  width:50px;height:34px"  class="btn btn-default col-md-2"
+                                    data-toggle="modal"  data-target="#enumModal" >
+                                <span class="fa fa-cog" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group" style="margin: 10px">
                         <label class="control-label">默认值：</label>
@@ -261,6 +267,30 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div><!-- /.modal -->
+<!-- 枚举模态框（Modal） -->
+<div class="modal fade" id="enumModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="myModalLabel">枚举</h4>
+            </div>
+            <div class="modal-body" id="enumModalBody">
+                <div id="enumInputList">
+                <input type="text"  class="form-control">
+                </div>
+                <button type="button" class="btn btn-hover btn-default" onclick="addEnumInput()" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </div>
+            <div class="modal-footer">
+<!--           <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addEnum()">取消</button>-->
+                <button type="button" class="btn btn-primary" data-dismiss="modal" >确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
     <!--修改输入参数模态框-->
     <div class="modal fade" id="updateInputParamModal">
         <div class="modal-dialog">
@@ -282,18 +312,24 @@
                         </div>
                         <div class="form-group" style="margin: 10px">
                             <label class="control-label">参数类型：</label>
-                            <select class="form-control" id="update_input_type">
-                                <option value="0">单行字符串</option>
-                                <option value="1">多行字符串</option>
-                                <option value="2">整型</option>
-                                <option value="3">枚举</option>
-                                <option value="4">IP列表</option>
-                                <option value="5">JobTags</option>
-                                <option value="6">SkipTags</option>
-                                <option value="7">ExtraVariable</option>
-                                <option value="8">执行时参数（目前只支持-s,-S）</option>
+                            <div class="col-md-12" style="margin-left: -12px">
+                                <select class="form-control" id="update_input_type" onchange="document.getElementById('setUpdateEnumBt').style.display= this.value==3 ? 'block' :'none' ">
+                                    <option value="0">单行字符串</option>
+                                    <option value="1">多行字符串</option>
+                                    <option value="2">整型</option>
+                                    <option value="3">枚举</option>
+                                    <option value="4">IP列表</option>
+                                    <option value="5">JobTags</option>
+                                    <option value="6">SkipTags</option>
+                                    <option value="7">ExtraVariable</option>
+                                    <option value="8">执行时参数（目前只支持-s,-S）</option>
 
-                            </select>
+                                </select>
+                                <button type="button" id="setUpdateEnumBt" style="  width:50px;height:34px"  class="btn btn-default col-md-2"
+                                        data-toggle="modal"  data-target="#enumModal" >
+                                    <span class="fa fa-cog" aria-hidden="true"></span>
+                                </button>
+                            </div>
                         </div>
                         <div class="form-group" style="margin: 10px">
                             <label class="control-label">默认值：</label>

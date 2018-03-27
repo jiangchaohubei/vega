@@ -94,15 +94,18 @@ function  onload_editTool() {
                     var type=data.toolinput[i].fields.TYPE
                     var def=data.toolinput[i].fields.DEFAULT
                     var isrequired=data.toolinput[i].fields.ISREQUIRED
+                    var enums=JSON.parse(data.toolinput[i].fields.ENUM)
                     var input={
                         name:name,
                         des:des,
                         type:type,
                         def:def,
-                        isrequired:isrequired
+                        isrequired:isrequired,
+                        enums:enums
                     }
                     var id=INPUTPARAM.push(input)-1
                     var inputid="input"+id
+
                     $('#inputList').append(
                         '<div class="inputItem" id="'+inputid+'" onclick="showInputModal('+id+')">'+
                         '<label for="inventory" class="control-label col-md-2  requiredField" style="height:64px;line-height:50px;text-align:center">'+name+':</label>'+
@@ -111,6 +114,13 @@ function  onload_editTool() {
                         '</div>'+
                         '</div>'
                     )
+                    if (type==3){
+                        for (var i=0;i<enums.length;i++){
+                            $('#enumInputList').append('<input type="text" value="'+enums[i]+'"  class="form-control">')
+                        }
+                    }
+
+
                 }
                 for (var i=0;i<data.tooloutput.length;i++){
                     var name=data.tooloutput[i].fields.NAME
@@ -154,12 +164,22 @@ function addInputParam() {
     var type=$('#add_input_type').val()
     var def=$('#add_input_default').val()
     var isrequired=$('#add_input_isrequired').is(":checked")
+    var enums=[]
+    if (type==3){
+        $('#enumInputList input').forEach(function (v,n) {
+            var enumInput=$(v).val()
+            if (enumInput){
+                enums.push(enumInput)
+            }
+        })
+    }
     var input={
         name:name,
         des:des,
         type:type,
         def:def,
-        isrequired:isrequired
+        isrequired:isrequired,
+        enums:enums
     }
     var id=INPUTPARAM.push(input)-1
     var inputid="input"+id
@@ -175,13 +195,19 @@ function addInputParam() {
 }
 
 function showInputModal(id) {
-    $('#updateInputParamModal').modal('show')
+
     $('#update_input_id').val(id)
     $('#update_input_name').val(INPUTPARAM[parseInt(id)].name)
     $('#update_input_des').val(INPUTPARAM[parseInt(id)].des)
     $('#update_input_type').val(INPUTPARAM[parseInt(id)].type)
     $('#update_input_default').val(INPUTPARAM[parseInt(id)].def)
     $('#update_input_isrequired').prop("checked", INPUTPARAM[parseInt(id)].isrequired);
+    $('#enumInputList').html('')
+    var enums=INPUTPARAM[parseInt(id)].enums
+    for (var i=0;i<enums.length;i++){
+        $('#enumInputList').append('<input type="text" value="'+enums[i]+'"  class="form-control">')
+    }
+    $('#updateInputParamModal').modal('show')
 
 }
 function updateInputParam() {
@@ -191,12 +217,22 @@ function updateInputParam() {
     var type=$('#update_input_type').val()
     var def=$('#update_input_default').val()
     var isrequired=$('#update_input_isrequired').is(":checked")
+    var enums=[]
+    if (type==3){
+        $('#enumInputList input').forEach(function (v,n) {
+            var enumInput=$(v).val()
+            if (enumInput){
+                enums.push(enumInput)
+            }
+        })
+    }
     var input={
         name:name,
         des:des,
         type:type,
         def:def,
-        isrequired:isrequired
+        isrequired:isrequired,
+        enums:enums
     }
     INPUTPARAM[parseInt(id)]=input
     var inputid="input"+id
@@ -438,6 +474,21 @@ function iconPickerFresh() {
 
         },
     });
+}
+
+//增加枚举文本框
+function addEnumInput() {
+    $('#enumInputList').append('<input type="text"  class="form-control">')
+}
+
+function showAddInputParamModal() {
+    $('#add_input_name').val('')
+    $('#add_input_des').val('')
+    $('#add_input_type').val(0)
+    $('#add_input_default').val('')
+    $('#add_input_isrequired').prop("checked", false);
+    $('#enumInputList').html('')
+    $('#addInputParamModal').modal('show')
 }
 
 

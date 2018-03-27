@@ -860,6 +860,8 @@ class T_TOOL_INPUT(models.Model):
     DESCRIPTION=models.CharField(max_length=256,null=True,blank=True)
     #默认值
     DEFAULT=models.CharField(max_length=256,null=True,blank=True)
+    #枚举值
+    ENUM=models.CharField(max_length=256,null=True,blank=True)
     #是否必填
     ISREQUIRED=models.BooleanField(default=False)
     #参数类型
