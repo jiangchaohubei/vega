@@ -300,7 +300,7 @@ def tool_add(request):
             for item in eval(form['inputParam']):
                 if not str(item)=='0':
 
-                    inputparam=T_TOOL_INPUT(NAME=item['name'], DESCRIPTION=item['des'],DEFAULT=item['def'],ISREQUIRED=item['isrequired'],TYPE=int(item['type']),ENUM=str(item['enums']),T_TOOL_ID=tool,
+                    inputparam=T_TOOL_INPUT(NAME=item['name'], DESCRIPTION=item['des'],DEFAULT=item['def'],ISREQUIRED=item['isrequired'],TYPE=int(item['type']),ENUM=json.dumps(item['enums']),T_TOOL_ID=tool,
                                             OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
                                             CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
                     inputParam_list.append(inputparam)
@@ -393,7 +393,7 @@ def tool_update(request):
             for item in eval(form['inputParam']):
                 if not str(item)=='0':
 
-                    inputparam=T_TOOL_INPUT(NAME=item['name'], DESCRIPTION=item['des'],DEFAULT=item['def'],ISREQUIRED=item['isrequired'],TYPE=int(item['type']),ENUM=str(item['enums']),T_TOOL_ID_id=int(form['toolid']),
+                    inputparam=T_TOOL_INPUT(NAME=item['name'], DESCRIPTION=item['des'],DEFAULT=item['def'],ISREQUIRED=item['isrequired'],TYPE=int(item['type']),ENUM=json.dumps(item['enums']),T_TOOL_ID_id=int(form['toolid']),
                                             OWNER_ID=OWNER_ID, OWNER_NAME=OWNER_NAME, OWNER_PROJECT_ID=OWNER_PROJECT_ID, OWNER_ALL=OWNER_ALL,
                                             CREATE_USER_ID=request.session['userId'],CREATE_USER_NAME=request.session['username'])
                     inputParam_list.append(inputparam)
