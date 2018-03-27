@@ -198,7 +198,7 @@ function showInputModal(id) {
     $('#update_input_id').val(id)
     $('#update_input_name').val(INPUTPARAM[parseInt(id)].name)
     $('#update_input_des').val(INPUTPARAM[parseInt(id)].des)
-    $('#update_input_type').val(INPUTPARAM[parseInt(id)].type)
+    $('#update_input_type').val(INPUTPARAM[parseInt(id)].type).change()
     $('#update_input_default').val(INPUTPARAM[parseInt(id)].def)
     $('#update_input_isrequired').prop("checked", INPUTPARAM[parseInt(id)].isrequired);
     $('#enumInputList').html('')
@@ -485,7 +485,7 @@ function addEnumInput() {
 function showAddInputParamModal() {
     $('#add_input_name').val('')
     $('#add_input_des').val('')
-    $('#add_input_type').val(0)
+    $('#add_input_type').val(0).change()
     $('#add_input_default').val('')
     $('#add_input_isrequired').prop("checked", false);
     $('#enumInputList').html('')
