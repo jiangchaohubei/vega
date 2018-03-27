@@ -243,7 +243,7 @@
                             <option value="7">ExtraVariable</option>
                             <option value="8">执行时参数（目前只支持-s,-S）</option>
                         </select>
-                            <button type="button" id="setEnumBt" style="  width:50px;height:34px"  class="btn btn-default col-md-2"
+                            <button type="button" id="setEnumBt" style="  width:50px;height:34px;display: none"  class="btn btn-default col-md-2"
                                     data-toggle="modal"  data-target="#enumModal" >
                                 <span class="fa fa-cog" aria-hidden="true"></span>
                             </button>
@@ -313,7 +313,7 @@
                         <div class="form-group" style="margin: 10px">
                             <label class="control-label">参数类型：</label>
                             <div class="col-md-12" style="margin-left: -12px">
-                                <select class="form-control" id="update_input_type" onchange="document.getElementById('setUpdateEnumBt').style.display= this.value==3 ? 'block' :'none' ">
+                                <select class="form-control col-md-10" id="update_input_type" onchange="document.getElementById('setUpdateEnumBt').style.display= this.value==3 ? 'block' :'none' ">
                                     <option value="0">单行字符串</option>
                                     <option value="1">多行字符串</option>
                                     <option value="2">整型</option>
@@ -325,7 +325,7 @@
                                     <option value="8">执行时参数（目前只支持-s,-S）</option>
 
                                 </select>
-                                <button type="button" id="setUpdateEnumBt" style="  width:50px;height:34px"  class="btn btn-default col-md-2"
+                                <button type="button" id="setUpdateEnumBt" style="  width:50px;height:34px;display: none"  class="btn btn-default col-md-2"
                                         data-toggle="modal"  data-target="#enumModal" >
                                     <span class="fa fa-cog" aria-hidden="true"></span>
                                 </button>
