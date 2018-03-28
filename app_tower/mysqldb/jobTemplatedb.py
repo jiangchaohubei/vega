@@ -97,7 +97,7 @@ def job_add(request):
         response_data['resultCode']='0000'
         response_data['resultDesc']='添加成功！'
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -180,7 +180,7 @@ def job_delete(request):
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '删除成功！'
     except Exception,ex:
-        print Exception,ex
+
         traceback.print_exc()
         log.error(ex)
         response_data['resultCode'] = '0001'
@@ -256,12 +256,10 @@ def job_update(request):
             job.OWNER_PROJECT_ID=OWNER_PROJECT_ID
             job.OWNER_ALL=OWNER_ALL
             job.save()
-
-
+            log.info("update T_JOB_TEMPLATE model :"+str(model_to_dict(job)))
             response_data['resultCode'] = '0000'
             response_data['resultDesc'] = '修改成功！'
     except Exception,ex:
-        print Exception,ex
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode'] = '0001'
@@ -326,7 +324,7 @@ def save_run_job(request):
                                  PLAYBOOK_FILE=playbook.objects.get(id=form['PLAYBOOK_FILE']).PLAYBOOK_PATH,PLAYBOOK_ID=playbook.objects.get(id=form['PLAYBOOK_FILE']), FORKS=form['FORKS'], JOB_TAGS=form['JOB_TAGS'],
                                  SKIP_TAGS=form['SKIP_TAGS'],EXTRA_VARIABLES=form['EXTRA_VARIABLES'],CREATE_USER_ID=userId,CREATE_USER_NAME=userName
                                  ,OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_PROJECT_ID=OWNER_PROJECT_ID,OWNER_ALL=OWNER_ALL)
-            print job
+
             job.save()
             log.info(job.PLAYBOOK_FILE)
             file=tempfile.NamedTemporaryFile(delete=False)  #临时文件记录日志
@@ -341,7 +339,7 @@ def save_run_job(request):
 
         runbook = run_playbook.delay(file.name,jobs.id)
         taskid = runbook.task_id
-        print taskid
+        log.info("taskid : "+str(taskid))
         result = AsyncResult(taskid)
         T_JOB.objects.filter(id=jobs.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
         #result={'success': {'host':''}, 'fail': {'host':''}, 'unreachable': {'host':''}}
@@ -406,7 +404,7 @@ def run_job(request):
         log.info("jobs:"+str(model_to_dict(jobs)))
         runbook = run_playbook.delay(file.name,jobs.id,form['hostList'])
         taskid = runbook.task_id
-        print taskid
+        log.info("taskid : "+str(taskid))
         # runbook=runplaybook(job.id,'/usr/local/vega/logs/runlog.txt')
         # result=runbook.run()
         result = AsyncResult(taskid)
@@ -430,12 +428,12 @@ def run_job(request):
 #前往任务执行页面
 def to_job_run(request):
 
-    print 'url to_job_run'
+    log.info('url to_job_run')
     jobsid=request.GET.get('jobsid')
     if not T_JOB.objects.check_id(request,jobsid):
         return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"任务没有使用权限！"}))
     jobs=T_JOB.objects.get(id=jobsid)
-    print jobsid
+
     return render(request, 'templates/pages/app_tower_pages/jobTemplete/jobTemplate_run.html', {'jobsid': jobs})
 
 
@@ -877,50 +875,49 @@ def review_file(request):
 def sudo_select(request):
 
     log.info("sudo_select start")
-    #本页第一条数据下标
-    offset= request.GET.get('offset')
-    # 每页数量
-    limit = request.GET.get('limit')
-    # 排序asc，desc
-    order= ''
-    if request.GET.get('order')=='desc':
-        order='-'
-    ordername='id'
-    if request.GET.get('ordername'):
-        ordername= str(request.GET.get('ordername'))
-    ordername=ordername.replace('fields.','')
-    orderBy=order+ordername
-    ip = ''
-    account = ''
-    createUser=''
-    if request.GET.get("ip"):
-        ip=request.GET.get("ip")
-    if request.GET.get("account"):
-        account=request.GET.get("account")
-    if request.GET.get("createUser"):
-        createUser=request.GET.get("createUser")
-
-    # 排序字段
-    # ordername= request.GET.get('ordername')
-    # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
-    templeteList = sudo_record.objects.filter(IP__contains=ip).filter(ACCOUNT__contains=account).filter(CREATE_USER_NAME__contains=createUser).order_by(orderBy)
-    total=len(templeteList)
-
-    try:
-        list = templeteList[int(offset):int(offset)+int(limit)]
-        #[5:10]这是查找从下标5到下标10之间的数据，不包括10。
-    except Exception,ex:
-        print Exception,ex
-        log.error(ex)
     response_data = {}
     try:
+        #本页第一条数据下标
+        offset= request.GET.get('offset')
+        # 每页数量
+        limit = request.GET.get('limit')
+        # 排序asc，desc
+        order= ''
+        if request.GET.get('order')=='desc':
+            order='-'
+        ordername='id'
+        if request.GET.get('ordername'):
+            ordername= str(request.GET.get('ordername'))
+        ordername=ordername.replace('fields.','')
+        orderBy=order+ordername
+        ip = ''
+        account = ''
+        createUser=''
+        if request.GET.get("ip"):
+            ip=request.GET.get("ip")
+        if request.GET.get("account"):
+            account=request.GET.get("account")
+        if request.GET.get("createUser"):
+            createUser=request.GET.get("createUser")
+
+        # 排序字段
+        # ordername= request.GET.get('ordername')
+        # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
+        templeteList = sudo_record.objects.filter(IP__contains=ip).filter(ACCOUNT__contains=account).filter(CREATE_USER_NAME__contains=createUser).order_by(orderBy)
+        total=len(templeteList)
+
+        list = templeteList[int(offset):int(offset)+int(limit)]
+        #[5:10]这是查找从下标5到下标10之间的数据，不包括10。
+
         response_data['result'] = 'Success'
         #序列码 serializers.serialize，且ensure_ascii=False防止乱码
         response_data['rows'] = serializers.serialize('json', list,ensure_ascii=False,use_natural_keys=True)
         response_data['total'] = total
-    except:
+    except Exception,e:
+        traceback.print_exc()
+        log.error(e.__str__())
         response_data['result'] = 'FAIELD!'
-        response_data['rows'] = 'Script has not ran correctly'
+        response_data['rows'] = e.__str__()
     log.info('response_data:'+str(response_data))
     log.info("sudo_select end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
@@ -940,6 +937,7 @@ def sudoRecord_add(request):
         sudorecord.save()
         return HttpResponse(JsonResponse({"resultCode":"0000","resultDesc":"添加成功！"}), content_type="application/json;charset=UTF-8")
     except Exception,e:
+        traceback.print_exc()
         log.error(e.__str__())
         return HttpResponse(JsonResponse({"resultCode":"0001","resultDesc":e.__str__()}), content_type="application/json;charset=UTF-8")
     finally:
@@ -968,50 +966,49 @@ def sudo_delete(request):
 def operation_select(request):
 
     log.info("operation_select start")
-    #本页第一条数据下标
-    offset= request.GET.get('offset')
-    # 每页数量
-    limit = request.GET.get('limit')
-    # 排序asc，desc
-    order= ''
-    if request.GET.get('order')=='desc':
-        order='-'
-    ordername='id'
-    if request.GET.get('ordername'):
-        ordername= str(request.GET.get('ordername'))
-    ordername.replace('fields.','')
-    orderBy=order+ordername
-    ip = ''
-    name = ''
-    createUser=''
-    if request.GET.get("ip"):
-        ip=request.GET.get("ip")
-    if request.GET.get("name"):
-        name=request.GET.get("name")
-    if request.GET.get("createUser"):
-        createUser=request.GET.get("createUser")
-
-    # 排序字段
-    # ordername= request.GET.get('ordername')
-    # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
-    templeteList = operation_record.objects.filter(CREATE_USER_NAME__contains=createUser).filter(NAME__contains=name)
-    total=len(templeteList)
-
-    try:
-        list = templeteList[int(offset):int(offset)+int(limit)]
-        #[5:10]这是查找从下标5到下标10之间的数据，不包括10。
-    except Exception,ex:
-        print Exception,ex
-        log.error(ex)
     response_data = {}
     try:
+        #本页第一条数据下标
+        offset= request.GET.get('offset')
+        # 每页数量
+        limit = request.GET.get('limit')
+        # 排序asc，desc
+        order= ''
+        if request.GET.get('order')=='desc':
+            order='-'
+        ordername='id'
+        if request.GET.get('ordername'):
+            ordername= str(request.GET.get('ordername'))
+        ordername.replace('fields.','')
+        orderBy=order+ordername
+        ip = ''
+        name = ''
+        createUser=''
+        if request.GET.get("ip"):
+            ip=request.GET.get("ip")
+        if request.GET.get("name"):
+            name=request.GET.get("name")
+        if request.GET.get("createUser"):
+            createUser=request.GET.get("createUser")
+
+        # 排序字段
+        # ordername= request.GET.get('ordername')
+        # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
+        templeteList = operation_record.objects.filter(CREATE_USER_NAME__contains=createUser).filter(NAME__contains=name)
+        total=len(templeteList)
+
+        list = templeteList[int(offset):int(offset)+int(limit)]
+        #[5:10]这是查找从下标5到下标10之间的数据，不包括10。
+
         response_data['result'] = 'Success'
         #序列码 serializers.serialize，且ensure_ascii=False防止乱码
         response_data['rows'] = serializers.serialize('json', list,ensure_ascii=False,use_natural_keys=True)
         response_data['total'] = total
-    except:
+    except Exception,e:
+        traceback.print_exc()
+        log.error(e.__str__())
         response_data['result'] = 'FAIELD!'
-        response_data['rows'] = 'Script has not ran correctly'
+        response_data['rows'] = e.__str__()
     log.info('response_data:'+str(response_data))
     log.info("sudo_select end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")

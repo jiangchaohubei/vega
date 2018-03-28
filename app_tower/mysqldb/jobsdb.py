@@ -7,6 +7,7 @@ from app_tower.models import User
 from django.core import serializers
 import traceback
 import logging
+from django.forms.models import model_to_dict
 log = logging.getLogger("jobsdb")
 from authority.permission import PermissionVerify
 
@@ -85,6 +86,7 @@ def jobs_delete(request):
             if not T_JOB.objects.check_id(request,form['id']):
                 return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"任务没有使用权限！"}))
         # 根据id删除的数据
+        log.info("delete id: "+form['id'])
         job = T_JOB.objects.get(id=form['id'])
         job.delete()
         response_data = {}

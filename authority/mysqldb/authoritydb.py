@@ -12,6 +12,7 @@ from django.db.models import Count
 from vega.settings import EMAIL_HOST_USER
 import datetime
 from django.shortcuts import render
+import traceback
 from app_tower.models import User,T_JOB,RoleList,PermissionList,T_RoleList_PermissionList_ID,JobStatusControl,T_PROJECT
 # python md5 加密
 import hashlib
@@ -388,44 +389,43 @@ def getResponseData(url):
 @PermissionVerify()
 def  selectUser(request):
     log.info('selectUser start')
-
-    # 本页第一条数据下标
-    offset = request.GET.get('offset')
-    # 每页数量
-    limit = request.GET.get('limit')
-    # 排序asc，desc
-    order= ''
-    if request.GET.get('order')=='desc':
-        order='-'
-    ordername='id'
-    if request.GET.get('ordername'):
-        ordername= str(request.GET.get('ordername'))
-    ordername=ordername.replace('fields.','')
-    orderBy=order+ordername
-    username=""
-    mobile=""
-    nickname=""
-    email=""
-    if request.GET.get("username"):
-        username = request.GET.get("username")
-    if request.GET.get("mobile"):
-        mobile = request.GET.get("mobile")
-    if request.GET.get("nickname"):
-        nickname = request.GET.get("nickname")
-    if request.GET.get("email"):
-        email = request.GET.get("email")
-
-    # 排序字段
-    # ordername= request.GET.get('ordername')
-    # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
-    user_List=User.objects.all().filter(username__contains=username).filter(mobile__contains=mobile).filter(nickname__contains=nickname).filter(email__contains=email).order_by(orderBy)
-    total = len(user_List)
-
-    list =user_List[int(offset):int(offset) + int(limit)]
-    # [5:10]这是查找从下标5到下标10之间的数据，不包括10。
-
     response_data = {}
     try:
+        # 本页第一条数据下标
+        offset = request.GET.get('offset')
+        # 每页数量
+        limit = request.GET.get('limit')
+        # 排序asc，desc
+        order= ''
+        if request.GET.get('order')=='desc':
+            order='-'
+        ordername='id'
+        if request.GET.get('ordername'):
+            ordername= str(request.GET.get('ordername'))
+        ordername=ordername.replace('fields.','')
+        orderBy=order+ordername
+        username=""
+        mobile=""
+        nickname=""
+        email=""
+        if request.GET.get("username"):
+            username = request.GET.get("username")
+        if request.GET.get("mobile"):
+            mobile = request.GET.get("mobile")
+        if request.GET.get("nickname"):
+            nickname = request.GET.get("nickname")
+        if request.GET.get("email"):
+            email = request.GET.get("email")
+
+        # 排序字段
+        # ordername= request.GET.get('ordername')
+        # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
+        user_List=User.objects.all().filter(username__contains=username).filter(mobile__contains=mobile).filter(nickname__contains=nickname).filter(email__contains=email).order_by(orderBy)
+        total = len(user_List)
+
+        list =user_List[int(offset):int(offset) + int(limit)]
+        # [5:10]这是查找从下标5到下标10之间的数据，不包括10。
+
         response_data['result'] = 'Success'
         response_data['rows'] = serializers.serialize('json', list, ensure_ascii=False,use_natural_keys=True)
         response_data['total'] = total
@@ -442,35 +442,33 @@ def  selectUser(request):
 @PermissionVerify()
 def selectRole(request):
     log.info('selectRole start')
-
-    # 本页第一条数据下标
-    offset = request.GET.get('offset')
-    # 每页数量
-    limit = request.GET.get('limit')
-    # 排序asc，desc
-    order= ''
-    if request.GET.get('order')=='desc':
-        order='-'
-    ordername='id'
-    if request.GET.get('ordername'):
-        ordername= str(request.GET.get('ordername'))
-    ordername=ordername.replace('fields.','')
-    orderBy=order+ordername
-    name=''
-    if request.GET.get("name"):
-        name = request.GET.get("name")
-
-
-    # 排序字段
-    # ordername= request.GET.get('ordername')
-    # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
-    role_List=RoleList.objects.all().filter(name__contains=name).order_by(orderBy)
-    total = len(role_List)
-
-    list = role_List[int(offset):int(offset) + int(limit)]
-
     response_data = {}
     try:
+        # 本页第一条数据下标
+        offset = request.GET.get('offset')
+        # 每页数量
+        limit = request.GET.get('limit')
+        # 排序asc，desc
+        order= ''
+        if request.GET.get('order')=='desc':
+            order='-'
+        ordername='id'
+        if request.GET.get('ordername'):
+            ordername= str(request.GET.get('ordername'))
+        ordername=ordername.replace('fields.','')
+        orderBy=order+ordername
+        name=''
+        if request.GET.get("name"):
+            name = request.GET.get("name")
+
+        # 排序字段
+        # ordername= request.GET.get('ordername')
+        # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM     Test.objects.filter(name="runoob").order_by("id")
+        role_List=RoleList.objects.all().filter(name__contains=name).order_by(orderBy)
+        total = len(role_List)
+
+        list = role_List[int(offset):int(offset) + int(limit)]
+
         response_data['result'] = 'Success'
         response_data['rows'] = serializers.serialize('json', list, ensure_ascii=False)
         response_data['total'] = total
@@ -521,35 +519,35 @@ def saveUser(request):
 
     form = {}
     response_data = {}
-    if request.POST:
-        form['username'] = request.POST['username']
-        if User.objects.filter(username=form['username']):
-            response_data['resultCode']='0001'
-            response_data['resultDesc']='NAME已经存在，名称不能重复！'
-            return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        if len(request.POST['username'])<5:
-            response_data['result'] = 'FAIELD!'
-            response_data['usernamemessage'] = '用户名长度不能少于5位!'
-            log.info('saveUser end')
-            return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        form['mobile'] = request.POST['mobile']
-        if not p2.match(request.POST['mobile']):
-            response_data['result'] = 'FAIELD!'
-            response_data['mobilememessage'] = '手机号码不正确!'
-            log.info('saveUser end')
-            return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        form['email'] = request.POST['email']
-        if not re.match(str, request.POST['email']):
-            response_data['result'] = 'FAIELD!'
-            response_data['emailmemessage'] = '邮箱不正确!'
-            log.info('saveUser end')
-            return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        form['nickname'] = request.POST['nickname']
-        form['role'] = request.POST['role']
-    user = User(username=form['username'],password=md5("88888888"), mobile=form['mobile'],email=form['email'],  nickname=form['nickname'],role=RoleList.objects.get(name=form['role']))
-    user.save()
-    response_data = {}
     try:
+        if request.POST:
+            form['username'] = request.POST['username']
+            if User.objects.filter(username=form['username']):
+                response_data['resultCode']='0001'
+                response_data['resultDesc']='NAME已经存在，名称不能重复！'
+                return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+            if len(request.POST['username'])<5:
+                response_data['result'] = 'FAIELD!'
+                response_data['usernamemessage'] = '用户名长度不能少于5位!'
+                log.info('saveUser end')
+                return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+            form['mobile'] = request.POST['mobile']
+            if not p2.match(request.POST['mobile']):
+                response_data['result'] = 'FAIELD!'
+                response_data['mobilememessage'] = '手机号码不正确!'
+                log.info('saveUser end')
+                return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+            form['email'] = request.POST['email']
+            if not re.match(str, request.POST['email']):
+                response_data['result'] = 'FAIELD!'
+                response_data['emailmemessage'] = '邮箱不正确!'
+                log.info('saveUser end')
+                return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
+            form['nickname'] = request.POST['nickname']
+            form['role'] = request.POST['role']
+        user = User(username=form['username'],password=md5("88888888"), mobile=form['mobile'],email=form['email'],  nickname=form['nickname'],role=RoleList.objects.get(name=form['role']))
+        user.save()
+
         log.info("添加用户成功")
         response_data['result'] = 'Success!'
     except:
@@ -594,15 +592,15 @@ def updateUser(request):
 @PermissionVerify()
 def addRole(request):
     log.info('addRole start')
-
-    form = {}
-    if request.POST:
-
-        form['roleName'] = request.POST['roleName']
-    rolelist=RoleList(name=form['roleName'])
-    rolelist.save()
     response_data = {}
+    form = {}
     try:
+        if request.POST:
+
+            form['roleName'] = request.POST['roleName']
+        rolelist=RoleList(name=form['roleName'])
+        rolelist.save()
+
         log.info("add role success")
         response_data['result'] = 'Success!'
     except:
@@ -617,14 +615,14 @@ def addRole(request):
 @PermissionVerify()
 def deleteRole(request):
     log.info('deleteRole start')
-
-    form = {}
-    if request.POST:
-        form['roleName'] = request.POST['roleName']
-    rolelist=RoleList.objects.get(name=form['roleName'])
-    rolelist.delete()
     response_data = {}
+    form = {}
     try:
+        if request.POST:
+            form['roleName'] = request.POST['roleName']
+        rolelist=RoleList.objects.get(name=form['roleName'])
+        rolelist.delete()
+
         log.info("deleteRole success")
         response_data['result'] = 'Success!'
     except:
@@ -760,10 +758,6 @@ def role_permission_update(request):
                 if T_RoleList_PermissionList_ID.objects.all().filter(RoleList_ID=role,PermissionList_ID=permission):
                     t_role_permission=T_RoleList_PermissionList_ID.objects.get(RoleList_ID=role,PermissionList_ID=permission)
                     t_role_permission.delete()
-                    print '333'
-
-
-
 
     return HttpResponse(JsonResponse({}), content_type="application/json;charset=UTF-8")
 
@@ -833,7 +827,7 @@ def JobStatusStatics(request):
                 elif (job["STATUS"] == u"REVOKED"):
                     REVOKED = job["count"]
                 else:
-                    print "都不成立输出"
+                    log.info("都不成立输出")
                 TOTAL_JOBS=SUCCESS+FAILURE+STARTED+REVOKED
                 # 判断当天的 JobStatusControl 统计是否存在，，如果存在，，更新统计，不存在创建
                 if JobStatusControl.objects.check_project(request,OWNER_PROJECT_ID).filter(TIME=time):
@@ -860,11 +854,10 @@ def JobStatusStatics(request):
         response_data['result'] = 'Success!'
         response_data['data'] = serializers.serialize('json', jobStatusControlList, ensure_ascii=False)
     except Exception,ex:
-        print "Exception==========="
-        print Exception, ex
-        print "Exception==========="
+        traceback.print_exc()
+        log.error(ex.__str__())
         response_data['result'] = 'FAIELD!'
-        response_data['message'] = 'Script has not ran correctly'
+        response_data['message'] = ex.__str__()
     log.info("JobStatusStatics end")
     return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
 

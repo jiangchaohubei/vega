@@ -50,11 +50,10 @@ def system_add(request):
         system = T_SYSTEM(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'], COMPANY=request.POST['COMPANY'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                           )
         system.save()
-
+        log.info("new system model :"+str(model_to_dict(system)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'

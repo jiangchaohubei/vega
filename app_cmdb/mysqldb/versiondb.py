@@ -72,7 +72,7 @@ def version_add(request):
                              OWNER_ALL=software.OWNER_ALL,OWNER_PROJECT_ID=software.OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                               )
         version.save()
-
+        log.info("new version model :"+str(model_to_dict(version)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:

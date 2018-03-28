@@ -13,7 +13,7 @@ from django.core import serializers
 from django.db import  transaction
 import json
 import os
-from django.db import models
+from django.forms.models import model_to_dict
 import logging
 
 log = logging.getLogger("inventoriesdb")  # 为loggers中定义的名称
@@ -56,10 +56,11 @@ def group_add(request):
         group = T_Group(NAME=form['name'], DESCRIPTION=form['description'], VARIABLES=form['variables'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_PROJECT_ID=OWNER_PROJECT_ID,OWNER_ALL=OWNER_ALL,
                         CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'])
         group.save()
+        log.info("new group model :"+str(model_to_dict(group)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -265,6 +266,7 @@ def group_update(request):
             inventorie.OWNER_PROJECT_ID=OWNER_PROJECT_ID
             inventorie.OWNER_ALL=OWNER_ALL
             inventorie.save()
+            log.info("update group model :"+str(model_to_dict(inventorie)))
             response_data['resultCode'] = '0000'
             response_data['resultDesc'] = '修改成功！'
     except Exception,e:
@@ -534,7 +536,7 @@ def host_delete(request):
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '删除成功！'
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode'] = '0001'
@@ -657,7 +659,7 @@ def selectBySomething(request):
         response_data['resultDesc']='查询成功'
         response_data['hostList']= host_list_dic
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode'] = '0001'
@@ -680,7 +682,7 @@ def init_cmdb_system(request):
         response_data['resultDesc']='查询成功'
         response_data['systemList']= system_list_dic
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode'] = '0001'

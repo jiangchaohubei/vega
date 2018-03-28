@@ -52,11 +52,10 @@ def host_add(request):
                       MACHINE_TYPE=request.POST['MACHINE_TYPE'],MACHINE_ROOM=request.POST['MACHINE_ROOM'],MACHINE_POSITION=request.POST['MACHINE_POSITION'],CUTTER_NUMBER=request.POST['CUTTER_NUMBER'],SN_NUMBER=request.POST['SN_NUMBER'],OS=request.POST['OS'],
                       PHYSICAL_MACHINE_TYPE=request.POST['PHYSICAL_MACHINE_TYPE'],NOTE=request.POST['NOTE'],SYSTEM_ID=T_SYSTEM.objects.get(id=request.POST['SYSTEM_ID']))
         host.save()
-
+        log.info("new host model :"+str(model_to_dict(host)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'

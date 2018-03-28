@@ -111,7 +111,6 @@ def project_add(request):
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-        print Exception, ex
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'

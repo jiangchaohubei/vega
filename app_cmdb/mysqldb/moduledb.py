@@ -49,11 +49,10 @@ def module_add(request):
         module = T_MODULE(NAME=request.POST['NAME'], DESCRIPTION=request.POST['DESCRIPTION'],SYSTEM_ID=T_SYSTEM.objects.get(id=request.POST['SYSTEM_ID']),RESPONSIBLE_PERSON=request.POST['RESPONSIBLE_PERSON'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_ALL=OWNER_ALL,OWNER_PROJECT_ID=OWNER_PROJECT_ID,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],
                       )
         module.save()
-
+        log.info("new module model :"+str(model_to_dict(module)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'

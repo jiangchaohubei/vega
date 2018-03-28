@@ -50,11 +50,10 @@ def software_add(request):
                     LISTEN_PORT=request.POST['LISTEN_PORT'] if request.POST['LISTEN_PORT'] else 22,DEPLOY_DIR=request.POST['DEPLOY_DIR'],DEPLOY_ACCOUNT=request.POST['DEPLOY_ACCOUNT'],TIMER_SCRIPT=request.POST['TIMER_SCRIPT'],LOG_EXPORT=request.POST['LOG_EXPORT'],
                               NOTE=request.POST['NOTE'],DATA_BACKUPPATH=request.POST['DATA_BACKUPPATH'],DATA_FILEPATH=request.POST['DATA_FILEPATH'],)
         software.save()
-
+        log.info("new software model :"+str(model_to_dict(software)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -281,7 +280,6 @@ def host_add(request):
         response_data['resultDesc']='Success'
         response_data['errorHost']=error_host
     except Exception, ex:
-        print Exception, ex
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -359,7 +357,7 @@ def host_delete(request):
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '解绑成功！'
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode'] = '0001'
@@ -381,7 +379,7 @@ def init_cmdb_system(request):
         response_data['systemId']= system.id
         response_data['systemName']= system.NAME
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode'] = '0001'

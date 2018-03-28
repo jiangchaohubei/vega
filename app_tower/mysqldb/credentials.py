@@ -46,11 +46,11 @@ def credentials_add(request):
             # 用提升密码来作为  DES 的key
             d.input_key(SECRET_KEY)
             # 加密
-            log.info(form['loginPassword'])
+            #log.info(form['loginPassword'])
             form['loginPassword'] = d.encode(str(request.POST['credentials_password']))
             form['privilege_password'] = d.encode(str(request.POST['privilege_password']))
             # d.decode(传入字符串来解密)
-        log.info("form:"+str(form))
+        #log.info("form:"+str(form))
         if form['owner']=='onlyOne':
             OWNER_ID=request.session['userId']
             OWNER_NAME=request.session['username']
@@ -65,13 +65,13 @@ def credentials_add(request):
             response_data['resultDesc']='NAME已经存在，名称不能重复！'
             return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
         credentials = T_LOGIN_CREDENTIALS(NAME=form['name'],DESCRIPTION=form['description'],OWNER_ID=OWNER_ID,OWNER_NAME=OWNER_NAME,OWNER_PROJECT_ID=OWNER_PROJECT_ID,OWNER_ALL=OWNER_ALL,TYPE=form['type'],LOGIN_USER=form['loginUser'],LOGIN_PWD=form['loginPassword']
-        ,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],PRIVILEGE_NAME=form['privilege'],PRIVILEGE_PWD=form['privilege_password'])
+                    ,CREATE_USER_ID=request.session['userId'] ,CREATE_USER_NAME=request.session['username'],PRIVILEGE_NAME=form['privilege'],PRIVILEGE_PWD=form['privilege_password'])
         credentials.save()
         log.info('credentials add :'+str(model_to_dict(credentials)))
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'

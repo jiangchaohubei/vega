@@ -283,8 +283,6 @@ def playbook_update(request):
             pb.OWNER_PROJECT_ID=OWNER_PROJECT_ID
             pb.OWNER_ALL=OWNER_ALL
             pb.save()
-
-
             response_data['resultCode'] = '0000'
             response_data['resultDesc'] = '修改成功！'
     except Exception,e:

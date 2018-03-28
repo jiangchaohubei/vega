@@ -24,7 +24,7 @@ def message_init(request):
         false=False
         null = None
     except Exception,ex:
-        print Exception, ex
+
         traceback.print_exc()
         log.error(ex.__str__())
 

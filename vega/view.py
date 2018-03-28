@@ -20,6 +20,6 @@ def main(request):
     context['USERNAME'] =request.session['username']
     context['PERMISSIONNAMELIST']=request.session['permissionsNamelist']
     context['environment']=ENVIRONMENT
-    print context['PERMISSIONNAMELIST']
+
     return render(request, 'templates/pages/main.html', context)
 

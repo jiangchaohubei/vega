@@ -120,7 +120,7 @@ def toolDetail_init(request):
         tool.ARGS2=T_PROJECT.objects.get(id=int(tool.OWNER_PROJECT_ID)).NAME+U'(项目组)'
     else:
         tool.ARGS2=tool.OWNER_NAME
-    print  tool.ARGS2
+    log.info("tool.ARGS2 :"+str(tool.ARGS2))
     toolinput=tool.T_TOOL_ID_T_TOOL_INPUT.all()
     tooloutput=tool.T_TOOL_ID_T_TOOL_OUTPUT.all()
     toolinputList = serializers.serialize('json', toolinput, ensure_ascii=False)
@@ -129,8 +129,8 @@ def toolDetail_init(request):
     false=False
     null = None
     #log.info('userList：'+userList)
+    log.info(str(model_to_dict(tool)))
     log.info('toolDetail_init end')
-    print str(model_to_dict(tool))
     return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList)}))
 
 #初始化编辑
@@ -146,7 +146,7 @@ def tooledit_init(request):
         tool.ARGS2=T_PROJECT.objects.get(id=int(tool.OWNER_PROJECT_ID)).NAME+U'(项目组)'
     else:
         tool.ARGS2=tool.OWNER_NAME
-    print  tool.ARGS2
+
     toolinput=tool.T_TOOL_ID_T_TOOL_INPUT.all()
     tooloutput=tool.T_TOOL_ID_T_TOOL_OUTPUT.all()
     toolinputList = serializers.serialize('json', toolinput, ensure_ascii=False)
@@ -161,8 +161,8 @@ def tooledit_init(request):
     false=False
     null = None
     #log.info('userList：'+userList)
+    log.info(str(model_to_dict(tool)))
     log.info('tooledit_init end')
-    print str(model_to_dict(tool))
     return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'tooltypeList': eval(tooltypeList),'projectList': eval(projectList),'imgList': eval(imgList)}))
 
 def get_event(request):
@@ -185,9 +185,8 @@ def toolEvent_init(request):
     true = True
     false=False
     null = None
-
+    log.info(str(model_to_dict(toolEvent)))
     log.info('toolEvent_init end')
-    print str(model_to_dict(toolEvent))
     return HttpResponse(json.dumps({'resultCode':'0000','toolEvent':model_to_dict(toolEvent)}))
 
 #初始化执行工具页面
@@ -203,7 +202,7 @@ def runTool_init(request):
         tool.ARGS2=T_PROJECT.objects.get(id=int(tool.OWNER_PROJECT_ID)).NAME+U'(项目组)'
     else:
         tool.ARGS2=tool.OWNER_NAME
-    print  tool.ARGS2
+
     toolinput=tool.T_TOOL_ID_T_TOOL_INPUT.all()
     tooloutput=tool.T_TOOL_ID_T_TOOL_OUTPUT.all()
     toolinputList = serializers.serialize('json', toolinput, ensure_ascii=False)
@@ -214,8 +213,8 @@ def runTool_init(request):
     false=False
     null = None
     #log.info('userList：'+userList)
+    log.info(str(model_to_dict(tool)))
     log.info('toolDetail_init end')
-    print str(model_to_dict(tool))
     return HttpResponse(json.dumps({'resultCode':'0000','tool':model_to_dict(tool),'toolinput': eval(toolinputList),'tooloutput': eval(tooloutputList),'credentialsList': eval(credentialsList)}))
 
 def icon_upload(request):
@@ -231,7 +230,6 @@ def icon_upload(request):
         response_data['resultCode']='0000'
         response_data['resultDesc']=request.FILES.get('itemImagers').name+'上传成功！'
     except Exception, ex:
-        print Exception, ex
         traceback.print_exc()
         log.error(ex.__str__())
         log.error(traceback.print_exc())
@@ -320,7 +318,6 @@ def tool_add(request):
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-        print Exception, ex
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -415,7 +412,6 @@ def tool_update(request):
         response_data['resultCode']='0000'
         response_data['resultDesc']='Success'
     except Exception, ex:
-        print Exception, ex
         traceback.print_exc()
         log.error(ex.__str__())
         response_data['resultCode']='0001'
@@ -446,9 +442,8 @@ def tool_delete(request):
         response_data['resultCode'] = '0000'
         response_data['resultDesc'] = '删除成功！'
     except Exception,ex:
-        print Exception,ex
         traceback.print_exc()
-        log.error(ex)
+        log.error(ex.__str__())
         response_data['resultCode'] = '0001'
         response_data['resultDesc'] = '已被使用，禁止删除！'
     log.info("tool_delete end")
@@ -725,7 +720,7 @@ def tool_run(request):
             fo.close()
             runtool = run_tool_yaml.delay(tool_event.id,int(form['credentialsId']),file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(request.POST['hostList']),sudo=sudo,su=su)
             taskid = runtool.task_id
-            print taskid
+
             result = AsyncResult(taskid)
             log.info("STATUS:"+result.status)
             T_TOOL_EVENT.objects.filter(id=tool_event.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
@@ -754,7 +749,7 @@ def tool_run(request):
             fo.close()
             runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']),sudo=sudo,su=su)
             taskid = runtool.task_id
-            print taskid
+
             result = AsyncResult(taskid)
             log.info("STATUS:"+result.status)
             T_TOOL_EVENT.objects.filter(id=tool_event.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
@@ -791,7 +786,7 @@ def tool_reRun(request):
             if not T_TOOL_EVENT.objects.check_id(request,int(form['toolEventId'])):
                 return HttpResponse(json.dumps({"resultCode":"0057","resultDesc":"没有使用权限！"}))
 
-        print str(form)
+        log.info(str(form))
         tool_event=T_TOOL_EVENT.objects.get(id=int(form['toolEventId']))
         tool=tool_event.TOOL_ID
         if not tool.AUDIT_STATUS == 1:
@@ -833,7 +828,7 @@ def tool_reRun(request):
             fo.close()
             runtool = run_tool_yaml.delay(tool_event2.id,tool_event2.CREDENTIALS_ID_id,file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su)
             taskid = runtool.task_id
-            print taskid
+
             result = AsyncResult(taskid)
             log.info("STATUS:"+result.status)
             T_TOOL_EVENT.objects.filter(id=tool_event2.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)
@@ -860,7 +855,7 @@ def tool_reRun(request):
             fo.close()
             runtool = run_tool_shell.delay(file.name,tool_event2.id,tool_event2.CREDENTIALS_ID_id,scriptPath.name,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su)
             taskid = runtool.task_id
-            print taskid
+
             result = AsyncResult(taskid)
             log.info("STATUS:"+result.status)
             T_TOOL_EVENT.objects.filter(id=tool_event2.id).update(STATUS=result.status,CELERY_TASK_ID=taskid)

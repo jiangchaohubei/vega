@@ -34,7 +34,8 @@ def saveFeedBack(request):
             response_data['resultCode'] = '0000'
             response_data['resultDesc'] = 'Success'
     except Exception, ex:
-        print Exception, ex
+
+        log.error(ex.__str__())
         response_data['resultCode'] = '0001'
         response_data['resultDesc'] = 'Faield'
     log.info('saveFeedBack end')
@@ -72,9 +73,7 @@ def exportAllFeedback(request):
             response_data['filepath'] = exportRoot
             response_data['resultDesc'] = 'Success'
         except Exception, ex:
-            print "==exception=="
-            print Exception, ex
-            print "==exception=="
+            log.error(ex.__str__())
             response_data['resultCode'] = '0001'
             response_data['resultDesc'] = 'Faield'
         log.info('exportAllFeedback end')
