@@ -17,7 +17,7 @@ class mygroup_tool():
         log.info(hosts)
 
     def get_mygroup(self):
-        print 'get_mygroup'
+        log.info( 'get_mygroup')
         """
         resource的数据格式是一个列表字典，比如
             {
@@ -42,9 +42,9 @@ class mygroup_tool():
         #主机组中主机进行了筛选
         if  self.hosts:
 
-            print self.hosts
+            log.info( self.hosts)
             for host in self.hosts:
-                print host
+
                 item={"hostname": "",'ip':'', "port": "22", "username": login_user, "password": login_pwd}
                 item["hostname"]=host
                 item["ip"]=host

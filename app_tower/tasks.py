@@ -68,8 +68,7 @@ def run_playbook(file,jobsid,hostList=None):
     log.info('celery run_playbook start')
     jobs=T_JOB.objects.get(id=jobsid)
     starttime=time.time()
-    print starttime
-    print time.localtime(starttime)
+
     log.info('startTime: '+str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))))
     jobs.START_TIME=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))
     #实例化
@@ -170,7 +169,7 @@ def timer_task(jobTempleteId,createUserId,createUserName,startUserId,startUserNa
 
     runbook = run_playbook.delay(file.name,jobs.id)
     taskid = runbook.task_id
-    print taskid
+
     # runbook=runplaybook(job.id,'/usr/local/vega/logs/runlog.txt')
     # result=runbook.run()
     result = AsyncResult(taskid)
@@ -185,8 +184,7 @@ def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,e
     log.info('celery run_tool_yaml start')
     tool_event=T_TOOL_EVENT.objects.get(id=toolEventId)
     starttime=time.time()
-    print starttime
-    print time.localtime(starttime)
+
     log.info('startTime: '+str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))))
     tool_event.START_TIME=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))
     #实例化
@@ -244,8 +242,7 @@ def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=
     log.info('celery run_tool_shell start')
     tool_event=T_TOOL_EVENT.objects.get(id=toolEventId)
     starttime=time.time()
-    print starttime
-    print time.localtime(starttime)
+
     log.info('startTime: '+str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))))
     tool_event.START_TIME=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(starttime))
 

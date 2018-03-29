@@ -19,11 +19,11 @@ def PermissionVerify():
                 if not iUser.role: #如果用户无角色，直接返回无权限
                     return render(request, 'templates/pages/noPermission.html')
                 role_permission = RoleList.objects.get(name=iUser.role.name)
-                print iUser.role.name
+                #print iUser.role.name
                 role_permission_list = role_permission.permission.all()
 
                 matchUrl = []
-                print role_permission_list
+                #print role_permission_list
                 for x in role_permission_list:
                     if request.path == x.url or request.path.rstrip('/') == x.url: #精确匹配，判断request.path是否与permission表中的某一条相符
                         matchUrl.append(x.url)
@@ -32,7 +32,7 @@ def PermissionVerify():
                     # else:
                     #     pass
 
-                print '%s---->matchUrl:%s' %(request.user,str(matchUrl))
+                #print '%s---->matchUrl:%s' %(request.user,str(matchUrl))
                 if len(matchUrl) == 0:
                      # return render(request, 'templates/pages/noPermission.html')
                      return HttpResponse(json.dumps({'resultCode':'0057','resultDesc':'您没有该操作权限！'}))

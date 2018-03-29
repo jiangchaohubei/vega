@@ -3,6 +3,8 @@
 from ansible.inventory import Inventory
 from ansible.inventory.group import Group
 from ansible.inventory.host import Host
+import logging
+log = logging.getLogger("tasks") # 为loggers中定义的名称
 
 class myInventory(Inventory):
     """
@@ -35,8 +37,8 @@ class myInventory(Inventory):
 
 
     def my_add_group(self, hosts, groupname, groupvars=None):
-        print 'my_add_group'
-        print str(hosts)
+        log.info( 'my_add_group')
+        log.info( str(hosts))
         """
         add hosts to a group
         """
@@ -49,7 +51,7 @@ class myInventory(Inventory):
 
                 # add hosts to group
         for host in hosts:
-            print host
+
             # set connection variables
             hostname = host.get("hostname")
             hostip = host.get('ip', hostname)
@@ -73,33 +75,33 @@ class myInventory(Inventory):
             #加到all里面
             self.inventory.get_group('all').add_host(my_host)
 
-        print my_group.get_hosts()
-        print my_group._get_hosts()
-        print my_group.get_vars()
+        log.info( str(my_group.get_hosts()))
+        log.info( str(my_group._get_hosts()))
+        log.info( str(my_group.get_vars()))
         self.inventory.add_group(my_group)
 
-        print self.inventory.get_hosts()
-        print self.inventory.get_group_dict()
+        log.info( str(self.inventory.get_hosts()))
+        log.info( str(self.inventory.get_group_dict()))
 
 
     def gen_inventory(self):
-        print 'gen_inventory'
+        log.info( 'gen_inventory')
         """
         add hosts to inventory.
         """
         if isinstance(self.resource, list):
-            print 'if'
-            print self.resource
+
+            log.info( self.resource)
             self.my_add_group(self.resource, 'default_group')
         elif isinstance(self.resource, dict):
-            print 'elif'
-            print self.resource
+
+            log.info( self.resource)
             for groupname, hosts_and_vars in self.resource.iteritems():
-                print groupname,hosts_and_vars.get("hosts")
+                log.info( groupname+":"+str(hosts_and_vars.get("hosts")))
                 self.my_add_group(hosts_and_vars.get("hosts"), groupname, hosts_and_vars.get("vars"))
 
     def get_inventory(self):
-        print 'get_inventory'
+        log.info( 'get_inventory')
         self.gen_inventory()
-        print self.inventory
+
         return self.inventory

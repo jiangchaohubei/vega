@@ -13,7 +13,7 @@ class checkOwnManager(models.Manager):
         return super(checkOwnManager, self).get_queryset()
     #字段权限筛选方法,返回所有可用数据
     def check_own(self, request):
-        print self.get_queryset()
+
         if request.session['isAdministrant']:
             return self.get_queryset()
         else:
@@ -31,7 +31,7 @@ class checkOwnManager(models.Manager):
             try:
                 model=self.model.objects.get(id=modelid)
             except Exception,e:
-                print e
+
                 return False
             if model.CREATE_USER_ID==request.session['userId'] or model.CREATE_USER_ID==None or model.OWNER_ALL or model.OWNER_PROJECT_ID in request.session['projectIdlist']:
                 return True
@@ -45,14 +45,14 @@ class checkOwnManager(models.Manager):
             try:
                 model=self.model.objects.get(NAME=name)
             except Exception,e:
-                print e
+
                 return False
             if model.CREATE_USER_ID==request.session['userId'] or model.CREATE_USER_ID==None or model.OWNER_ALL or model.OWNER_PROJECT_ID in request.session['projectIdlist']:
                 return True
             else:
                 return False
     def check_project(self, request, projectid):
-        print self.get_queryset()
+
         if request.session['isAdministrant']:
             return self.get_queryset()
         else:

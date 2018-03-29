@@ -69,46 +69,46 @@ class mycallback(CallbackBase):
         #FIXME, get real clock
         clock = 0
         self.runner_on_async_poll(host, result._result, jid, clock)
-        print 'v2_runner_on_async_poll'
+        log.info( 'v2_runner_on_async_poll')
 
     def v2_runner_on_async_ok(self, result):
         log.info('v2_runner_on_async_ok')
         host = result._host.get_name()
         jid = result._result.get('ansible_job_id')
         self.runner_on_async_ok(host, result._result, jid)
-        print 'v2_runner_on_async_ok'
+        log.info( 'v2_runner_on_async_ok')
 
     def v2_runner_on_async_failed(self, result):
         log.info('v2_runner_on_async_failed')
         host = result._host.get_name()
         jid = result._result.get('ansible_job_id')
         self.runner_on_async_failed(host, result._result, jid)
-        print 'v2_runner_on_async_failed'
+        log.info( 'v2_runner_on_async_failed')
     def v2_playbook_on_task_start(self, task, is_conditional):
         log.info('v2_playbook_on_task_start')
         self.playbook_on_task_start(task.name, is_conditional)
-        print 'v2_playbook_on_task_start'
+        log.info( 'v2_playbook_on_task_start')
     def v2_playbook_on_setup(self):
         log.info('v2_playbook_on_setup')
         self.playbook_on_setup()
-        print 'v2_playbook_on_setup'
+        log.info( 'v2_playbook_on_setup')
     def v2_playbook_on_import_for_host(self, result, imported_file):
         log.info('v2_playbook_on_import_for_host')
         host = result._host.get_name()
         self.playbook_on_import_for_host(host, imported_file)
-        print 'v2_playbook_on_import_for_host'
+        log.info( 'v2_playbook_on_import_for_host')
 
     def v2_playbook_on_not_import_for_host(self, result, missing_file):
         log.info('v2_playbook_on_not_import_for_host')
         host = result._host.get_name()
         self.playbook_on_not_import_for_host(host, missing_file)
-        print 'v2_playbook_on_not_import_for_host'
+        log.info( 'v2_playbook_on_not_import_for_host')
     def v2_on_file_diff(self, result):
         log.info('v2_on_file_diff')
         if 'diff' in result._result:
             host = result._host.get_name()
             self.on_file_diff(host, result._result['diff'])
-            print 'v2_on_file_diff'
+            log.info( 'v2_on_file_diff')
 
     def v2_runner_on_skipped(self, result):
         log.info('v2_runner_on_skipped')
@@ -121,7 +121,7 @@ class mycallback(CallbackBase):
             self.fo.writelines('skipped:'+host+'=>'+json.dumps(result._result,sort_keys=True,indent=8)+'\n')
             self.fo.flush()
             log.info('v2_runner_on_skipped: host'+host+' msg :'+str(result._result))
-            print 'v2_runner_on_skipped'
+            log.info( 'v2_runner_on_skipped')
     def v2_runner_on_ok(self, result):
         log.info('v2_runner_on_ok')
         host = result._host.get_name()
@@ -194,7 +194,7 @@ class mycallback(CallbackBase):
             )
             self.recap[h]={'ok':t['ok'],'changed':t['changed'],'unreachable':t['unreachable'],'skipped':t['skipped'],'failed':t['failures']}
             myrecap+=msg+'\n'
-            print 'RECAP>>>',msg
+
         log.info('v2_playbook_on_stats :'+myrecap)
         self.fo.writelines("PLAY RECAP*****************************************************************************************************************"+'\n')
         self.fo.writelines(myrecap+'\n')
@@ -288,7 +288,7 @@ class my_commands_play():
     def run(self):
         log.info('run')
         fo = open(self.logfile, "a+")
-        print 'logfile ',self.logfile
+        log.info( 'logfile :'+self.logfile)
         self.results_callback = mycallback(fo)
         if self.PRIVILEGE_NAME=="su" or self.PRIVILEGE_NAME=="sudo":
             self.variable_manager.extra_vars={"ansible_ssh_user":self.login_user , "ansible_ssh_pass":self.login_pwd,"ansible_ssh_port":self.port,"ansible_become":True,
@@ -318,7 +318,7 @@ class my_commands_play():
                 run_tree=False,
             )
             result = tqm.run(play)
-            print 'commands result',result
+            log.info( 'commands result'+str(result))
             log.info('run end')
         finally:
             fo.close()
@@ -328,8 +328,7 @@ class my_commands_play():
     def get_result(self):
         log.info('get_result start')
         self.result_all = {'code':1000,'recap':self.results_callback.recap,'no_host_matched':self.results_callback.status_no_hosts,'success': {}, 'fail': {}, 'unreachable': {},'skipped':{}}
-        # print result_all
-        # print dir(self.results_callback)
+
         for host, result in self.results_callback.host_ok.items():
             self.result_all['success'][host] = result._result['stdout_lines'] if result._result.has_key('stdout_lines') else  result._result
 
@@ -345,7 +344,7 @@ class my_commands_play():
             self.result_all['unreachable'][host] = result._result['stderr_lines'] if result._result.has_key('stderr_lines') else  result._result
 
         for i in self.result_all['success'].keys():
-            print i, self.result_all['success'][i]
+            log.info( i+":"+str(self.result_all['success'][i]))
 
         log.info('result: '+str(self.result_all))
         log.info('get_result start')
