@@ -15,6 +15,8 @@ def PermissionVerify():
         response = HttpResponse()
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.session['username'])
+            if not iUser.is_active : #用户已被删除
+                return  HttpResponse(json.dumps({"resultCode":"0087","resultDesc":u"抱歉，会话过期，请登录系统！"}), content_type="application/json;charset=UTF-8")
             if not iUser.is_superuser: #判断用户如果是超级管理员则具有所有权限
                 if not iUser.role: #如果用户无角色，直接返回无权限
                     return render(request, 'templates/pages/noPermission.html')

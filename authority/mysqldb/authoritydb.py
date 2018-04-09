@@ -71,10 +71,15 @@ def login(request):
             if User.objects.all().filter(username=request.POST['USERNAME']):
                 if User.objects.all().filter(username=request.POST['USERNAME']).filter(
                         password=md5(request.POST['PASSWORD'])):
+                    loginUser=User.objects.get(username=request.POST['USERNAME'])
+                    if not loginUser.is_active :
+                        response_data['result'] = 'FAIELD!'
+                        response_data['message'] = "user notExist!"
+                        log.info("用户is_not_active")
+                        return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
                     response_data['result'] = 'Success!'
                     request.session['username'] = request.POST['USERNAME']
                     request.session['userId'] = User.objects.get(username=request.POST['USERNAME']).id
-                    loginUser=User.objects.get(username=request.POST['USERNAME'])
                     roleName=loginUser.role.name
                     request.session['isAdministrant']=False
                     if loginUser.is_superuser or roleName==u'管理员':
@@ -498,7 +503,8 @@ def delete(request):
                 return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
         # 删除id=1的数据
         user = User.objects.get(id=form['id'])
-        user.delete()
+        user.is_active=False
+        user.save()
         response_data['result'] = 'Success'
     except:
         response_data['result'] = 'FAIELD!'

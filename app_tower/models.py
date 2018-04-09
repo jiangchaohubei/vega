@@ -471,7 +471,7 @@ class User(AbstractBaseUser):
     createTime = models.DateTimeField('创建时间', auto_now_add=True, null=True, blank=True)
     gitLabToken=models.CharField(max_length=512,null=True, blank=True)
     email = models.EmailField(max_length=255)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     nickname = models.CharField(max_length=64, null=True)
     sex = models.CharField(max_length=2, null=True)

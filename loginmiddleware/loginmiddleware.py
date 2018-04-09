@@ -33,7 +33,7 @@ class LoginMiddleware(object):
                     # 这里要跳出整个frameset
                     jump_to_console = "<script>alert('抱歉，会话过期，请登录系统！');top.location.href='/login'</script>"
                     response = HttpResponse(jump_to_console)
-                    print req_path
+
                     if req_path =="/main" or req_path =='/authority/user/logout/':
                         return response
                     else:
