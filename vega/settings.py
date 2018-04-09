@@ -124,6 +124,7 @@ USE_L10N = True
 
 USE_TZ = False
 
+ANSIBLE_VERSION='2.4'   #2.3
 ENVIRONMENT='阿里云'  #&'预览'
 VERSIONS_PATH='/opt/versions'
 PLAYBOOK_ROOT='/opt/playbooks/'
@@ -146,6 +147,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE=True  #：会话cookie可以在用户浏览器�
 #request.session.set_expiry(value)
 # SECURITY WARNING: don't run with debug turned on in production!
 SESSION_SAVE_EVERY_REQUEST = True                       # 是否每次请求都保存Session，默认修改之后才保存（默认）
+SESSION_COOKIE_HTTPONLY = True
+#SESSION_COOKIE_SECURE = True
+
+TEMPLATE_DEBUG = False
+DEBUG = True  #False
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -159,7 +165,7 @@ DEFAULT_FROM_EMAIL = '15221459431@163.com'  #这样别人收到的邮件中就�
 
 
 #日志配置
-DEBUG = True
+
 LOG_ROOT='./logs'   #日志根目录  './logs'
 import loggerconfig
 import datetime
