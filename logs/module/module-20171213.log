@@ -1,6 +1,0 @@
-2017-12-13 16:29:38,586 moduledb.py[line:62] INFO module_select start
-2017-12-13 16:29:38,588 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=0&_=1513153778475'>
-2017-12-13 16:29:38,605 moduledb.py[line:109] INFO module_select end
-2017-12-13 16:29:44,283 moduledb.py[line:62] INFO module_select start
-2017-12-13 16:29:44,283 moduledb.py[line:63] INFO request: <WSGIRequest: GET '/app_cmdb/module/select?limit=5&offset=0&order=asc&name=&description=&systemId=18&_=1513153784189'>
-2017-12-13 16:29:44,289 moduledb.py[line:109] INFO module_select end

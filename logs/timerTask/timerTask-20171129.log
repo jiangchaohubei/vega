@@ -1,8 +1,0 @@
-2017-11-29 10:19:56,494 timerTask.py[line:132] INFO timerTask_select start
-2017-11-29 10:19:56,496 timerTask.py[line:133] INFO request: <WSGIRequest: GET '/app_tower/timerTask/select?limit=5&offset=0&order=asc&name=&description=&_=1511921996344'>
-2017-11-29 10:19:56,506 timerTask.py[line:177] INFO timerTask_select end
-2017-11-29 10:19:57,815 timerTask.py[line:18] INFO init_jobTemplete_select start
-2017-11-29 10:19:57,829 timerTask.py[line:24] INFO init_jobTemplete_select end
-2017-11-29 10:20:10,276 timerTask.py[line:132] INFO timerTask_select start
-2017-11-29 10:20:10,276 timerTask.py[line:133] INFO request: <WSGIRequest: GET '/app_tower/timerTask/select?limit=5&offset=0&order=asc&name=&description=&_=1511922010133'>
-2017-11-29 10:20:10,283 timerTask.py[line:177] INFO timerTask_select end

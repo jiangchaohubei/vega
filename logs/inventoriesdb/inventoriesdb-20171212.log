@@ -1,3 +1,0 @@
-2017-12-12 10:51:42,288 inventoriesdb.py[line:140] INFO group_select start
-2017-12-12 10:51:42,288 inventoriesdb.py[line:141] INFO request: <WSGIRequest: GET '/app_tower/group/select?limit=5&offset=0&order=asc&name=&description=&_=1513047102109'>
-2017-12-12 10:51:42,302 inventoriesdb.py[line:184] INFO group_select end

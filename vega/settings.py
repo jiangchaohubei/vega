@@ -96,8 +96,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vega',
-        'USER': 'root',  #root                                                                                             #vegauser
-        'PASSWORD': 'root',   #root                                                                                       #DBVega568SQL
+        'USER': 'root',  #root                 #vegauser
+        'PASSWORD': 'root',   #root           #DBVega568SQL
         'HOST': 'localhost',
         'PORT': '3306',
 
@@ -124,16 +124,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-ANSIBLE_VERSION='2.4'   #2.3
-ENVIRONMENT='阿里云'  #&'预览'
-VERSIONS_PATH='/opt/versions'
-PLAYBOOK_ROOT='/opt/playbooks/'
 
-#图片文件夹
-MEDIA_ROOT = '/opt/images'     #设置静态文件路径为主目录下的media文件夹
-MEDIA_URL = '/icon/'                                                 #url映射
-
-STATIC_URL = BASE_DIR+'/static/'
 
 
 
@@ -150,8 +141,7 @@ SESSION_SAVE_EVERY_REQUEST = True                       # 是否每次请求都�
 SESSION_COOKIE_HTTPONLY = True
 #SESSION_COOKIE_SECURE = True
 
-TEMPLATE_DEBUG = False
-DEBUG = True  #False
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -163,17 +153,7 @@ EMAIL_HOST_USER = '15221459431@163.com' #我自己的邮箱是发件人     需�
 EMAIL_HOST_PASSWORD = 'smy289343354'   #SMTP密码   不是你的邮箱登录密码
 DEFAULT_FROM_EMAIL = '15221459431@163.com'  #这样别人收到的邮件中就会有你设定的名称 发件人:<15221459431@163.com>
 
-
-#日志配置
-
-LOG_ROOT='./logs'   #日志根目录  './logs'
-import loggerconfig
-import datetime
-LOGGING=loggerconfig.LOGGING
-
-
-
-
+#channels配置
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
@@ -183,3 +163,32 @@ CHANNEL_LAYERS = {
         'ROUTING': 'vega.routing.channel_routing',
     }
 }
+
+#debug开启
+TEMPLATE_DEBUG = False
+DEBUG = True  #False
+
+#日志配置
+
+LOG_ROOT='/var/log/vega/logs'   #日志根目录  './logs'
+import loggerconfig
+import datetime
+LOGGING=loggerconfig.LOGGING
+
+ANSIBLE_VERSION='2.3'   #2.4 ansible版本
+ENVIRONMENT='预览'  #&'预览'
+
+#程序版本文件存放文件夹
+VERSIONS_PATH='/opt/versions'
+#playbook文件存放文件夹
+PLAYBOOK_ROOT='/opt/playbooks/'
+
+#图片文件夹
+MEDIA_ROOT = '/opt/images'     #设置静态文件路径为主目录下的media文件夹
+MEDIA_URL = '/icon/'             #url映射
+
+STATIC_URL = BASE_DIR+'/static/'
+
+
+
+

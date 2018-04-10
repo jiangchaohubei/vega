@@ -1,3 +1,0 @@
-2017-11-29 10:22:35,640 jobsdb.py[line:15] INFO jobs_select start
-2017-11-29 10:22:35,641 jobsdb.py[line:16] INFO request: <WSGIRequest: GET '/app_tower/jobs/select?limit=5&offset=0&order=asc&name=&description=&jobType=-1&jobTaskid=&jobStatus=-1&_=1511922155551'>
-2017-11-29 10:22:35,648 jobsdb.py[line:67] INFO jobs_select end
