@@ -151,10 +151,17 @@ var TableInit_usergrant = function () {
                     sortable : true,
 
                 },{
-                    field: 'fields.updateTime',
-                    title: '更新时间',
+                    field: 'fields.is_active',
+                    title: '状态',
                     align : 'center',
                     sortable : true,
+                    formatter:function (value, row, index) {
+                        if(value){
+                            return "<span class='label label-primary'>"+"<i class='ace-icon fa fa-stop-circle-o bigger-130'></i>"+"正常"+"</span>"
+                        }else{
+                            return "<span class='label label-default'>"+"<i class='glyphicon glyphicon-alert'></i>"+"禁用"+"</span>"
+                        }
+                    }
                 }, {
                 //field: 'count',
                 title: '操作',
@@ -732,15 +739,17 @@ function showDeleteUserModal(data){
 }
 
 
-function deleteUser(){
+function deleteUser(flag){
      var id=$("#delete_id").val();
      var username=$("#delete_username").html();
+
      $.ajax({
        url:"/authority/delete/user",
        type:"POST",
        data:{
            id:id,
-           username:username
+           username:username,
+           flag:flag
        },
        dataType:"json",
        success:function(data){

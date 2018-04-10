@@ -501,15 +501,19 @@ def delete(request):
         if request.POST:
             form['id'] = request.POST['id']
             form['username']=request.POST['username']
+            form['flag']=request.POST['flag']
             if request.POST['username']=="Admin":
                 response_data['result']='FAIELD!'
                 response_data['message']='超级管理员不能删除!'
                 log.info('delete end because Supermaster cannot delete')
                 return HttpResponse(JsonResponse(response_data), content_type="application/json;charset=UTF-8")
-        # 删除id=1的数据
-        user = User.objects.get(id=form['id'])
-        user.is_active=False
-        user.save()
+        # 完全删除与账号禁用
+        if form['flag']=='complete':
+             User.objects.get(id=form['id']).delete()
+        else:
+            user = User.objects.get(id=form['id'])
+            user.is_active=False
+            user.save()
         response_data['result'] = 'Success'
     except:
         response_data['result'] = 'FAIELD!'

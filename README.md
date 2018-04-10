@@ -95,3 +95,5 @@ cd /opt(预览)    cd /opt/vega  (生产)
     nohup python /opt/vega/vega/manage.py runserver 0.0.0.0:80 &
     nohup python /opt/vega/vega/manage.py celery worker -c 4 --loglevel=info --autoreload &
     nohup python /opt/vega/vega/manage.py celery beat --loglevel=info &
+
+    注意：
