@@ -175,8 +175,8 @@ import loggerconfig
 import datetime
 LOGGING=loggerconfig.LOGGING
 
-ANSIBLE_VERSION='2.3'   #2.4 ansible版本
-ENVIRONMENT='预览'  #&'预览'
+ANSIBLE_VERSION='2.4'   #2.4 ansible版本
+ENVIRONMENT='阿里云'  #&'预览'
 
 #程序版本文件存放文件夹
 VERSIONS_PATH='/opt/versions'
