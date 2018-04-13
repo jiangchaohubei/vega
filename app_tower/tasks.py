@@ -183,7 +183,7 @@ def timer_task(jobTempleteId,createUserId,createUserName,startUserId,startUserNa
 
 #执行工具脚本为yaml
 @task(throws=(Terminated,))
-def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,extraVariable,hostList=None,sudo=False,su=False):
+def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,extraVariable,hostList=None,sudo=False,su=False,sshCommonArgs=None):
     log.info('celery run_tool_yaml start')
     tool_event=T_TOOL_EVENT.objects.get(id=toolEventId)
     starttime=time.time()
@@ -196,7 +196,7 @@ def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,e
     true = True
     null = None
     false=False
-    runbook=runplaybook(file,playbookPath,group,extraVariable,jobTags,skipTags,5,sudo,su)
+    runbook=runplaybook(file,playbookPath,group,extraVariable,jobTags,skipTags,5,sudo,su,sshCommonArgs)
     #执行
     result=runbook.run()
 
@@ -241,7 +241,7 @@ def run_tool_yaml(toolEventId,credentialsId,file,playbookPath,jobTags,skipTags,e
 
 #执行工具脚本为shell
 @task(throws=(Terminated,))
-def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=22,isSudo='false',sudo=False,su=False):
+def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=22,isSudo='false',sudo=False,su=False,sshCommonArgs=None):
     log.info('celery run_tool_shell start')
     tool_event=T_TOOL_EVENT.objects.get(id=toolEventId)
     starttime=time.time()
@@ -258,7 +258,7 @@ def run_tool_shell(logfile,toolEventId,credentialsid,shellContent,hostList,port=
     PRIVILEGE_PWD=d.decode(str(credentials.PRIVILEGE_PWD))
 
     #执行
-    com=commandsrun(logfile,hostList,login_user,login_pwd,'script',shellContent,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD,sudo=sudo,su=su)
+    com=commandsrun(logfile,hostList,login_user,login_pwd,'script',shellContent,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD,sudo=sudo,su=su,sshCommonArgs=sshCommonArgs)
     result=com.run()
 
     endtime=time.time()

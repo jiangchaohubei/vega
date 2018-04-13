@@ -875,6 +875,7 @@ class T_TOOL_INPUT(models.Model):
         (6, 'SkipTags'),
         (7, 'ExtraVariable'),
         (8, '执行时参数'),
+        (9, 'ssh_common_args'),
 
     )
     TYPE=models.IntegerField(choices=SCRIPTLANGUAGE_CHIOCES,default=0)

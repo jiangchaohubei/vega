@@ -21,7 +21,7 @@ import logging
 log = logging.getLogger("playbook_run") # 为loggers中定义的名称
 
 class runplaybook:
-    def __init__(self, logfile,playbook_path,group,extra_vars={},tags=None,skip_tags=None,fork=5,sudo=False,su=False):
+    def __init__(self, logfile,playbook_path,group,extra_vars={},tags=None,skip_tags=None,fork=5,sudo=False,su=False,sshCommonArgs=None):
         log.info('runplaybook init')
         self.logfile=logfile
         self.playbook_path=playbook_path
@@ -32,11 +32,12 @@ class runplaybook:
         self.fork=fork
         self.sudo=sudo
         self.su=su
+        self.sshCommonArgs=sshCommonArgs
         log.info('group:'+str(self.group))
 
     def run(self):
         log.info('runplaybook run')
-        play_book = my_ansible_play(self.logfile,self.playbook_path,self.group,extra_vars=self.extra_vars,tags=self.tags,skip_tags=self.skip_tags,fork=self.fork,sudo=self.sudo,su=self.su)
+        play_book = my_ansible_play(self.logfile,self.playbook_path,self.group,extra_vars=self.extra_vars,tags=self.tags,skip_tags=self.skip_tags,fork=self.fork,sudo=self.sudo,su=self.su,sshCommonArgs=self.sshCommonArgs)
         #play_book = my_ansible_play(self.logfile,'/root/code/ping.yml')
         run_msg=play_book.run()
         if run_msg['code'] in [1001,1002,1003]:
@@ -218,7 +219,8 @@ class my_ansible_play():
                  tags=None,
                  skip_tags=None,
                  sudo=False,
-                 su=False
+                 su=False,
+                 sshCommonArgs=None
                  ):
         self.logfile=logfile
         self.playbook_path = playbook
@@ -235,6 +237,7 @@ class my_ansible_play():
                               'become',
                               'become_method',
                               'become_user',
+                              'ssh_common_args',
                               'check',
                               'listhosts',
                               'listtasks',
@@ -256,6 +259,7 @@ class my_ansible_play():
                                become=True if sudo or su else False,
                                become_method='sudo' if sudo else 'su',
                                become_user='root',
+                               ssh_common_args=sshCommonArgs,
                                check=check,
                                listhosts=None,
                                listtasks=None,

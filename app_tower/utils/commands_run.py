@@ -19,7 +19,7 @@ import logging
 log = logging.getLogger("commands_run") # 为loggers中定义的名称
 
 class commandsrun:
-    def __init__(self,file,hostName_list,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD,sudo=False,su=False):
+    def __init__(self,file,hostName_list,login_user,login_pwd,commandName,vars,port,isSudo,PRIVILEGE_NAME,PRIVILEGE_PWD,sudo=False,su=False,sshCommonArgs=None):
         log.info('commandsrun init')
 
         self.logfile=file
@@ -34,11 +34,12 @@ class commandsrun:
         self.PRIVILEGE_PWD=PRIVILEGE_PWD
         self.sudo=sudo
         self.su=su
+        self.sshCommonArgs=sshCommonArgs
 
 
     def run(self):
         log.info('commandsrun run')
-        play_book = my_commands_play(self.logfile,self.hostName_list,self.login_user,self.login_pwd,self.commandName,self.vars,self.port,self.isSudo,self.PRIVILEGE_NAME,self.PRIVILEGE_PWD,sudo=self.sudo,su=self.su)
+        play_book = my_commands_play(self.logfile,self.hostName_list,self.login_user,self.login_pwd,self.commandName,self.vars,self.port,self.isSudo,self.PRIVILEGE_NAME,self.PRIVILEGE_PWD,sudo=self.sudo,su=self.su,sshCommonArgs=self.sshCommonArgs)
         #play_book = my_ansible_play(self.logfile,'/root/code/ping.yml')
         run_msg=play_book.run()
 
@@ -215,7 +216,8 @@ class my_commands_play():
                  passwords={},
                  check=False,
                  sudo=False,
-                 su=False):
+                 su=False,
+                 sshCommonArgs=None):
         self.logfile=logfile
         self.hostName_list=hostName_list
         self.login_user=login_user
@@ -246,7 +248,8 @@ class my_commands_play():
                               'listtags',
                               'syntax',
                               'sudo_user',
-                              'sudo'])
+                              'sudo',
+                              'ssh_common_args'])
         self.options = Options(connection='smart',
                                remote_user='root',
                                ack_pass=None,
@@ -259,6 +262,7 @@ class my_commands_play():
                                become=True if sudo or su else False,
                                become_method='sudo' if sudo else 'su',
                                become_user='root',
+                               ssh_common_args=sshCommonArgs,
                                check=None,
                                listhosts=None,
                                listtasks=None,

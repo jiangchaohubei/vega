@@ -693,6 +693,7 @@ def tool_run(request):
             extraVariable={}
             sudo=False
             su=False
+            sshCommonArgs=None
             for param in eval(form['inputParams']):
                 if param['type']=='5' and param['value']:
                     jobtagstr=param['value']+','
@@ -712,13 +713,15 @@ def tool_run(request):
                         sudo=True
                     elif  param['value']== '-S' :
                         su=True
+                elif param['type']=='9' and param['value']:
+                    sshCommonArgs=param['value']
             #临时playbook
             playbook=tempfile.NamedTemporaryFile(delete=False)
             fo = open(playbook.name, "w+")
             fo.write(tool.SCRIPT_CODE)
             fo.flush()
             fo.close()
-            runtool = run_tool_yaml.delay(tool_event.id,int(form['credentialsId']),file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(request.POST['hostList']),sudo=sudo,su=su)
+            runtool = run_tool_yaml.delay(tool_event.id,int(form['credentialsId']),file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(request.POST['hostList']),sudo=sudo,su=su,sshCommonArgs=sshCommonArgs)
             taskid = runtool.task_id
 
             result = AsyncResult(taskid)
@@ -730,6 +733,7 @@ def tool_run(request):
             vars=""
             sudo=False
             su=False
+            sshCommonArgs=None
             for param in eval(form['inputParams']):
                 if param['type']=='0' and param['value']:
                     vars+=param['name']+"="+param['value']+"\n"
@@ -740,6 +744,8 @@ def tool_run(request):
                         sudo=True
                     elif  param['value']== '-S' :
                         su=True
+                elif param['type']=='9' and param['value']:
+                    sshCommonArgs=param['value']
             vars+=vars+tool.SCRIPT_CODE
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
@@ -747,7 +753,7 @@ def tool_run(request):
             fo.write(vars)
             fo.flush()
             fo.close()
-            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']),sudo=sudo,su=su)
+            runtool = run_tool_shell.delay(file.name,tool_event.id,int(form['credentialsId']),scriptPath.name,hostList=eval(request.POST['hostList']),sudo=sudo,su=su,sshCommonArgs=sshCommonArgs)
             taskid = runtool.task_id
 
             result = AsyncResult(taskid)
@@ -801,6 +807,7 @@ def tool_reRun(request):
             extraVariable={}
             sudo=False
             su=False
+            sshCommonArgs=None
             for param in eval(tool_event2.INPUTPARAMS):
                 if param['type']=='5' and param['value']:
                     jobtagstr=param['value']+','
@@ -820,13 +827,15 @@ def tool_reRun(request):
                         sudo=True
                     elif  param['value']== '-S' :
                         su=True
+                elif param['type']=='9' and param['value']:
+                    sshCommonArgs=param['value']
             #临时playbook
             playbook=tempfile.NamedTemporaryFile(delete=False)
             fo = open(playbook.name, "w+")
             fo.write(tool.SCRIPT_CODE)
             fo.flush()
             fo.close()
-            runtool = run_tool_yaml.delay(tool_event2.id,tool_event2.CREDENTIALS_ID_id,file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su)
+            runtool = run_tool_yaml.delay(tool_event2.id,tool_event2.CREDENTIALS_ID_id,file.name,playbook.name,jobTags,skipTags,extraVariable,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su,sshCommonArgs=sshCommonArgs)
             taskid = runtool.task_id
 
             result = AsyncResult(taskid)
@@ -838,6 +847,7 @@ def tool_reRun(request):
             vars=""
             sudo=False
             su=False
+            sshCommonArgs=None
             for param in eval(tool_event2.INPUTPARAMS):
                 if param['type']=='0' or param['type']=='3' and param['value']:
                     vars+=param['name']+"="+param['value']+"\n"
@@ -846,6 +856,8 @@ def tool_reRun(request):
                         sudo=True
                     elif  param['value']== '-S' :
                         su=True
+                elif param['type']=='9' and param['value']:
+                    sshCommonArgs=param['value']
             vars+=vars+tool.SCRIPT_CODE
             #临时script
             scriptPath=tempfile.NamedTemporaryFile(delete=False)
@@ -853,7 +865,7 @@ def tool_reRun(request):
             fo.write(vars)
             fo.flush()
             fo.close()
-            runtool = run_tool_shell.delay(file.name,tool_event2.id,tool_event2.CREDENTIALS_ID_id,scriptPath.name,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su)
+            runtool = run_tool_shell.delay(file.name,tool_event2.id,tool_event2.CREDENTIALS_ID_id,scriptPath.name,hostList=eval(tool_event2.HOSTLIST),sudo=sudo,su=su,sshCommonArgs=sshCommonArgs)
             taskid = runtool.task_id
 
             result = AsyncResult(taskid)
